@@ -16,8 +16,8 @@ module.exports = function(options) {
 	config = _.extend(config, options);
 
 	var app = express()
-	        .use(index)
-	        .use(express.static("client"));
+	        .use(config.rootpath, index)
+	        .use(config.rootpath, express.static("client"));
 
 	app.enable("trust proxy");
 
@@ -44,7 +44,8 @@ module.exports = function(options) {
 	}
 
 	sockets = io(server, {
-		transports: transports
+		transports: transports,
+                path: config.rootpath + 'socket.io'
 	});
 
 	sockets.on("connect", function(socket) {
