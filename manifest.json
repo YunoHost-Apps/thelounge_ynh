@@ -1,0 +1,45 @@
+{
+    "name": "Shout",
+    "id": "shout",
+    "description": {
+        "en": "Web IRC client",
+        "fr": "Client Web IRC"
+    },
+    "maintainer": {
+        "name": "kload",
+        "email": "kload@kload.fr"
+    },
+    "multi_instance": "false",
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain for Shout",
+                    "fr": "Choisissez un domaine pour Shout"
+                },
+                "example": "domain.org"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for Shout",
+                    "fr": "Choisissez un chemin pour Shout"
+                },
+                "example": "/irc",
+                "default": "/irc"
+            },
+            {
+                "name": "is_public",
+                "ask": {
+                    "en": "Is it a public instance ?",
+                    "fr": "Est-ce une instance public ?"
+                },
+                "choices": ["Yes", "No"],
+                "default": "No"
+            }
+        ]
+    }
+}

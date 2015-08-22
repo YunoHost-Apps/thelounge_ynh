@@ -1,0 +1,11 @@
+[Service]
+ExecStart=/usr/bin/node /var/www/shout/index.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=shout
+User=shout
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

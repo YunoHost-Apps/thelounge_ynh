@@ -1,0 +1,14 @@
+#!/bin/bash
+
+domain=$(sudo yunohost app setting shout domain)
+
+sudo systemctl stop shout
+sudo systemctl disable shout
+sudo yunohost service remove shout
+
+sudo rm -rf /var/www/shout
+sudo rm -f /etc/nginx/conf.d/$domain.d/shout.conf
+sudo rm -f /etc/systemd/system/shout.service
+
+sudo service nginx reload
+sudo yunohost app ssowatconf
