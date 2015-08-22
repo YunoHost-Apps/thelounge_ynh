@@ -16,8 +16,8 @@ module.exports = function(options) {
 	config = _.extend(config, options);
 
 	var app = express()
-		.use(index)
-		.use(express.static("client"));
+	        .use(config.rootpath, index)
+	        .use(config.rootpath, express.static("client"));
 
 	app.enable("trust proxy");
 
@@ -36,7 +36,7 @@ module.exports = function(options) {
 		server = server.createServer({
 			key: fs.readFileSync(https.key),
 			cert: fs.readFileSync(https.certificate)
-		}, app).listen(port, host)
+		}, app).listen(port, host);
 	}
 
 	if ((config.identd || {}).enable) {
@@ -46,10 +46,11 @@ module.exports = function(options) {
 	sockets = io(server, {
 		transports: transports
 	});
+        sockets.path(config.rootpath + 'socket.io');
 
 	sockets.on("connect", function(socket) {
                 var authHeader = socket.client.request.headers.authorization;
-                config.public = authHeader == undefined;
+                config.public = (authHeader == undefined);
 		if (config.public) {
 		        auth.call(socket);
                 } else if (authHeader) {

@@ -13,6 +13,8 @@ path=${path%/}
 
 # Copy files to the right place
 sudo mkdir -p $final_path/.shout/users
+sed -i "s@PATHTOCHANGE@$path/@g" ../conf/config.js
+sudo cp ../conf/config.js $final_path/.shout/
 sudo cp -a ../sources/* $final_path/
 
 # Set permissions

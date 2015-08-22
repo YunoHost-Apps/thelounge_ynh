@@ -29,9 +29,11 @@ sudo useradd -d $final_path shout \
 # Modify the random username
 user=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
 sed -i "s@USERTOCHANGE@$user@g" ../conf/user.json
+sed -i "s@PATHTOCHANGE@$path/@g" ../conf/config.js
 
 # Copy files to the right place
 sudo mkdir -p $final_path/.shout/users
+sudo cp ../conf/config.js $final_path/.shout/
 sudo cp ../conf/user.json $final_path/.shout/users/$user.json
 sudo cp -a ../sources/* $final_path/
 
