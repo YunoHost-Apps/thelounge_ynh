@@ -1,5 +1,5 @@
 $(function() {
-	var socket = io();
+	var socket = io({path: 'PATHTOCHANGE/socket.io'});
 	var commands = [
 		"/close",
 		"/connect",

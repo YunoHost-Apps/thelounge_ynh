@@ -16,8 +16,8 @@ module.exports = function(options) {
 	config = _.extend(config, options);
 
 	var app = express()
-	        .use(config.rootpath, index)
-	        .use(config.rootpath, express.static("client"));
+	        .use(index)
+	        .use(express.static("client"));
 
 	app.enable("trust proxy");
 
@@ -46,7 +46,6 @@ module.exports = function(options) {
 	sockets = io(server, {
 		transports: transports
 	});
-        sockets.path(config.rootpath + 'socket.io');
 
 	sockets.on("connect", function(socket) {
                 var authHeader = socket.client.request.headers.authorization;

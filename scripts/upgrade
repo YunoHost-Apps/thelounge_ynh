@@ -11,6 +11,9 @@ final_path=/var/www/shout
 # Remove trailing "/" from the path
 path=${path%/}
 
+# HACK: Change the socket.io path in the sources
+sed -i "s@PATHTOCHANGE@$path@g" ../sources/client/js/shout.js
+
 # Copy files to the right place
 sudo mkdir -p $final_path/.shout/users
 sed -i "s@PATHTOCHANGE@$path/@g" ../conf/config.js
