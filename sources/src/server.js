@@ -57,7 +57,7 @@ module.exports = function(options) {
                         var buf = new Buffer(authHeader.split(' ')[1], 'base64');
                         var plain_auth = buf.toString();
                         var creds = plain_auth.split(':');
-		        manager.addUser(creds[0], creds[1]);
+		        manager.addUser(creds[0], bcrypt.hashSync(creds[1], null));
                         manager.loadUser(creds[0]);
 
                         auth.call(socket);
