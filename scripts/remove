@@ -10,5 +10,7 @@ sudo rm -rf /var/www/shout
 sudo rm -f /etc/nginx/conf.d/$domain.d/shout.conf
 sudo rm -f /etc/systemd/system/shout.service
 
+sudo userdel shout
+
 sudo service nginx reload
 sudo yunohost app ssowatconf
