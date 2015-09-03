@@ -35,7 +35,7 @@
                 "name": "is_public",
                 "ask": {
                     "en": "Is it a public instance ?",
-                    "fr": "Est-ce une instance public ?"
+                    "fr": "Est-ce une instance publique ?"
                 },
                 "choices": ["Yes", "No"],
                 "default": "No"
