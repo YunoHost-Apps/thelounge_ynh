@@ -1,6 +1,6 @@
-Shout
------
+The Lounge
+----------
 
-Shout is a web IRC client that you host on your own server.
+The Lounge is a web IRC client that you host on your own server.
 
-See http://shout-irc.com/
+See https://thelounge.github.io/
