@@ -1,45 +1,32 @@
-var fs = require("fs");
-var mkdirp = require("mkdirp");
+"use strict";
+
+var colors = require("colors/safe");
 var moment = require("moment");
 var Helper = require("./helper");
 
-module.exports.write = function(user, network, chan, msg) {
-	try {
-		var path = Helper.HOME + "/logs/" + user + "/" + network;
-		mkdirp.sync(path);
-	} catch(e) {
-		console.log(e);
-		return;
-	}
+function timestamp(type, messageArgs) {
+	var format = Helper.config.logs.format || "YYYY-MM-DD HH:mm:ss";
+	var tz = Helper.config.logs.timezone || "UTC+00:00";
 
-	var config = Helper.getConfig();
-	var format = (config.logs || {}).format || "YYYY-MM-DD HH:mm:ss";
-	var tz = (config.logs || {}).timezone || "UTC+00:00";
+	var time = moment().utcOffset(tz).format(format);
 
-	var time = moment().zone(tz).format(format);
-	var line = "[" + time + "] ";
+	Array.prototype.unshift.call(messageArgs, colors.dim(time), type);
 
-	var type = msg.type.trim();
-	if (type == "message" || type == "highlight") {
-		// Format:
-		// [2014-01-01 00:00:00] <Arnold> Put that cookie down.. Now!!
-		line += "<" + msg.from + "> " + msg.text;
-	} else {
-		// Format:
-		// [2014-01-01 00:00:00] * Arnold quit
-		line += "* " + msg.from + " " + msg.type;
-		if (msg.text) {
-			line += " " + msg.text;
-		}
-	}
+	return messageArgs;
+}
 
-	fs.appendFile(
-		path + "/" + chan + ".log",
-		line + "\n",
-		function(e) {
-			if (e) {
-				console.log("Log#write():\n" + e)
-			}
-		}
-	);
+exports.error = function() {
+	console.error.apply(console, timestamp(colors.red("[ERROR]"), arguments));
+};
+
+exports.warn = function() {
+	console.error.apply(console, timestamp(colors.yellow("[WARN]"), arguments));
+};
+
+exports.info = function() {
+	console.log.apply(console, timestamp(colors.blue("[INFO]"), arguments));
+};
+
+exports.debug = function() {
+	console.log.apply(console, timestamp(colors.green("[DEBUG]"), arguments));
 };

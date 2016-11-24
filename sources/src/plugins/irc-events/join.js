@@ -1,4 +1,5 @@
-var _ = require("lodash");
+"use strict";
+
 var Chan = require("../../models/chan");
 var Msg = require("../../models/msg");
 var User = require("../../models/user");
@@ -6,7 +7,7 @@ var User = require("../../models/user");
 module.exports = function(irc, network) {
 	var client = this;
 	irc.on("join", function(data) {
-		var chan = _.find(network.channels, {name: data.channel});
+		var chan = network.getChannel(data.channel);
 		if (typeof chan === "undefined") {
 			chan = new Chan({
 				name: data.channel
@@ -18,26 +19,18 @@ module.exports = function(irc, network) {
 				chan: chan
 			});
 		}
-		var users = chan.users;
-		users.push(new User({name: data.nick}));
-		chan.sortUsers();
+		chan.users.push(new User({nick: data.nick}));
+		chan.sortUsers(irc);
 		client.emit("users", {
-			chan: chan.id,
-			users: users
+			chan: chan.id
 		});
-		var self = false;
-		if (data.nick.toLowerCase() == irc.me.toLowerCase()) {
-			self = true;
-		}
 		var msg = new Msg({
+			time: data.time,
 			from: data.nick,
+			hostmask: data.ident + "@" + data.hostname,
 			type: Msg.Type.JOIN,
-			self: self
+			self: data.nick === irc.user.nick
 		});
-		chan.messages.push(msg);
-		client.emit("msg", {
-			chan: chan.id,
-			msg: msg
-		});
+		chan.pushMessage(client, msg);
 	});
 };

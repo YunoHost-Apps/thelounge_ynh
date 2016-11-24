@@ -1,38 +1,34 @@
-var Msg = require("../../models/msg");
+"use strict";
 
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "slap" && cmd != "me") {
-		return;
-	}
-	
-	var client = this;
+exports.commands = ["slap", "me"];
+
+exports.input = function(network, chan, cmd, args) {
 	var irc = network.irc;
-	
+	var text;
+
 	switch (cmd) {
 	case "slap":
-		var slap = "slaps " + args[0] + " around a bit with a large trout";
+		text = "slaps " + args[0] + " around a bit with a large trout";
 		/* fall through */
 	case "me":
 		if (args.length === 0) {
 			break;
 		}
-		
-		var text = slap || args.join(" ");
-		irc.action(
-			chan.name,
-			text
-		);
-		
-		var msg = new Msg({
-			type: Msg.Type.ACTION,
-			from: irc.me,
-			text: text
-		});
-		chan.messages.push(msg);
-		client.emit("msg", {
-			chan: chan.id,
-			msg: msg
-		});
+
+		text = text || args.join(" ");
+
+		irc.action(chan.name, text);
+
+		if (!network.irc.network.cap.isEnabled("echo-message")) {
+			irc.emit("action", {
+				nick: irc.user.nick,
+				target: chan.name,
+				message: text
+			});
+		}
+
 		break;
 	}
+
+	return true;
 };

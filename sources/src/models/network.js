@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require("lodash");
 var Chan = require("./chan");
 
@@ -6,7 +8,7 @@ module.exports = Network;
 var id = 0;
 
 function Network(attr) {
-	_.merge(this, _.extend({
+	_.defaults(this, attr, {
 		name: "",
 		host: "",
 		port: 6667,
@@ -16,10 +18,16 @@ function Network(attr) {
 		username: "",
 		realname: "",
 		channels: [],
-		connected: false,
+		ip: null,
+		hostname: null,
 		id: id++,
 		irc: null,
-	}, attr));
+		serverOptions: {
+			PREFIX: [],
+		},
+		chanCache: [],
+	});
+
 	this.name = attr.name || prettify(attr.host);
 	this.channels.unshift(
 		new Chan({
@@ -29,13 +37,35 @@ function Network(attr) {
 	);
 }
 
+Network.prototype.setNick = function(nick) {
+	this.nick = nick;
+	this.highlightRegex = new RegExp(
+		// Do not match characters and numbers (unless IRC color)
+		"(?:^|[^a-z0-9]|\x03[0-9]{1,2})" +
+
+		// Escape nickname, as it may contain regex stuff
+		nick.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&") +
+
+		// Do not match characters and numbers
+		"(?:[^a-z0-9]|$)",
+
+		// Case insensitive search
+		"i"
+	);
+};
+
 Network.prototype.toJSON = function() {
-	var json = _.extend(this, {nick: (this.irc || {}).me || ""});
-	return _.omit(json, "irc", "password");
+	return _.omit(this, [
+		"chanCache",
+		"highlightRegex",
+		"irc",
+		"password",
+	]);
 };
 
 Network.prototype.export = function() {
 	var network = _.pick(this, [
+		"nick",
 		"name",
 		"host",
 		"port",
@@ -43,14 +73,30 @@ Network.prototype.export = function() {
 		"password",
 		"username",
 		"realname",
-		"commands"
+		"commands",
+		"ip",
+		"hostname"
 	]);
-	network.nick = (this.irc || {}).me;
-	network.join = _.pluck(
-		_.where(this.channels, {type: "channel"}),
-		"name"
-	).join(",");
+
+	network.channels = this.channels
+		.filter(function(channel) {
+			return channel.type === Chan.Type.CHANNEL;
+		})
+		.map(function(chan) {
+			return _.pick(chan, [
+				"name"
+			]);
+		});
+
 	return network;
+};
+
+Network.prototype.getChannel = function(name) {
+	name = name.toLowerCase();
+
+	return _.find(this.channels, function(that) {
+		return that.name.toLowerCase() === name;
+	});
 };
 
 function prettify(host) {

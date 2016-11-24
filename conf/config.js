@@ -1,261 +1,371 @@
+"use strict";
+
 module.exports = {
-        //
-        // Set the server mode.
-        // Public servers does not require authentication.
-        //
-        // Set to 'false' to enable users.
-        //
-        // @type     boolean
-        // @default  false
-        //
-        public: false,
+	//
+	// Set the server mode.
+	// Public servers does not require authentication.
+	//
+	// Set to 'false' to enable users.
+	//
+	// @type     boolean
+	// @default  true
+	//
+	public: false,
 
-        //
-        // Allow connections from this host.
-        //
-        // @type     string
-        // @default  "0.0.0.0"
-        //
-        host: "127.0.0.1",
+	//
+	// IP address or hostname for the web server to listen on.
+	// Setting this to undefined will listen on all interfaces.
+	//
+	// @type     string
+	// @default  undefined
+	//
+	host: "127.0.0.1",
 
-        //
-        // Set the port to listen on.
-        //
-        // @type     int
-        // @default  9000
-        //
-        port: 9191,
+	//
+	// Set the port to listen on.
+	//
+	// @type     int
+	// @default  9000
+	//
+	port: 9191,
 
-        //
-        // Set the local IP to bind to.
-        //
-        // @type     string
-        // @default  "0.0.0.0"
-        //
-        bind: undefined,
+	//
+	// Set the local IP to bind to for outgoing connections. Leave to undefined
+	// to let the operating system pick its preferred one.
+	//
+	// @type     string
+	// @default  undefined
+	//
+	bind: undefined,
 
-        //
-        // Set the default theme.
-        //
-        // @type     string
-        // @default  "themes/example.css"
-        //
-        theme: "themes/example.css",
+	//
+	// Sets whether the server is behind a reverse proxy and should honor the
+	// X-Forwarded-For header or not.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	reverseProxy: true,
 
-        //
-        // Autoload users
-        //
-        // When this setting is enabled, your 'users/' folder will be monitored. This is useful
-        // if you want to add/remove users while the server is running.
-        //
-        // @type     boolean
-        // @default  true
-        //
-        autoload: true,
+	//
+	// Set the default theme.
+	//
+	// @type     string
+	// @default  "themes/example.css"
+	//
+	theme: "themes/morning.css",
 
-        //
-        // Prefetch URLs
-        //
-        // If enabled, Shout will try to load thumbnails and site descriptions from
-        // URLs posted in channels.
-        //
-        // @type     boolean
-        // @default  true
-        //
-        prefetch: true,
+	//
+	// Autoload users
+	//
+	// When this setting is enabled, your 'users/' folder will be monitored. This is useful
+	// if you want to add/remove users while the server is running.
+	//
+	// @type     boolean
+	// @default  true
+	//
+	autoload: true,
 
-        // Serving path
-        //
-        // The path at which shout is available.
-        // For example if you set this to /chat,
-        // shout will be available at http://0.0.0.0:9000/chat
-        //
-        // @type     string
-        // @default  "/"
-        //
-        rootpath: "PATHTOCHANGE",
+	//
+	// Prefetch URLs
+	//
+	// If enabled, The Lounge will try to load thumbnails and site descriptions from
+	// URLs posted in channels.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	prefetch: true,
 
-        //
-        // Display network
-        //
-        // If set to false Shout will not expose network settings in login
-        // form, limiting client to connect to the configured network.
-        //
-        // @type     boolean
-        // @default  true
-        //
-        displayNetwork: true,
+	//
+	// Prefetch URLs Image Preview size limit
+	//
+	// If prefetch is enabled, The Lounge will only display content under the maximum size.
+	// Default value is 512 (in kB)
+	//
+	// @type     int
+	// @default  512
+	//
+	prefetchMaxImageSize: 512,
 
-        //
-        // Log settings
-        //
-        // Logging has to be enabled per user. If enabled, logs will be stored in
-        // the '/users/<user>/logs/' folder.
-        //
-        // @type     object
-        // @default  {}
-        //
-        logs: {
-                //
-                // Timestamp format
-                //
-                // @type     string
-                // @default  "YYYY-MM-DD HH:mm:ss"
-                //
-                format: "YYYY-MM-DD HH:mm:ss",
+	//
+	// Display network
+	//
+	// If set to false network settings will not be shown in the login form.
+	//
+	// @type     boolean
+	// @default  true
+	//
+	displayNetwork: true,
 
-                //
-                // Timezone
-                //
-                // @type     string
-                // @default  "UTC+00:00"
-                //
-                timezone: "UTC+00:00"
-        },
+	//
+	// Lock network
+	//
+	// If set to true, users will not be able to modify host, port and tls
+	// settings and will be limited to the configured network.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	lockNetwork: false,
 
-        //
-        // Default values for the 'Connect' form.
-        //
-        // @type     object
-        // @default  {}
-        //
-        defaults: {
-                //
-                // Name
-                //
-                // @type     string
-                // @default  "Freenode"
-                //
-                name: "Freenode",
+	//
+	// WEBIRC support
+	//
+	// If enabled, The Lounge will pass the connecting user's host and IP to the
+	// IRC server. Note that this requires to obtain a password from the IRC network
+	// The Lounge will be connecting to and generally involves a lot of trust from the
+	// network you are connecting to.
+	//
+	// Format (standard): {"irc.example.net": "hunter1", "irc.example.org": "passw0rd"}
+	// Format (function):
+	//   {"irc.example.net": function(client, args, trusted) {
+	//       // here, we return a webirc object fed directly to `irc-framework`
+	//       return {username: "thelounge", password: "hunter1", address: args.ip, hostname: "webirc/"+args.hostname};
+	//   }}
+	//
+	// @type     string | function(client, args):object(webirc)
+	// @default  null
+	webirc: null,
 
-                //
-                // Host
-                //
-                // @type     string
-                // @default  "irc.freenode.org"
-                //
-                host: "irc.freenode.org",
+	//
+	// Log settings
+	//
+	// Logging has to be enabled per user. If enabled, logs will be stored in
+	// the 'logs/<user>/<network>/' folder.
+	//
+	// @type     object
+	// @default  {}
+	//
+	logs: {
+		//
+		// Timestamp format
+		//
+		// @type     string
+		// @default  "YYYY-MM-DD HH:mm:ss"
+		//
+		format: "YYYY-MM-DD HH:mm:ss",
 
-                //
-                // Port
-                //
-                // @type     int
-                // @default  6697
-                //
-                port: 6697,
+		//
+		// Timezone
+		//
+		// @type     string
+		// @default  "UTC+00:00"
+		//
+		timezone: "UTC+00:00"
+	},
 
-                //
-                // Password
-                //
-                // @type     string
-                // @default  ""
-                //
-                password: "",
+	//
+	// Maximum number of history lines per channel
+	//
+	// Defines the maximum number of history lines that will be kept in
+	// memory per channel/query, in order to reduce the memory usage of
+	// the server. Negative means unlimited.
+	//
+	// @type     integer
+	// @default  -1
+	maxHistory: -1,
 
-                //
-                // Enable TLS/SSL
-                //
-                // @type     boolean
-                // @default  true
-                //
-                tls: true,
+	//
+	// Default values for the 'Connect' form.
+	//
+	// @type     object
+	// @default  {}
+	//
+	defaults: {
+		//
+		// Name
+		//
+		// @type     string
+		// @default  "Freenode"
+		//
+		name: "Freenode",
 
-                //
-                // Nick
-                //
-                // @type     string
-                // @default  "shout-user"
-                //
-                nick: "shout-user",
+		//
+		// Host
+		//
+		// @type     string
+		// @default  "chat.freenode.net"
+		//
+		host: "chat.freenode.net",
 
-                //
-                // Username
-                //
-                // @type     string
-                // @default  "shout-user"
-                //
-                username: "shout-user",
+		//
+		// Port
+		//
+		// @type     int
+		// @default  6697
+		//
+		port: 6697,
 
-                //
-                // Real Name
-                //
-                // @type     string
-                // @default  "Shout User"
-                //
-                realname: "Shout User",
+		//
+		// Password
+		//
+		// @type     string
+		// @default  ""
+		//
+		password: "",
 
-                //
-                // Channels
-                //
-                // @type     string
-                // @default  "#foo, #shout-irc"
-                //
-                join: "#foo, #shout-irc"
-        },
+		//
+		// Enable TLS/SSL
+		//
+		// @type     boolean
+		// @default  true
+		//
+		tls: true,
 
-        //
-        // Set socket.io transports
-        //
-        // @type     array
-        // @default  ["polling', "websocket"]
-        //
-        transports: ["polling", "websocket"],
+		//
+		// Nick
+		//
+		// @type     string
+		// @default  "lounge-user"
+		//
+		nick: "lounge-user",
 
-        //
-        // Run Shout with HTTPS support.
-        //
-        // @type     object
-        // @default  {}
-        //
-        https: {
-                //
-                // Enable HTTPS support.
-                //
-                // @type     boolean
-                // @default  false
-                //
-                enable: false,
+		//
+		// Username
+		//
+		// @type     string
+		// @default  "lounge-user"
+		//
+		username: "lounge-user",
 
-                //
-                // Path to the key.
-                //
-                // @type     string
-                // @example  "sslcert/key.pem"
-                // @default  ""
-                //
-                key: "",
+		//
+		// Real Name
+		//
+		// @type     string
+		// @default  "The Lounge User"
+		//
+		realname: "The Lounge User",
 
-                //
-                // Path to the certificate.
-                //
-                // @type     string
-                // @example  "sslcert/key-cert.pem"
-                // @default  ""
-                //
-                certificate: ""
-        },
+		//
+		// Channels
+		// This is a comma-separated list.
+		//
+		// @type     string
+		// @default  "#thelounge"
+		//
+		join: "#thelounge"
+	},
 
-        //
-        // Run Shout with identd support.
-        //
-        // @type     object
-        // @default  {}
-        //
-        identd: {
-                //
-                // Run the identd daemon on server start.
-                //
-                // @type     boolean
-                // @default  false
-                //
-                enable: false,
+	//
+	// Set socket.io transports
+	//
+	// @type     array
+	// @default  ["polling", "websocket"]
+	//
+	transports: ["polling", "websocket"],
 
-                //
-                // Port to listen for ident requests.
-                //
-                // @type     int
-                // @default  113
-                //
-                port: 113
-        }
+	//
+	// Run The Lounge using encrypted HTTP/2.
+	// This will fallback to regular HTTPS if HTTP/2 is not supported.
+	//
+	// @type     object
+	// @default  {}
+	//
+	https: {
+		//
+		// Enable HTTP/2 / HTTPS support.
+		//
+		// @type     boolean
+		// @default  false
+		//
+		enable: false,
+
+		//
+		// Path to the key.
+		//
+		// @type     string
+		// @example  "sslcert/key.pem"
+		// @default  ""
+		//
+		key: "",
+
+		//
+		// Path to the certificate.
+		//
+		// @type     string
+		// @example  "sslcert/key-cert.pem"
+		// @default  ""
+		//
+		certificate: ""
+	},
+
+	//
+	// Run The Lounge with identd support.
+	//
+	// @type     object
+	// @default  {}
+	//
+	identd: {
+		//
+		// Run the identd daemon on server start.
+		//
+		// @type     boolean
+		// @default  false
+		//
+		enable: false,
+
+		//
+		// Port to listen for ident requests.
+		//
+		// @type     int
+		// @default  113
+		//
+		port: 113
+	},
+
+	//
+	// Enable oidentd support using the specified file
+	//
+	// Example: oidentd: "~/.oidentd.conf",
+	//
+	// @type     string
+	// @default  null
+	//
+	oidentd: null,
+
+	//
+	// LDAP authentication settings (only available if public=false)
+	// @type    object
+	// @default {}
+	//
+	ldap: {
+		//
+		// Enable LDAP user authentication
+		//
+		// @type     boolean
+		// @default  false
+		//
+		enable: true,
+
+		//
+		// LDAP server URL
+		//
+		// @type     string
+		//
+		url: "ldap://127.0.0.1",
+
+		//
+		// LDAP base dn
+		//
+		// @type     string
+		//
+		baseDN: "ou=users,dc=yunohost,dc=org",
+
+		//
+		// LDAP primary key
+		//
+		// @type     string
+		// @default  "uid"
+		//
+		primaryKey: "uid"
+	},
+
+	// Enables extra debugging output. Turn this on if you experience
+	// IRC connection issues and want to file a bug report.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	debug: false,
 };

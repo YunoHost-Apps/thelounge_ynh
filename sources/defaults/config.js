@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
 	//
 	// Set the server mode.
@@ -6,17 +8,18 @@ module.exports = {
 	// Set to 'false' to enable users.
 	//
 	// @type     boolean
-	// @default  false
+	// @default  true
 	//
-	public: false,
+	public: true,
 
 	//
-	// Allow connections from this host.
+	// IP address or hostname for the web server to listen on.
+	// Setting this to undefined will listen on all interfaces.
 	//
 	// @type     string
-	// @default  "0.0.0.0"
+	// @default  undefined
 	//
-	host: "0.0.0.0",
+	host: undefined,
 
 	//
 	// Set the port to listen on.
@@ -27,12 +30,22 @@ module.exports = {
 	port: 9000,
 
 	//
-	// Set the local IP to bind to.
+	// Set the local IP to bind to for outgoing connections. Leave to undefined
+	// to let the operating system pick its preferred one.
 	//
 	// @type     string
-	// @default  "0.0.0.0"
+	// @default  undefined
 	//
 	bind: undefined,
+
+	//
+	// Sets whether the server is behind a reverse proxy and should honor the
+	// X-Forwarded-For header or not.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	reverseProxy: false,
 
 	//
 	// Set the default theme.
@@ -56,31 +69,29 @@ module.exports = {
 	//
 	// Prefetch URLs
 	//
-	// If enabled, Shout will try to load thumbnails and site descriptions from
+	// If enabled, The Lounge will try to load thumbnails and site descriptions from
 	// URLs posted in channels.
 	//
 	// @type     boolean
-	// @default  true
+	// @default  false
 	//
-	prefetch: true,
+	prefetch: false,
 
-        //
-        // Serving path
-        //
-        // The path at which shout is available.
-        // For example if you set this to /chat,
-        // shout will be available at http://0.0.0.0:9000/chat
-        //
-        // @type     string
-        // @default  "/"
-        //
-        rootpath: "/",
+	//
+	// Prefetch URLs Image Preview size limit
+	//
+	// If prefetch is enabled, The Lounge will only display content under the maximum size.
+	// Default value is 512 (in kB)
+	//
+	// @type     int
+	// @default  512
+	//
+	prefetchMaxImageSize: 512,
 
 	//
 	// Display network
 	//
-	// If set to false Shout will not expose network settings in login
-	// form, limiting client to connect to the configured network.
+	// If set to false network settings will not be shown in the login form.
 	//
 	// @type     boolean
 	// @default  true
@@ -88,10 +99,40 @@ module.exports = {
 	displayNetwork: true,
 
 	//
+	// Lock network
+	//
+	// If set to true, users will not be able to modify host, port and tls
+	// settings and will be limited to the configured network.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	lockNetwork: false,
+
+	//
+	// WEBIRC support
+	//
+	// If enabled, The Lounge will pass the connecting user's host and IP to the
+	// IRC server. Note that this requires to obtain a password from the IRC network
+	// The Lounge will be connecting to and generally involves a lot of trust from the
+	// network you are connecting to.
+	//
+	// Format (standard): {"irc.example.net": "hunter1", "irc.example.org": "passw0rd"}
+	// Format (function):
+	//   {"irc.example.net": function(client, args, trusted) {
+	//       // here, we return a webirc object fed directly to `irc-framework`
+	//       return {username: "thelounge", password: "hunter1", address: args.ip, hostname: "webirc/"+args.hostname};
+	//   }}
+	//
+	// @type     string | function(client, args):object(webirc)
+	// @default  null
+	webirc: null,
+
+	//
 	// Log settings
 	//
 	// Logging has to be enabled per user. If enabled, logs will be stored in
-	// the '/users/<user>/logs/' folder.
+	// the 'logs/<user>/<network>/' folder.
 	//
 	// @type     object
 	// @default  {}
@@ -115,6 +156,17 @@ module.exports = {
 	},
 
 	//
+	// Maximum number of history lines per channel
+	//
+	// Defines the maximum number of history lines that will be kept in
+	// memory per channel/query, in order to reduce the memory usage of
+	// the server. Negative means unlimited.
+	//
+	// @type     integer
+	// @default  -1
+	maxHistory: -1,
+
+	//
 	// Default values for the 'Connect' form.
 	//
 	// @type     object
@@ -133,9 +185,9 @@ module.exports = {
 		// Host
 		//
 		// @type     string
-		// @default  "irc.freenode.org"
+		// @default  "chat.freenode.net"
 		//
-		host: "irc.freenode.org",
+		host: "chat.freenode.net",
 
 		//
 		// Port
@@ -165,52 +217,54 @@ module.exports = {
 		// Nick
 		//
 		// @type     string
-		// @default  "shout-user"
+		// @default  "lounge-user"
 		//
-		nick: "shout-user",
+		nick: "lounge-user",
 
 		//
 		// Username
 		//
 		// @type     string
-		// @default  "shout-user"
+		// @default  "lounge-user"
 		//
-		username: "shout-user",
+		username: "lounge-user",
 
 		//
 		// Real Name
 		//
 		// @type     string
-		// @default  "Shout User"
+		// @default  "The Lounge User"
 		//
-		realname: "Shout User",
+		realname: "The Lounge User",
 
 		//
 		// Channels
+		// This is a comma-separated list.
 		//
 		// @type     string
-		// @default  "#foo, #shout-irc"
+		// @default  "#thelounge"
 		//
-		join: "#foo, #shout-irc"
+		join: "#thelounge"
 	},
 
 	//
 	// Set socket.io transports
 	//
 	// @type     array
-	// @default  ["polling', "websocket"]
+	// @default  ["polling", "websocket"]
 	//
 	transports: ["polling", "websocket"],
 
 	//
-	// Run Shout with HTTPS support.
+	// Run The Lounge using encrypted HTTP/2.
+	// This will fallback to regular HTTPS if HTTP/2 is not supported.
 	//
 	// @type     object
 	// @default  {}
 	//
 	https: {
 		//
-		// Enable HTTPS support.
+		// Enable HTTP/2 / HTTPS support.
 		//
 		// @type     boolean
 		// @default  false
@@ -237,7 +291,7 @@ module.exports = {
 	},
 
 	//
-	// Run Shout with identd support.
+	// Run The Lounge with identd support.
 	//
 	// @type     object
 	// @default  {}
@@ -258,5 +312,60 @@ module.exports = {
 		// @default  113
 		//
 		port: 113
-	}
+	},
+
+	//
+	// Enable oidentd support using the specified file
+	//
+	// Example: oidentd: "~/.oidentd.conf",
+	//
+	// @type     string
+	// @default  null
+	//
+	oidentd: null,
+
+	//
+	// LDAP authentication settings (only available if public=false)
+	// @type    object
+	// @default {}
+	//
+	ldap: {
+		//
+		// Enable LDAP user authentication
+		//
+		// @type     boolean
+		// @default  false
+		//
+		enable: false,
+
+		//
+		// LDAP server URL
+		//
+		// @type     string
+		//
+		url: "ldaps://example.com",
+
+		//
+		// LDAP base dn
+		//
+		// @type     string
+		//
+		baseDN: "ou=accounts,dc=example,dc=com",
+
+		//
+		// LDAP primary key
+		//
+		// @type     string
+		// @default  "uid"
+		//
+		primaryKey: "uid"
+	},
+
+	// Enables extra debugging output. Turn this on if you experience
+	// IRC connection issues and want to file a bug report.
+	//
+	// @type     boolean
+	// @default  false
+	//
+	debug: false,
 };

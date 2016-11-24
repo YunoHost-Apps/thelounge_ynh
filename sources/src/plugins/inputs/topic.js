@@ -1,12 +1,10 @@
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "topic") {
-		return;
-	}
-	
-	var msg = "TOPIC";
-	msg += " " + chan.name;
-	msg += args[0] ? (" :" + args.join(" ")) : "";
-	
+"use strict";
+
+exports.commands = ["topic"];
+
+exports.input = function(network, chan, cmd, args) {
 	var irc = network.irc;
-	irc.write(msg);
+	irc.raw("TOPIC", chan.name, args.join(" "));
+
+	return true;
 };

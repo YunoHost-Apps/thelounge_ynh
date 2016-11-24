@@ -1,16 +1,16 @@
 #!/bin/bash
 
-domain=$(sudo yunohost app setting shout domain)
+domain=$(sudo yunohost app setting thelounge domain)
 
-sudo systemctl stop shout
-sudo systemctl disable shout
-sudo yunohost service remove shout
+sudo systemctl stop thelounge
+sudo systemctl disable thelounge
+sudo yunohost service remove thelounge
 
-sudo rm -rf /var/www/shout
-sudo rm -f /etc/nginx/conf.d/$domain.d/shout.conf
-sudo rm -f /etc/systemd/system/shout.service
+sudo rm -rf /var/www/thelounge
+sudo rm -f /etc/nginx/conf.d/$domain.d/thelounge.conf
+sudo rm -f /etc/systemd/system/thelounge.service
 
-sudo userdel shout
+sudo userdel thelounge
 
 sudo service nginx reload
 sudo yunohost app ssowatconf

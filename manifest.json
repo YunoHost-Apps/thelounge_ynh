@@ -1,13 +1,13 @@
 {
-    "name": "Shout",
-    "id": "shout",
+    "name": "The Lounge",
+    "id": "thelounge",
     "description": {
         "en": "Web IRC client",
         "fr": "Client Web IRC"
     },
     "maintainer": {
-        "name": "kload",
-        "email": "kload@kload.fr"
+        "name": "beudbeud",
+        "email": "beudbeud@beudibox.fr"
     },
     "multi_instance": "false",
     "arguments": {
@@ -16,8 +16,8 @@
                 "name": "domain",
                 "type": "domain",
                 "ask": {
-                    "en": "Choose a domain for Shout",
-                    "fr": "Choisissez un domaine pour Shout"
+                    "en": "Choose a domain for The Lounge",
+                    "fr": "Choisissez un domaine pour The Lounge"
                 },
                 "example": "domain.org"
             },
@@ -25,8 +25,8 @@
                 "name": "path",
                 "type": "path",
                 "ask": {
-                    "en": "Choose a path for Shout",
-                    "fr": "Choisissez un chemin pour Shout"
+                    "en": "Choose a path for The Lounge",
+                    "fr": "Choisissez un chemin pour The Lounge"
                 },
                 "example": "/irc",
                 "default": "/irc"

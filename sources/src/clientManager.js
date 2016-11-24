@@ -1,20 +1,25 @@
+"use strict";
+
 var _ = require("lodash");
 var fs = require("fs");
 var Client = require("./client");
-var mkdirp = require("mkdirp");
 var Helper = require("./helper");
-var moment = require("moment");
+var Oidentd = require("./oidentd");
 
 module.exports = ClientManager;
 
 function ClientManager() {
 	this.clients = [];
+
+	if (typeof Helper.config.oidentd === "string") {
+		this.identHandler = new Oidentd(Helper.config.oidentd);
+	}
 }
 
-ClientManager.prototype.findClient = function(name) {
+ClientManager.prototype.findClient = function(name, token) {
 	for (var i in this.clients) {
 		var client = this.clients[i];
-		if (client.name == name) {
+		if (client.name === name || (token && token === client.config.token)) {
 			return client;
 		}
 	}
@@ -29,41 +34,33 @@ ClientManager.prototype.loadUsers = function() {
 };
 
 ClientManager.prototype.loadUser = function(name) {
+	let json;
 	try {
-		var json = fs.readFileSync(
-			Helper.HOME + "/users/" + name + ".json",
-			"utf-8"
-		);
-		json = JSON.parse(json);
-	} catch(e) {
-		console.log(e);
+		json = this.readUserConfig(name);
+	} catch (e) {
+		log.error("Failed to read user config", e);
 		return;
 	}
 	if (!this.findClient(name)) {
 		this.clients.push(new Client(
-			this.sockets,
+			this,
 			name,
 			json
 		));
-		console.log(
-			"User '" + name + "' loaded."
-		);
 	}
 };
 
 ClientManager.prototype.getUsers = function() {
 	var users = [];
-	var path = Helper.HOME + "/users";
-	mkdirp.sync(path);
 	try {
-		var files = fs.readdirSync(path);
-		files.forEach(function(file) {
+		var files = fs.readdirSync(Helper.USERS_PATH);
+		files.forEach(file => {
 			if (file.indexOf(".json") !== -1) {
 				users.push(file.replace(".json", ""));
 			}
 		});
-	} catch(e) {
-		console.log(e);
+	} catch (e) {
+		log.error("Failed to get users", e);
 		return;
 	}
 	return users;
@@ -75,23 +72,59 @@ ClientManager.prototype.addUser = function(name, password) {
 		return false;
 	}
 	try {
-		var path = Helper.HOME + "/users";
+
+		if (require("path").basename(name) !== name) {
+			throw new Error(name + " is an invalid username.");
+		}
+
 		var user = {
 			user: name,
 			password: password || "",
 			log: false,
 			networks: []
 		};
-		mkdirp.sync(path);
 		fs.writeFileSync(
-			path + "/" + name + ".json",
-			JSON.stringify(user, null, "  "),
-			{mode: "0777"}
+			Helper.getUserConfigPath(name),
+			JSON.stringify(user, null, "\t")
 		);
-	} catch(e) {
+	} catch (e) {
+		log.error("Failed to add user " + name, e);
 		throw e;
 	}
 	return true;
+};
+
+ClientManager.prototype.updateUser = function(name, opts) {
+	var users = this.getUsers();
+	if (users.indexOf(name) === -1) {
+		return false;
+	}
+	if (typeof opts === "undefined") {
+		return false;
+	}
+
+	var user = {};
+	try {
+		user = this.readUserConfig(name);
+		_.assign(user, opts);
+		fs.writeFileSync(
+			Helper.getUserConfigPath(name),
+			JSON.stringify(user, null, "\t")
+		);
+	} catch (e) {
+		log.error("Failed to update user", e);
+		return;
+	}
+	return true;
+};
+
+ClientManager.prototype.readUserConfig = function(name) {
+	var users = this.getUsers();
+	if (users.indexOf(name) === -1) {
+		return false;
+	}
+	var data = fs.readFileSync(Helper.getUserConfigPath(name), "utf-8");
+	return JSON.parse(data);
 };
 
 ClientManager.prototype.removeUser = function(name) {
@@ -100,28 +133,22 @@ ClientManager.prototype.removeUser = function(name) {
 		return false;
 	}
 	try {
-		var path = Helper.HOME + "/users/" + name + ".json";
-		fs.unlinkSync(path);
-	} catch(e) {
+		fs.unlinkSync(Helper.getUserConfigPath(name));
+	} catch (e) {
 		throw e;
 	}
 	return true;
 };
 
-ClientManager.prototype.autoload = function(sockets) {
+ClientManager.prototype.autoload = function(/* sockets */) {
 	var self = this;
-	var loaded = [];
 	setInterval(function() {
-		var loaded = _.pluck(
-			self.clients,
-			"name"
-		);
+		var loaded = self.clients.map(c => c.name);
 		var added = _.difference(self.getUsers(), loaded);
-		_.each(added, function(name) {
-			self.loadUser(name);
-		});
+		added.forEach(name => self.loadUser(name));
+
 		var removed = _.difference(loaded, self.getUsers());
-		_.each(removed, function(name) {
+		removed.forEach(name => {
 			var client = _.find(
 				self.clients, {
 					name: name
@@ -130,11 +157,8 @@ ClientManager.prototype.autoload = function(sockets) {
 			if (client) {
 				client.quit();
 				self.clients = _.without(self.clients, client);
-				console.log(
-					"User '" + name + "' disconnected."
-				);
+				log.info("User '" + name + "' disconnected");
 			}
 		});
 	}, 1000);
 };
-

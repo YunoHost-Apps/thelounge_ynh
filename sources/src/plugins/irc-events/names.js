@@ -1,21 +1,21 @@
-var _ = require("lodash");
+"use strict";
+
 var User = require("../../models/user");
 
 module.exports = function(irc, network) {
 	var client = this;
-	irc.on("names", function(data) {
-		var chan = _.findWhere(network.channels, {name: data.channel});
+	irc.on("userlist", function(data) {
+		var chan = network.getChannel(data.channel);
 		if (typeof chan === "undefined") {
 			return;
 		}
-		chan.users = [];
-		_.each(data.names, function(u) {
-			chan.users.push(new User(u));
-		});
-		chan.sortUsers();
+
+		chan.users = data.users.map(u => new User(u, network.prefixLookup));
+
+		chan.sortUsers(irc);
+
 		client.emit("users", {
-			chan: chan.id,
-			users: chan.users
+			chan: chan.id
 		});
 	});
 };

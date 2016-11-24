@@ -1,22 +1,58 @@
+"use strict";
+
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
 	var client = this;
-	irc.on("errors", function(data) {
+
+	irc.on("irc error", function(data) {
+		var text = data.error;
+		if (data.reason) {
+			text = data.reason + " (" + text + ")";
+		}
 		var lobby = network.channels[0];
 		var msg = new Msg({
 			type: Msg.Type.ERROR,
-			text: data.message,
+			text: text,
 		});
-		client.emit("msg", {
-			chan: lobby.id,
-			msg: msg
+		lobby.pushMessage(client, msg);
+	});
+
+	irc.on("nick in use", function(data) {
+		var lobby = network.channels[0];
+		var msg = new Msg({
+			type: Msg.Type.ERROR,
+			text: data.nick + ": " + (data.reason || "Nickname is already in use."),
 		});
-		if (!network.connected) {
-			if (data.cmd == "ERR_NICKNAMEINUSE") {
-				var random = irc.me + Math.floor(10 + (Math.random() * 89));
-				irc.nick(random);
-			}
+		lobby.pushMessage(client, msg);
+
+		if (irc.connection.registered === false) {
+			var random = (data.nick || irc.user.nick) + Math.floor(10 + (Math.random() * 89));
+			irc.changeNick(random);
 		}
+
+		client.emit("nick", {
+			network: network.id,
+			nick: irc.user.nick
+		});
+	});
+
+	irc.on("nick invalid", function(data) {
+		var lobby = network.channels[0];
+		var msg = new Msg({
+			type: Msg.Type.ERROR,
+			text: data.nick + ": " + (data.reason || "Nickname is invalid."),
+		});
+		lobby.pushMessage(client, msg);
+
+		if (irc.connection.registered === false) {
+			var random = "i" + Math.random().toString(36).substr(2, 10); // 'i' so it never begins with a number
+			irc.changeNick(random);
+		}
+
+		client.emit("nick", {
+			network: network.id,
+			nick: irc.user.nick
+		});
 	});
 };

@@ -1,45 +1,83 @@
-# Shout [![](https://badge.fury.io/js/shout.png)](https://www.npmjs.org/package/shout)
+[![#thelounge IRC channel on freenode](https://img.shields.io/badge/irc%20channel-%23thelounge%20on%20freenode-blue.svg)](https://avatar.playat.ch:1000/)
+[![npm version](https://img.shields.io/npm/v/thelounge.svg)](https://www.npmjs.org/package/thelounge)
+[![Travis CI Build Status](https://travis-ci.org/thelounge/lounge.svg?branch=master)](https://travis-ci.org/thelounge/lounge)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/deymtp0lldq78s8t/branch/master?svg=true)](https://ci.appveyor.com/project/astorije/lounge/branch/master)
+[![Dependency Status](https://david-dm.org/thelounge/lounge.svg)](https://david-dm.org/thelounge/lounge)
+[![devDependency Status](https://david-dm.org/thelounge/lounge/dev-status.svg)](https://david-dm.org/thelounge/lounge?type=dev)
 
-### [Try the Demo](http://demo.shout-irc.com/)
+# The Lounge
 
-__What is it?__  
-Shout is a web IRC client that you host on your own server.
+__What is it?__
 
-__What features does it have?__  
+The Lounge is a web IRC client that you host on your own server.
+
+*This is the official, community-managed fork of @erming's great initiative, the [Shout](https://github.com/erming/shout) project.*
+
+__What features does it have?__
+
 - Multiple user support
 - Stays connected even when you close the browser
 - Connect from multiple devices at once
 - Responsive layout — works well on your smartphone
 - _.. and more!_
 
-## Install
+__Why the fork?__
 
+We felt that the original [Shout](https://github.com/erming/shout) project
+"stagnated" a little because its original author wanted it to remain his pet
+project (which is a perfectly fine thing!).
+
+A bunch of people, excited about doing things a bit differently than the upstream
+project forked it under a new name: “The Lounge”.
+
+This fork aims to be community managed, meaning that the decisions are taken
+in a collegial fashion, and that a bunch of maintainers should be able to make
+the review process quicker and more streamlined.
+
+## Installation and usage
+
+The Lounge requires [Node.js](https://nodejs.org/) v4 or more recent.
+
+### Running stable releases from npm (recommended)
+
+Run this in a terminal to install (or upgrade) the latest stable release from
+[npm](https://www.npmjs.com/):
+
+```sh
+[sudo] npm install -g thelounge
 ```
-sudo npm install -g shout
+
+When installation is complete, run:
+
+```sh
+lounge start
 ```
 
-## Usage
+For more information, read the [documentation](https://thelounge.github.io/docs/), [wiki](https://github.com/thelounge/lounge/wiki), or run:
 
-When the install is complete, go ahead and run this in your terminal:
-
-```
-shout --help
+```sh
+lounge --help
 ```
 
-For more information, read the [documentation](http://shout-irc.com/docs/).
+### Running from source
+
+The following commands install the development version of The Lounge. A word of
+caution: while it is the most recent codebase, this is not production-ready!
+
+```sh
+git clone https://github.com/thelounge/lounge.git
+cd lounge
+npm install
+npm start
+```
 
 ## Development setup
 
-To run the app from source, just clone the code and run this in your terminal:
+Simply follow the instructions to run The Lounge from source above, on your own
+fork.
 
-```
-npm install
-grunt
-./index.js --port 8080
-```
+Before submitting any change, make sure to:
 
-And if you don't have [grunt](http://gruntjs.com/getting-started) installed already, just run `npm install -g grunt-cli`.
-
-## License
-
-Available under [the MIT license](http://mths.be/mit).
+- Read the [Contributing instructions](https://github.com/thelounge/lounge/blob/master/CONTRIBUTING.md#contributing)
+- Run `npm test` to execute linters and test suite
+- Run `npm run build` if you change or add anything in `client/js/libs` or `client/views`

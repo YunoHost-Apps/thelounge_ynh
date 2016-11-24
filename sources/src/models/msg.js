@@ -1,9 +1,12 @@
+"use strict";
+
 var _ = require("lodash");
-var moment = require("moment");
 
 Msg.Type = {
+	UNHANDLED: "unhandled",
 	ACTION: "action",
 	ERROR: "error",
+	INVITE: "invite",
 	JOIN: "join",
 	KICK: "kick",
 	MESSAGE: "message",
@@ -14,7 +17,9 @@ Msg.Type = {
 	PART: "part",
 	QUIT: "quit",
 	TOGGLE: "toggle",
+	CTCP: "ctcp",
 	TOPIC: "topic",
+	TOPIC_SET_BY: "topic_set_by",
 	WHOIS: "whois"
 };
 
@@ -23,12 +28,17 @@ module.exports = Msg;
 var id = 0;
 
 function Msg(attr) {
-	_.merge(this, _.extend({
+	_.defaults(this, attr, {
 		from: "",
 		id: id++,
 		text: "",
-		time: moment().utc().format("HH:mm:ss"),
 		type: Msg.Type.MESSAGE,
 		self: false
-	}, attr));
+	});
+
+	if (this.time > 0) {
+		this.time = new Date(this.time);
+	} else {
+		this.time = new Date();
+	}
 }

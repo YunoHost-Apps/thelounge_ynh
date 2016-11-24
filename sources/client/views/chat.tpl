@@ -1,38 +1,26 @@
 {{#each channels}}
-<div id="chan-{{id}}" data-title="{{name}}" data-id="{{id}}" data-type="{{type}}" class="chan {{type}}">
+<div id="chan-{{id}}" data-title="{{name}}" data-id="{{id}}" data-type="{{type}}" data-target="#chan-{{id}}" class="chan {{type}}">
 	<div class="header">
-		<button class="lt"></button>
-		<button class="rt"></button>
-		<div class="right">
-			<button class="button close">
-				{{#equal type "lobby"}}
-					Disconnect
-				{{else}}
-					{{#equal type "query"}}
-						Close
-					{{else}}
-						Leave
-					{{/equal}}
-				{{/equal}}
-			</button>
-		</div>
+		<button class="lt" aria-label="Toggle channel list"></button>
+		{{#equal type "channel"}}
+			<span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user list">
+				<button class="rt" aria-label="Toggle user list"></button>
+			</span>
+		{{/equal}}
+		<button class="menu" aria-label="Open the context menu"></button>
 		<span class="title">{{name}}</span>
-		<span class="topic">{{{parse topic}}}</span>
+		<span title="{{topic}}" class="topic">{{{parse topic}}}</span>
 	</div>
 	<div class="chat">
 		<div class="show-more {{#equal messages.length 100}}show{{/equal}}">
 			<button class="show-more-button" data-id="{{id}}">
-				Show more
+				Show older messages
 			</button>
 		</div>
-		<div class="messages">
-			{{partial "msg"}}
-		</div>
+		<div class="messages"></div>
 	</div>
 	<aside class="sidebar">
-		<div class="users">
-			{{partial "user"}}
-		</div>
+		<div class="users"></div>
 	</aside>
 </div>
 {{/each}}

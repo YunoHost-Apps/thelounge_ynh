@@ -1,37 +1,37 @@
+"use strict";
+
 var _ = require("lodash");
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
 	var client = this;
 	irc.on("part", function(data) {
-		var chan = _.findWhere(network.channels, {name: data.channels[0]});
+		var chan = network.getChannel(data.channel);
 		if (typeof chan === "undefined") {
 			return;
 		}
 		var from = data.nick;
-		if (from == irc.me) {
+		if (from === irc.user.nick) {
 			network.channels = _.without(network.channels, chan);
 			client.save();
 			client.emit("part", {
 				chan: chan.id
 			});
 		} else {
-			var user = _.findWhere(chan.users, {name: from});
+			var user = _.find(chan.users, {name: from});
 			chan.users = _.without(chan.users, user);
 			client.emit("users", {
-				chan: chan.id,
-				users: chan.users
+				chan: chan.id
 			});
 			var msg = new Msg({
 				type: Msg.Type.PART,
-				mode: chan.getMode(from),
+				time: data.time,
+				mode: (user && user.mode) || "",
+				text: data.message || "",
+				hostmask: data.ident + "@" + data.hostname,
 				from: from
 			});
-			chan.messages.push(msg);
-			client.emit("msg", {
-				chan: chan.id,
-				msg: msg
-			});
+			chan.pushMessage(client, msg);
 		}
 	});
 };

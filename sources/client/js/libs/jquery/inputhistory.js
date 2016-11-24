@@ -32,6 +32,10 @@
 			var key = e.which;
 			switch (key) {
 			case 13: // Enter
+				if (e.shiftKey) {
+					return; // multiline input
+				}
+				
 				if (self.val() != "") {
 					i = history.length;
 					history[i - 1] = self.val();
@@ -49,10 +53,21 @@
 			
 			case 38: // Up
 			case 40: // Down
-				// NOTICE: This is specific to the Shout client.
+				// NOTICE: This is specific to The Lounge.
 				if (e.ctrlKey || e.metaKey) {
 					break;
 				}
+				
+				if (
+					this.value.indexOf("\n") >= 0
+					&&
+					(key === 38 && this.selectionStart > 0)
+					||
+					(key === 40 && this.selectionStart < this.value.length))
+				{
+					return; // don't prevent default
+				}
+
 				history[i] = self.val();
 				if (key == 38 && i != 0) {
 					i--;

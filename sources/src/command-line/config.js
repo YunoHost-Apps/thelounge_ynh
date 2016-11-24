@@ -1,17 +1,19 @@
-var fs = require("fs");
-var path = require("path");
+"use strict";
+
 var program = require("commander");
-var mkdirp = require("mkdirp");
 var child = require("child_process");
 var Helper = require("../helper");
 
 program
 	.command("config")
-	.description("Edit config: '" + Helper.HOME + "/config.js'")
+	.description("Edit config: " + Helper.CONFIG_PATH)
 	.action(function() {
-		child.spawn(
+		var child_spawn = child.spawn(
 			process.env.EDITOR || "vi",
-			[Helper.HOME + "/config.js"],
+			[Helper.CONFIG_PATH],
 			{stdio: "inherit"}
 		);
+		child_spawn.on("error", function() {
+			log.error("Unable to open " + Helper.CONFIG_PATH + ". $EDITOR is not set, and vi was not found.");
+		});
 	});

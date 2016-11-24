@@ -1,126 +1,123 @@
 /*
-Crypto theme for Shout.
+Crypto theme for The Lounge.
 
 Installation instructions can be found here
-http://shout-irc.com/docs/server/configuration.html#theme
+https://thelounge.github.io/docs/server/configuration.html#theme
 
 Author: Aynik
 GitHub: https://github.com/aynik
 */
 
 @font-face {
-    font-family: Inconsolata-g;
-    src: url("fonts/inconsolatag.woff") format("woff"), url("fonts/inconsolatag.ttf") format("ttf");
+	font-family: Inconsolata-g;
+	src: url("../css/fonts/inconsolatag.woff") format("woff");
 }
 
 body {
-    background: #000;
-    font: 16px Inconsolata-g, monospace;
+	background: #000;
+	font: 16px Inconsolata-g, monospace;
 }
 
-a, #chat a {
-    color: #00FF0E;
+a,
+#chat a {
+	color: #00ff0e;
 }
 
-a:hover, #chat a:hover {
-    color: #3EFF48;
+a:hover,
+#chat a:hover {
+	color: #3eff48;
 }
 
 #windows .window h2 {
-    color: #666;
-    font: regular 14px Leto, sans-serif;
-    border-bottom: none;
-}
-
-#main {
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
-    border-radius: 0px;
+	color: #666;
+	font: regular 14px Lato, sans-serif;
+	border-bottom: none;
 }
 
 .container {
-    margin: 40px auto;
+	margin: 40px auto;
 }
 
 #sign-in label {
-    font: 14px Lato, sans-serif;
-    color: #666;
+	font: 14px Lato, sans-serif;
+	color: #666;
 }
 
 #sign-in label input {
-    margin-top: 10px !important;
-    font: 14px Inconsolata-g, monospace;
+	margin-top: 10px !important;
+	font-size: 14px;
 }
 
 .btn {
-    border-color: #00FF0E;
-    color: #00FF0E;
+	border-color: #00ff0e;
+	color: #00ff0e;
 }
 
-.btn:disabled, .btn:hover {
-    background: #00FF0E;
-}
-
-#windows .window:before, #windows .chan:before {
-    content: none;
+.btn:disabled,
+.btn:hover {
+	background: #00ff0e;
 }
 
 #settings .opt {
-    line-height: 20px;
-    font-size: 12px;
+	line-height: 20px;
+	font-size: 12px;
 }
 
 #sign-in .remember {
-    font: 12px Inconsolata-g, monospace;
-    line-height: 30px;
+	font-size: 12px;
+	line-height: 30px;
 }
 
-.chan:first-child.activeat .msg .type,
 #sidebar .chan:first-child {
-    color: #00FF0E;
+	color: #00ff0e;
+}
+
+#sidebar .chan .name:after {
+	background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 #sidebar button,
 #sidebar .chan,
 #sidebar .sign-out,
 #chat .time,
-#chat .msg .type,
 #chat .count:before,
 #sidebar .empty {
-    color: #666;
+	color: #666;
+}
+
+#chat .unhandled .from {
+	color: #ddd;
 }
 
 #sidebar .active {
-    color: #fff;
+	color: #fff;
 }
 
-#chat,
-#windows .header {
-    font: 12px Inconsolata-g, monospace;
-    line-height: 1.8;
+#windows .header .topic,
+.messages .msg,
+.sidebar {
+	font: 12px Inconsolata-g, monospace;
+	line-height: 1.8;
 }
 
-#chat .chat,
-#chat .sidebar {
-    top: 48px;
+#chat .user {
+	color: black;
+	font-weight: bold;
 }
 
-#chat.no-colors .from button, #chat.no-colors .sidebar button {
-    color: #000 !important;
-    font-weight: bold
+#windows #form .input {
+	font-family: inherit;
+	font-size: 12px;
 }
 
-#form .input {
-    font: 12px Inconsolata-g, monospace;
+#windows select.input {
+	height: 38px;
 }
 
 #footer .icon {
-    color: #666;
+	color: #666;
 }
 
-@media (max-width: 768px) {
-    #main  {
-        left: 0px;
-    }
+.tooltipped:after {
+	font-family: Inconsolata-g, monospace;
 }

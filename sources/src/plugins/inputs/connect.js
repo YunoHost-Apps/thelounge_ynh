@@ -1,11 +1,41 @@
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "connect" && cmd != "server") {
+"use strict";
+
+var Msg = require("../../models/msg");
+
+exports.commands = ["connect", "server"];
+exports.allowDisconnected = true;
+
+exports.input = function(network, chan, cmd, args) {
+	if (args.length === 0) {
+		if (!network.irc || !network.irc.connection) {
+			return;
+		}
+
+		if (network.irc.connection.connected) {
+			chan.pushMessage(this, new Msg({
+				type: Msg.Type.ERROR,
+				text: "You are already connected."
+			}));
+			return;
+		}
+
+		network.irc.connection.connect();
+
 		return;
 	}
-	if (args.length !== 0) {
-		var client = this;
-		client.connect({
-			host: args[0]
-		});
+
+	var port = args[1] || "";
+	var tls = port[0] === "+";
+
+	if (tls) {
+		port = port.substring(1);
 	}
+
+	this.connect({
+		host: args[0],
+		port: port,
+		tls: tls,
+	});
+
+	return true;
 };

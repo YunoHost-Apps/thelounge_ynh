@@ -1,20 +1,33 @@
-var _ = require("lodash");
+"use strict";
 
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "part" && cmd != "leave" && cmd != "close") {
+var _ = require("lodash");
+var Msg = require("../../models/msg");
+var Chan = require("../../models/chan");
+
+exports.commands = ["close", "leave", "part"];
+exports.allowDisconnected = true;
+
+exports.input = function(network, chan, cmd, args) {
+	if (chan.type === Chan.Type.LOBBY) {
+		chan.pushMessage(this, new Msg({
+			type: Msg.Type.ERROR,
+			text: "You can not part from networks, use /quit instead."
+		}));
 		return;
 	}
-	var client = this;
-	if (chan.type == "query") {
-		network.channels = _.without(network.channels, chan);
-		client.emit("part", {
-			chan: chan.id
-		});
-	} else {
-		var irc = network.irc;
-		if (args.length === 0) {
-			args.push(chan.name);
+
+	network.channels = _.without(network.channels, chan);
+	this.emit("part", {
+		chan: chan.id
+	});
+
+	if (chan.type === Chan.Type.CHANNEL) {
+		this.save();
+
+		if (network.irc) {
+			network.irc.part(chan.name, args.join(" "));
 		}
-		irc.part(args);
 	}
+
+	return true;
 };

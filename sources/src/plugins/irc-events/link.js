@@ -1,53 +1,41 @@
-var _ = require("lodash");
+"use strict";
+
 var cheerio = require("cheerio");
 var Msg = require("../../models/msg");
 var request = require("request");
 var Helper = require("../../helper");
-var es = require('event-stream');
+var es = require("event-stream");
 
 process.setMaxListeners(0);
 
 module.exports = function(irc, network) {
 	var client = this;
-	irc.on("message", function(data) {
-		var config = Helper.getConfig();
-		if (!config.prefetch) {
+	irc.on("privmsg", function(data) {
+		if (!Helper.config.prefetch) {
 			return;
 		}
 
-		var links = [];
-		var split = data.message.split(" ");
-		_.each(split, function(w) {
-			if (w.match(/^(http|https):\/\/localhost/g)) {
-				return;
-			}
-			var match = w.indexOf("http://") === 0 || w.indexOf("https://") === 0;
-			if (match) {
-				links.push(w);
-			}
-		});
+		const links = data.message
+			.replace(/\x02|\x1D|\x1F|\x16|\x0F|\x03(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?/g, "")
+			.split(" ")
+			.filter(w => /^https?:\/\//.test(w));
 
 		if (links.length === 0) {
 			return;
 		}
 
-		var self = data.to.toLowerCase() == irc.me.toLowerCase();
-		var chan = _.findWhere(network.channels, {name: self ? data.from : data.to});
+		var chan = network.getChannel(data.target);
 		if (typeof chan === "undefined") {
 			return;
 		}
 
 		var msg = new Msg({
+			self: data.nick === irc.user.nick,
 			type: Msg.Type.TOGGLE,
-			time: ""
 		});
-		chan.messages.push(msg);
-		client.emit("msg", {
-			chan: chan.id,
-			msg: msg
-		});
+		chan.pushMessage(client, msg);
 
-		var link = links[0];
+		var link = escapeHeader(links[0]);
 		fetch(link, function(res) {
 			parse(msg, link, res, client);
 		});
@@ -70,12 +58,12 @@ function parse(msg, url, res, client) {
 		toggle.type = "link";
 		toggle.head = $("title").text();
 		toggle.body =
-			   $('meta[name=description]').attr('content')
-			|| $('meta[property="og:description"]').attr('content')
+			$("meta[name=description]").attr("content")
+			|| $("meta[property=\"og:description\"]").attr("content")
 			|| "No description found.";
 		toggle.thumb =
-			   $('meta[property="og:image"]').attr('content')
-			|| $('meta[name="twitter:image:src"]').attr('content')
+			$("meta[property=\"og:image\"]").attr("content")
+			|| $("meta[name=\"twitter:image:src\"]").attr("content")
 			|| "";
 		break;
 
@@ -83,7 +71,11 @@ function parse(msg, url, res, client) {
 	case "image/gif":
 	case "image/jpg":
 	case "image/jpeg":
-		toggle.type = "image";
+		if (res.size < (Helper.config.prefetchMaxImageSize * 1024)) {
+			toggle.type = "image";
+		} else {
+			return;
+		}
 		break;
 
 	default:
@@ -94,20 +86,28 @@ function parse(msg, url, res, client) {
 }
 
 function fetch(url, cb) {
+	let req;
 	try {
-		var req = request.get(url);
-	} catch(e) {
+		req = request.get({
+			url: url,
+			maxRedirects: 5,
+			timeout: 5000,
+			headers: {
+				"User-Agent": "Mozilla/5.0 (compatible; The Lounge IRC Client; +https://github.com/thelounge/lounge)"
+			}
+		});
+	} catch (e) {
 		return;
 	}
 	var length = 0;
 	var limit = 1024 * 10;
 	req
-		.on('response', function(res) {
-			if (!(/(text\/html|application\/json)/.test(res.headers['content-type']))) {
-			  res.req.abort();
+		.on("response", function(res) {
+			if (!(/(text\/html|application\/json)/.test(res.headers["content-type"]))) {
+				res.req.abort();
 			}
 		})
-		.on('error', function() {})
+		.on("error", function() {})
 		.pipe(es.map(function(data, next) {
 			length += data.length;
 			if (length > limit) {
@@ -116,24 +116,39 @@ function fetch(url, cb) {
 			next(null, data);
 		}))
 		.pipe(es.wait(function(err, data) {
-			if (err) return;
+			if (err) {
+				return;
+			}
+
 			var body;
 			var type;
+			var size = req.response.headers["content-length"];
 			try {
 				body = JSON.parse(data);
-			} catch(e) {
+			} catch (e) {
 				body = {};
 			}
 			try {
-				type = req.response.headers['content-type'].split(/ *; */).shift();
-			} catch(e) {
+				type = req.response.headers["content-type"].split(/ *; */).shift();
+			} catch (e) {
 				type = {};
 			}
 			data = {
 				text: data,
 				body: body,
-				type: type
+				type: type,
+				size: size
 			};
 			cb(data);
 		}));
+}
+
+// https://github.com/request/request/issues/2120
+// https://github.com/nodejs/node/issues/1693
+// https://github.com/alexeyten/descript/commit/50ee540b30188324198176e445330294922665fc
+function escapeHeader(header) {
+	return header
+		.replace(/([\uD800-\uDBFF][\uDC00-\uDFFF])+/g, encodeURI)
+		.replace(/[\uD800-\uDFFF]/g, "")
+		.replace(/[\u0000-\u001F\u007F-\uFFFF]+/g, encodeURI);
 }

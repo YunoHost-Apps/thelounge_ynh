@@ -1,9 +1,12 @@
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "raw" && cmd != "send" && cmd != "quote") {
-		return;
-	}
+"use strict";
+
+exports.commands = ["raw", "send", "quote"];
+
+exports.input = function(network, chan, cmd, args) {
 	if (args.length !== 0) {
 		var irc = network.irc;
-		irc.write(args.join(" "));
+		irc.raw(args);
 	}
+
+	return true;
 };

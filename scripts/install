@@ -6,24 +6,18 @@ set -e
 domain=$1
 path=$2
 is_public=$3
-final_path=/var/www/shout
-
-# Ensure that it is installed on Debian Jessie
-VERSION=$(sed 's/\..*//' /etc/debian_version)
-if [[ "$VERSION" == '7' ]]; then
-    echo "You need at least Debian 8 (Jessie) to run this app" && exit 1
-fi
+final_path=/var/www/thelounge
 
 # Check domain/path availability
-sudo yunohost app checkurl $domain$path -a shout
+sudo yunohost app checkurl $domain$path -a thelounge
 path=${path%/}
 
 # Install dependencies
 sudo apt-get update
-sudo apt-get install nodejs-legacy npm -y
+sudo apt-get install nodejs -y
 
 # Create user
-sudo useradd -d $final_path shout \
+sudo useradd -d $final_path thelounge\
   || echo "User already created"
 
 # Modify the random username
@@ -32,19 +26,19 @@ sed -i "s@USERTOCHANGE@$user@g" ../conf/user.json
 sed -i "s@PATHTOCHANGE@$path/@g" ../conf/config.js
 
 # HACK: Change the socket.io path in the sources
-sed -i "s@PATHTOCHANGE@$path@g" ../sources/client/js/shout.js
+sed -i "s@PATHTOCHANGE@$path@g" ../sources/client/js/lounge.js
 
 # Copy files to the right place
-sudo mkdir -p $final_path/.shout/users
-sudo cp ../conf/config.js $final_path/.shout/
-sudo cp ../conf/user.json $final_path/.shout/users/$user.json
+sudo mkdir -p $final_path/.lounge/users
+sudo cp ../conf/config.js $final_path/.lounge/
+sudo cp ../conf/user.json $final_path/.lounge/users/$user.json
 sudo cp -a ../sources/* $final_path/
 
 # Set permissions
-sudo chown -hR shout $final_path
+sudo chown -hR thelounge $final_path
 
 # Install dependencies
-sudo su -c "cd $final_path && /usr/bin/npm install --production" shout
+sudo su - thelounge -c "cd $final_path && /usr/bin/npm install"
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 if [[ "$path" == "" ]]; then
@@ -52,23 +46,23 @@ if [[ "$path" == "" ]]; then
 else
   sed -i "s@LOCATIONTOCHANGE@$path@g" ../conf/nginx.conf
 fi
-sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/shout.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/thelounge.conf
 
 # Copy systemd service
-sudo cp ../conf/systemd.service /etc/systemd/system/shout.service
+sudo cp ../conf/systemd.service /etc/systemd/system/thelounge.service
 
 # Add YunoHost service
-sudo yunohost service add shout -l /var/log/syslog
+sudo yunohost service add thelounge -l /var/log/syslog
 
 # Make app public if necessary
-sudo yunohost app setting shout is_public -v "$is_public"
+sudo yunohost app setting thelounge is_public -v "$is_public"
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting shout unprotected_uris -v "/"
+    sudo yunohost app setting thelounge unprotected_uris -v "/"
 fi
 
-# Reload Nginx, shout and regenerate SSOwat conf
+# Reload Nginx, thelounge and regenerate SSOwat conf
 sudo service nginx reload
-sudo systemctl enable shout
-sudo systemctl start shout || sudo systemctl restart shout
+sudo systemctl enable thelounge
+sudo systemctl start thelounge || sudo systemctl restart thelounge
 sudo yunohost app ssowatconf

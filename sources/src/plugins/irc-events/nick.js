@@ -1,50 +1,48 @@
+"use strict";
+
 var _ = require("lodash");
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
 	var client = this;
 	irc.on("nick", function(data) {
+		let msg;
 		var self = false;
-		var nick = data["new"];
-		if (nick == irc.me) {
+		if (data.nick === irc.user.nick) {
+			network.setNick(data.new_nick);
+
 			var lobby = network.channels[0];
-			var msg = new Msg({
-				text: "You're now known as " + nick,
+			msg = new Msg({
+				text: "You're now known as " + data.new_nick,
 			});
-			lobby.messages.push(msg);
-			client.emit("msg", {
-				chan: lobby.id,
-				msg: msg
-			});
+			lobby.pushMessage(client, msg);
 			self = true;
 			client.save();
 			client.emit("nick", {
 				network: network.id,
-				nick: nick
+				nick: data.new_nick
 			});
 		}
-		network.channels.forEach(function(chan) {
-			var user = _.findWhere(chan.users, {name: data.nick});
+
+		network.channels.forEach(chan => {
+			var user = _.find(chan.users, {name: data.nick});
 			if (typeof user === "undefined") {
 				return;
 			}
-			user.name = nick;
-			chan.sortUsers();
+			user.name = data.new_nick;
+			chan.sortUsers(irc);
 			client.emit("users", {
-				chan: chan.id,
-				users: chan.users
+				chan: chan.id
 			});
-			var msg = new Msg({
-				type: Msg.Type.NICK,
+			msg = new Msg({
+				time: data.time,
 				from: data.nick,
-				text: nick,
+				type: Msg.Type.NICK,
+				mode: chan.getMode(data.new_nick),
+				new_nick: data.new_nick,
 				self: self
 			});
-			chan.messages.push(msg);
-			client.emit("msg", {
-				chan: chan.id,
-				msg: msg
-			});
+			chan.pushMessage(client, msg);
 		});
 	});
 };

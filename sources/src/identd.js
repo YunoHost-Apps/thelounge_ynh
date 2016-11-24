@@ -1,23 +1,32 @@
+"use strict";
+
 var _ = require("lodash");
 var net = require("net");
 
 var users = {};
+var enabled = false;
 
 module.exports.start = function(port) {
-	var server = net.createServer(init).listen(port || 113);
+	port = port || 113;
+	log.info("Starting identd server on port", port);
+	net.createServer(init).listen(port);
+	enabled = true;
 };
 
 module.exports.hook = function(stream, user) {
-	var id = "";
 	var socket = stream.socket || stream;
-	socket.on("connect", function() {
-		var ports = _.pick(socket, "localPort", "remotePort");
-		id = _.values(ports).join(", ");
-		users[id] = user;
-	});
+	var ports = _.pick(socket, "localPort", "remotePort");
+	var id = _.values(ports).join(", ");
+
+	users[id] = user;
+
 	socket.on("close", function() {
 		delete users[id];
 	});
+};
+
+module.exports.isEnabled = function() {
+	return enabled;
 };
 
 function init(socket) {
@@ -44,4 +53,3 @@ function parse(data) {
 	data = data.split(",");
 	return parseInt(data[0]) + ", " + parseInt(data[1]);
 }
-

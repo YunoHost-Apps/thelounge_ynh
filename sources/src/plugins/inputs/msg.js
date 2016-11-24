@@ -1,31 +1,33 @@
-var _ = require("lodash");
+"use strict";
 
-module.exports = function(network, chan, cmd, args) {
-	if (cmd != "say" && cmd != "msg") {
-		return;
-	}
-	if (args.length === 0 || args[0] === "") {
-		return;
-	}
-	var client = this;
+exports.commands = ["msg", "say"];
+
+exports.input = function(network, chan, cmd, args) {
 	var irc = network.irc;
-	var target = "";
-	if (cmd == "msg") {
-		target = args.shift();
-		if (args.length === 0) {
-			return;
-		}
-	} else {
-		target = chan.name;
+	var target = cmd === "msg" ? args.shift() : chan.name;
+
+	if (args.length === 0 || !target) {
+		return true;
 	}
+
 	var msg = args.join(" ");
-	irc.send(target, msg);
-	var channel = _.find(network.channels, {name: target});
-	if (typeof channel !== "undefined") {
-		irc.emit("message", {
-			from: irc.me,
-			to: channel.name,
-			message: msg
-		});
+
+	if (msg.length === 0) {
+		return true;
 	}
+
+	irc.say(target, msg);
+
+	if (!network.irc.network.cap.isEnabled("echo-message")) {
+		var channel = network.getChannel(target);
+		if (typeof channel !== "undefined") {
+			irc.emit("privmsg", {
+				nick: irc.user.nick,
+				target: channel.name,
+				message: msg
+			});
+		}
+	}
+
+	return true;
 };

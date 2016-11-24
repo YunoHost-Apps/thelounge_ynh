@@ -3,28 +3,28 @@
 set -e
 
 # Retrieve arguments
-domain=$(sudo yunohost app setting shout domain)
-path=$(sudo yunohost app setting shout path)
-is_public=$(sudo yunohost app setting shout is_public)
-final_path=/var/www/shout
+domain=$(sudo yunohost app setting thelounge domain)
+path=$(sudo yunohost app setting thelounge path)
+is_public=$(sudo yunohost app setting thelounge is_public)
+final_path=/var/www/thelounge
 
 # Remove trailing "/" from the path
 path=${path%/}
 
 # HACK: Change the socket.io path in the sources
-sed -i "s@PATHTOCHANGE@$path@g" ../sources/client/js/shout.js
+sed -i "s@PATHTOCHANGE@$path@g" ../sources/client/js/thelounge.js
 
 # Copy files to the right place
-sudo mkdir -p $final_path/.shout/users
+sudo mkdir -p $final_path/.thelounge/users
 sed -i "s@PATHTOCHANGE@$path/@g" ../conf/config.js
-sudo cp ../conf/config.js $final_path/.shout/
+sudo cp ../conf/config.js $final_path/.thelounge/
 sudo cp -a ../sources/* $final_path/
 
 # Set permissions
-sudo chown -hR shout $final_path
+sudo chown -hR thelounge $final_path
 
 # Install dependencies
-sudo su -c "cd $final_path && /usr/bin/npm install --production" shout
+sudo su -c "cd $final_path && /usr/bin/npm install --production" thelounge
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 if [[ "$path" == "" ]]; then
@@ -32,24 +32,24 @@ if [[ "$path" == "" ]]; then
 else
   sed -i "s@LOCATIONTOCHANGE@$path@g" ../conf/nginx.conf
 fi
-sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/shout.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/thelounge.conf
 
 # Copy systemd service
-sudo cp ../conf/systemd.service /etc/systemd/system/shout.service
+sudo cp ../conf/systemd.service /etc/systemd/system/thelounge.service
 
 # Add YunoHost service
-sudo yunohost service add shout -l /var/log/syslog \
+sudo yunohost service add thelounge -l /var/log/syslog \
   || echo "Service already exist"
 
 # Make app public if necessary
-sudo yunohost app setting shout is_public -v "$is_public"
+sudo yunohost app setting thelounge is_public -v "$is_public"
 if [ "$is_public" = "Yes" ];
 then
-    sudo yunohost app setting shout unprotected_uris -v "/"
+    sudo yunohost app setting thelounge unprotected_uris -v "/"
 fi
 
-# Reload Nginx, shout and regenerate SSOwat conf
+# Reload Nginx, thelounge and regenerate SSOwat conf
 sudo service nginx reload
-sudo systemctl enable shout
-sudo systemctl restart shout || sudo systemctl start shout
+sudo systemctl enable thelounge
+sudo systemctl restart thelounge || sudo systemctl start thelounge
 sudo yunohost app ssowatconf
