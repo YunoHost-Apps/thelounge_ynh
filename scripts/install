@@ -136,6 +136,7 @@ npm install $final_path --unsafe-perm
 cd $final_path
 npm install webpack
 npm install webpack-cli
+npm install copy-webpack-plugin
 
 # Build The Lounge
 NODE_ENV=production npm run build
