@@ -113,15 +113,17 @@ ynh_system_user_create $app
 ynh_add_systemd_config
 
 #=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+cp -a ../conf/config.js $config_path
+
+#=================================================
 # INSTALL THE LOUNGE
 #=================================================
 npm -g install $final_path
-
-
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-cp -a ../conf/config.js $config_path
+cd $final_path
+NODE_ENV=production npm run build
 
 #=================================================
 # STORE THE CHECKSUM OF THE CONFIG FILE
