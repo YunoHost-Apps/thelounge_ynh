@@ -6,6 +6,9 @@ Type=simple
 ExecStart=/var/www/thelounge/index.js start --home /home/yunohost.app/__APP__/
 User=__APP__
 Group=__APP__
+ExecStartPre=__NODEJS__
+Environment="PATH=__ENV_PATH__"
+ExecStart=__FINALPATH__/index.js start --home /home/yunohost.app/__APP__/
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
