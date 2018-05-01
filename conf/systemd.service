@@ -3,7 +3,6 @@ Description=The Lounge IRC client
 After=__APP__.service
 
 Type=simple
-ExecStart=/var/www/thelounge/index.js start --home /home/yunohost.app/__APP__/
 User=__APP__
 Group=__APP__
 ExecStartPre=__NODEJS__
