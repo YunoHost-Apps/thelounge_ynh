@@ -111,6 +111,9 @@ ynh_system_user_create $app
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
+ynh_replace_string "__NODEJS__" "$nodejs_use_version" "/etc/systemd/system/$app.service"
+ynh_replace_string "__ENV_PATH__" "$PATH" "/etc/systemd/system/$app.service"
+ynh_replace_string "__NODE__" "$nodejs_path" "/etc/systemd/system/$app.service"
 
 #=================================================
 # MODIFY A CONFIG FILE
@@ -121,6 +124,7 @@ cp -a ../conf/config.js $config_path
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
+ynh_use_nodejs
 npm -g install $final_path
 
 # Install webpack
