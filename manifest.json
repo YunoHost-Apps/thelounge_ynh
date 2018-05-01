@@ -6,7 +6,7 @@
         "en": "The Lounge is a web IRC client.",
         "fr": "The Lounge est un client web IRC."
     },
-    "version": "1.0",
+    "version": "2.7.1~ynh1",
     "url": "https://thelounge.chat/",
     "license": "free",
     "maintainer": {
@@ -19,7 +19,7 @@
     	"email": "beudbeud@beudibox.fr"
     },
     "requirements": {
-        "yunohost": ">= 2.7.10"
+        "yunohost": ">= 2.7.9"
     },
     "multi_instance": true,
     "services": [
