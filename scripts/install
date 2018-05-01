@@ -137,8 +137,8 @@ npm install $final_path --unsafe-perm
 #npm -g install webpack-cli
 
 # Build The Lounge
-#cd $final_path
-#NODE_ENV=production npm run build config.js
+cd $final_path
+NODE_ENV=production npm run build
 
 #=================================================
 # STORE THE CHECKSUM OF THE CONFIG FILE
