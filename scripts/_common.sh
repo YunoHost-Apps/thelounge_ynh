@@ -50,7 +50,7 @@ ynh_use_nodejs () {
 
 ynh_install_nodejs () {
 	# Use n, https://github.com/tj/n to manage the nodejs versions
-	nodejs_version="6"
+	nodejs_version="$nodejs_version"
 	local n_install_script="https://git.io/n-install"
 
 	# Create $n_install_dir
