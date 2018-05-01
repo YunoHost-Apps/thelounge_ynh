@@ -2,6 +2,7 @@
 Description=The Lounge IRC client
 After=network.target
 
+[Service]
 Type=simple
 User=__APP__
 Group=__APP__
