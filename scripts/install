@@ -122,6 +122,7 @@ cp -a ../conf/config.js $config_path
 # INSTALL THE LOUNGE
 #=================================================
 npm -g install $final_path
+npm -g install webpack
 cd $final_path
 NODE_ENV=production npm run build index.js
 ln -s $final_path/index.js /usr/bin/thelounge/
