@@ -1,17 +1,19 @@
 {
     "name": "The Lounge",
     "id": "thelounge",
+    "packaging_format": 1,
     "description": {
-        "en": "Web IRC client",
-        "fr": "Client Web IRC"
+        "en": "The Lounge is a web IRC client.",
+        "fr": "The Lounge est un client web IRC."
     },
+    "version": "1.0",
+    "url": "https://thelounge.chat/",
+    "license": "free",
     "maintainer": {
-        "name": "beudbeud",
-        "email": "beudbeud@beudibox.fr"
+        "name": "rafi59",
+        "email": "rafi59_dev@srvmaison.fr.nf",
+        "url": "http://blog.rafi59.codelib.re/"
     },
-
-    "multi_instance": "false",
-
     "previous_maintainers": {
     	"name": "beudbeud",
     	"email": "beudbeud@beudibox.fr"
@@ -24,17 +26,16 @@
         "nginx",
         "mysql"
     ],
-
     "arguments": {
         "install" : [
             {
                 "name": "domain",
                 "type": "domain",
                 "ask": {
-                    "en": "Choose a domain for The Lounge",
-                    "fr": "Choisissez un domaine pour The Lounge"
+                    "en": "Choose a domain name for The Lounge",
+                    "fr": "Choisissez un nom de domaine pour The Lounge"
                 },
-                "example": "domain.org"
+                "example": "example.com"
             },
             {
                 "name": "path",
@@ -48,13 +49,14 @@
             },
             {
                 "name": "is_public",
+                "type": "boolean",
                 "ask": {
-                    "en": "Is it a public instance ?",
-                    "fr": "Est-ce une instance publique ?"
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
                 },
-                "choices": ["Yes", "No"],
-                "default": "No"
+                "default": true
             }
+                     
         ]
     }
 }

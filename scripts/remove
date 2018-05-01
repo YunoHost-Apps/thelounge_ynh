@@ -1,16 +1,88 @@
 #!/bin/bash
 
-domain=$(sudo yunohost app setting thelounge domain)
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
 
-sudo systemctl stop thelounge
-sudo systemctl disable thelounge
-sudo yunohost service remove thelounge
+source _common.sh
+source /usr/share/yunohost/helpers
 
-sudo rm -rf /var/www/thelounge
-sudo rm -f /etc/nginx/conf.d/$domain.d/thelounge.conf
-sudo rm -f /etc/systemd/system/thelounge.service
+#=================================================
+# LOAD SETTINGS
+#=================================================
 
-sudo userdel thelounge
+app=$YNH_APP_INSTANCE_NAME
 
-sudo service nginx reload
-sudo yunohost app ssowatconf
+domain=$(ynh_app_setting_get $app domain)
+port=$(ynh_app_setting_get $app port)
+final_path=$(ynh_app_setting_get $app final_path)
+
+#=================================================
+# STANDARD REMOVE
+#=================================================
+# STOP AND REMOVE SERVICE
+#=================================================
+
+# Remove the dedicated systemd config
+ynh_remove_systemd_config
+
+#=================================================
+# REMOVE SERVICE FROM ADMIN PANEL
+#=================================================
+
+if yunohost service status | grep -q $app
+then
+	echo "Remove $app service"
+	yunohost service remove $app
+fi
+
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
+
+# Remove the app directory securely
+ynh_secure_remove "$final_path"
+
+#=================================================
+# REMOVE NGINX CONFIGURATION
+#=================================================
+
+# Remove the dedicated nginx config
+ynh_remove_nginx_config
+
+
+#=================================================
+# REMOVE LOGROTATE CONFIGURATION
+#=================================================
+
+# Remove the app-specific logrotate config
+ynh_remove_logrotate
+
+#=================================================
+# CLOSE A PORT
+#=================================================
+
+if yunohost firewall list | grep -q "\- $port$"
+then
+	echo "Close port $port"
+	yunohost firewall disallow TCP $port 2>&1
+fi
+
+#=================================================
+# SPECIFIC REMOVE
+#=================================================
+
+ynh_use_nodejs
+npm uninstall $app
+ynh_remove_nodejs
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+# REMOVE DEDICATED USER
+#=================================================
+
+# Delete a system user
+ynh_system_user_delete $app

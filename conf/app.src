@@ -1,0 +1,6 @@
+SOURCE_URL=https://github.com/thelounge/thelounge/archive/v2.7.1.tar.gz
+SOURCE_SUM=e7b66fe1dfef4583668ccf36214184f767fa381076ca21b09479b6e59251f81d
+SOURCE_SUM_PRG=sha256sum
+ARCH_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=

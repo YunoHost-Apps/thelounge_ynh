@@ -1,11 +1,17 @@
+[Unit]
+Description=The Lounge IRC client
+After=__APP__.service
+
 [Service]
-ExecStart=/usr/bin/node /var/www/thelounge/index.js
-Restart=always
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=thelounge
-User=thelounge
-Environment=NODE_ENV=production
+Type=simple
+ExecStart=/usr/bin/thelounge start --home /home/yunohost.app/__APP__/
+User=__APP__
+Group=__APP__
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
+
