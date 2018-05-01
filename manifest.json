@@ -9,7 +9,22 @@
         "name": "beudbeud",
         "email": "beudbeud@beudibox.fr"
     },
+<<<<<<< HEAD
     "multi_instance": "false",
+=======
+    "previous_maintainers": {
+    	"name": "beudbeud",
+    	"email": "beudbeud@beudibox.fr"
+    },
+    "requirements": {
+        "yunohost": ">= 2.7.10"
+    },
+    "multi_instance": true,
+    "services": [
+        "nginx",
+        "mysql"
+    ],
+>>>>>>> [enh] Made this app working
     "arguments": {
         "install" : [
             {
