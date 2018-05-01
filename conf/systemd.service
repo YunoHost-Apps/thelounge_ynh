@@ -5,9 +5,10 @@ After=__APP__.service
 Type=simple
 User=__APP__
 Group=__APP__
+WorkingDirectory=__FINALPATH__
 ExecStartPre=__NODEJS__
 Environment="PATH=__ENV_PATH__"
-ExecStart=__FINALPATH__/index.js start --home /home/yunohost.app/__APP__/
+ExecStart=__NODE__ index.js start --home /home/yunohost.app/__APP__/
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
