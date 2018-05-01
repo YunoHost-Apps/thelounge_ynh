@@ -9,9 +9,9 @@
         "name": "beudbeud",
         "email": "beudbeud@beudibox.fr"
     },
-<<<<<<< HEAD
+
     "multi_instance": "false",
-=======
+
     "previous_maintainers": {
     	"name": "beudbeud",
     	"email": "beudbeud@beudibox.fr"
@@ -24,7 +24,7 @@
         "nginx",
         "mysql"
     ],
->>>>>>> [enh] Made this app working
+
     "arguments": {
         "install" : [
             {
