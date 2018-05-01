@@ -6,7 +6,6 @@ Type=simple
 ExecStart=/var/www/thelounge/index.js start --home /home/yunohost.app/__APP__/
 User=__APP__
 Group=__APP__
-Restart=always
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
