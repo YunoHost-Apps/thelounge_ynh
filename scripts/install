@@ -110,12 +110,10 @@ ynh_system_user_create $app
 #=================================================
 
 # Create a dedicated systemd config
+ynh_replace_string "__NODEJS__" "$nodejs_use_version" "../conf/systemd.service"
+ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
 ynh_add_systemd_config
-ynh_replace_string "__NODEJS__" "$nodejs_use_version" "/etc/systemd/system/$app.service"
-ynh_replace_string "__ENV_PATH__" "$PATH" "/etc/systemd/system/$app.service"
-ynh_replace_string "__NODE__" "$nodejs_path" "/etc/systemd/system/$app.service"
-cat /etc/systemd/system/$app.service
-systemctl daemon-reload
+
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
