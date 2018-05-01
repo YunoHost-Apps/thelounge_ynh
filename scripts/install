@@ -133,11 +133,11 @@ cp -a ../conf/config.js $config_path
 npm install $final_path --unsafe-perm
 
 # Install webpack
-#npm -g install webpack
-#npm -g install webpack-cli
+cd $final_path
+npm install webpack
+npm install webpack-cli
 
 # Build The Lounge
-cd $final_path
 NODE_ENV=production npm run build
 
 #=================================================
