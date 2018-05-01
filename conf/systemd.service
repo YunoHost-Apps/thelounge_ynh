@@ -8,7 +8,7 @@ Group=__APP__
 WorkingDirectory=__FINALPATH__
 ExecStartPre=__NODEJS__
 Environment="PATH=__ENV_PATH__"
-ExecStart=__NODE__ index.js start --home /home/yunohost.app/__APP__/
+ExecStart=__NODE__ /var/www/thelounge/index.js start --home /home/yunohost.app/__APP__/
 Restart=always
 Restart=on-failure
 RestartSec=5
