@@ -22,7 +22,7 @@ Overview
 The Lounge is a self hosted IRC client.
 
 
-**Shipped version:** Latest stable version
+**Shipped version:** 2.7.1
 
 YunoHost specific features
 --------------------------
