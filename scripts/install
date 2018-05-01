@@ -126,7 +126,7 @@ cp -a ../conf/config.js $config_path
 # INSTALL THE LOUNGE
 #=================================================
 ynh_use_nodejs
-npm -g install $final_path
+npm -g install  $final_path --unsafe-perm
 
 # Install webpack
 #npm -g install webpack
