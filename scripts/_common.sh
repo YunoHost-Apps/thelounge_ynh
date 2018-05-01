@@ -1,3 +1,7 @@
+#===========
+#NODEJS
+#===========
+
 n_install_dir="/opt/node_n"
 node_version_path="$n_install_dir/n/versions/node"
 # N_PREFIX is the directory of n, it needs to be loaded as a environment variable.
