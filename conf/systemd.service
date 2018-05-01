@@ -6,10 +6,7 @@ After=network.target
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__
-ExecStartPre=__NODEJS__
-Environment="PATH=__ENV_PATH__"
-ExecStart=__NODE__ index.js start --home /home/yunohost.app/__APP__/
+ExecStart=/opt/node_n/bin/thelounge start --home /home/yunohost.app/__APP__/
 Restart=always
 
 [Install]
