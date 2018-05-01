@@ -123,7 +123,8 @@ cp -a ../conf/config.js $config_path
 #=================================================
 npm -g install $final_path
 cd $final_path
-NODE_ENV=production npm run build
+NODE_ENV=production npm run build index.js
+ln -s $final_path/index.js /usr/bin/thelounge/
 
 #=================================================
 # STORE THE CHECKSUM OF THE CONFIG FILE
