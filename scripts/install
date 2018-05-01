@@ -129,11 +129,10 @@ cp -a ../conf/config.js $config_path
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
-
-npm install $final_path --unsafe-perm
+cd $final_path
+npm install --unsafe-perm
 
 # Install webpack
-cd $final_path
 npm install webpack
 npm install webpack-cli
 npm install copy-webpack-plugin
