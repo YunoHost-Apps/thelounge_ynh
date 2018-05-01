@@ -1,6 +1,6 @@
 [Unit]
 Description=The Lounge IRC client
-After=__APP__.service
+After=network.target
 
 Type=simple
 User=__APP__
@@ -9,10 +9,7 @@ WorkingDirectory=__FINALPATH__
 ExecStartPre=__NODEJS__
 Environment="PATH=__ENV_PATH__"
 ExecStart=__NODE__ index.js start --home /home/yunohost.app/__APP__/
-Restart=on-failure
-RestartSec=5
-StartLimitInterval=60s
-StartLimitBurst=3
+Restart=always
 
 [Install]
 WantedBy=default.target
