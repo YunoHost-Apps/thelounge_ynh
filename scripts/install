@@ -133,7 +133,7 @@ npm -g install webpack-cli
 
 # Build The Lounge
 cd $final_path
-NODE_ENV=production npm run build
+NODE_ENV=production npm run build config.js
 
 #=================================================
 # STORE THE CHECKSUM OF THE CONFIG FILE
