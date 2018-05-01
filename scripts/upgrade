@@ -70,18 +70,6 @@ path_url=$(ynh_normalize_url_path $path_url)
 #=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-
-# Upgrade Nodejs
-ynh_install_nodejs
-
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source $final_path
-ynh_use_nodejs
-npm -g upgrade thelounge $final_path
-
-
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -97,13 +85,53 @@ ynh_add_nginx_config
 ynh_system_user_create $app
 
 #=================================================
+# SETUP SYSTEMD
+#=================================================
+
+# Create a dedicated systemd config
+ynh_use_nodejs
+ynh_replace_string "__NODEJS__" "$nodejs_version" "../conf/systemd.service"
+ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
+ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
+ynh_add_systemd_config
+cat /etc/systemd/system/$app.service
+echo $nodejs_version
+echo $PATH
+echo $nodejs_path
+
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+cp -a ../conf/config.js $config_path
+
+#=================================================
+# UPGRADE THE LOUNGE
+#=================================================
+
+# Upgrade Nodejs
+ynh_install_nodejs
+
+ynh_setup_source $final_path
+cd $final_path
+npm install --unsafe-perm
+
+# Install webpack
+npm install webpack
+npm install webpack-cli
+npm install copy-webpack-plugin
+
+# Build The Lounge
+NODE_ENV=production npm run build
+
+#=================================================
 # SPECIFIC UPGRADE
 #=================================================
 # ...
 #=================================================
 
 # Verify the checksum and backup the file if it's different
-ynh_backup_if_checksum_is_different "$final_path/CONFIG_FILE"
+ynh_backup_if_checksum_is_different "$config_path/config.js"
 # Recalculate and store the config file checksum into the app settings
 ynh_store_file_checksum "$config_path/config.js"
 
@@ -113,13 +141,6 @@ ynh_store_file_checksum "$config_path/config.js"
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
 
 #=================================================
 # GENERIC FINALIZATION
