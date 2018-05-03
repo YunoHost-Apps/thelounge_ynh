@@ -8,7 +8,7 @@
     },
     "version": "2.7.1~ynh1",
     "url": "https://thelounge.chat/",
-    "license": "free",
+    "license": "MIT",
     "maintainer": {
         "name": "rafi59",
         "email": "rafi59_dev@srvmaison.fr.nf",

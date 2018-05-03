@@ -85,6 +85,13 @@ ynh_add_nginx_config
 ynh_system_user_create $app
 
 #=================================================
+# UPGRADE NODEJS
+#=================================================
+
+systemctl stop thelounge
+ynh_cron_upgrade_node
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 
@@ -109,17 +116,15 @@ cp -a ../conf/config.js $config_path
 # UPGRADE THE LOUNGE
 #=================================================
 
-# Upgrade Nodejs
-ynh_install_nodejs
 
 ynh_setup_source $final_path
 cd $final_path
 npm install --unsafe-perm
 
 # Install webpack
-npm install webpack
-npm install webpack-cli
-npm install copy-webpack-plugin
+npm upgrade webpack
+npm upgrade webpack-cli
+npm upgrade copy-webpack-plugin
 
 # Build The Lounge
 NODE_ENV=production npm run build
@@ -171,5 +176,6 @@ fi
 # RELOAD NGINX
 #=================================================
 
-systemctl restart thelounge
+systemctl start thelounge
+sleep 30
 systemctl reload nginx
