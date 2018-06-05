@@ -1,0 +1,6 @@
+test:
+  script:
+  - apt-get update
+  - apt-get install python
+  - git clone https://github.com/YunoHost/package_linter
+  - python package_linter/package_linter.py .
