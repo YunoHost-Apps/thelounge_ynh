@@ -3,4 +3,5 @@ test:
   - apt-get update
   - apt-get install -yy python git
   - git clone https://github.com/YunoHost/package_linter
+  - pip install report
   - python package_linter/package_linter.py .
