@@ -159,7 +159,7 @@ module.exports = {
 	// @type     array
 	// @default  ["sqlite", "text"]
 	//
-	messageStorage: ["sqlite", "text"],
+	messageStorage: ["sqlite"],
 
 	//
 	// Log settings
