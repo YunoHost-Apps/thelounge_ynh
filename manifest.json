@@ -6,20 +6,20 @@
         "en": "The Lounge is a web IRC client.",
         "fr": "The Lounge est un client web IRC."
     },
-    "version": "2.7.1~ynh1",
+    "version": "3.0.0~ynh1",
     "url": "https://thelounge.chat/",
     "license": "MIT",
     "maintainer": {
         "name": "rafi59",
         "email": "rafi59_dev@srvmaison.fr.nf",
-        "url": "http://blog.rafi59.codelib.re/"
+        "url": ""
     },
     "previous_maintainers": {
     	"name": "beudbeud",
     	"email": "beudbeud@beudibox.fr"
     },
     "requirements": {
-        "yunohost": ">= 2.7.9"
+        "yunohost": ">= 3.3.3"
     },
     "multi_instance": true,
     "services": [

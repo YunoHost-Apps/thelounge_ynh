@@ -9,7 +9,8 @@ Group=__APP__
 ExecStartPre=__NODEJS__
 WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
-ExecStart=__NODE__/node index.js start --home /home/yunohost.app/__APP__/
+Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
+ExecStart=__NODE__/node index.js start
 Restart=always
 
 [Install]
