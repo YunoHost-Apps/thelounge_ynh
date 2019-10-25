@@ -52,7 +52,7 @@ ynh_script_progression --message="Validating installation parameters..." --time 
 final_path=/var/www/$app
 config_path=/home/yunohost.app/$app/
 test ! -e "$final_path" || ynh_die "This path already contains a folder"
-ynh_app_setting_set --app=$app --key=home_path --value=$home_path
+ynh_app_setting_set --app=$app --key=config_path --value=$config_path
 
 # Normalize the url path syntax
 path_url=$(ynh_normalize_url_path $path_url)
