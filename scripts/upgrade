@@ -116,6 +116,7 @@ ynh_cron_upgrade_node
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
+ynh_use_nodejs
 pushd $final_path
 npm install --unsafe-perm
 

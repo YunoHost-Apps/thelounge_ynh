@@ -62,14 +62,6 @@ ynh_script_progression --message="Recreating the dedicated system user..." --tim
 ynh_system_user_create --username=$app
 
 #=================================================
-# RESTORE USER RIGHTS
-#=================================================
-
-# Restore permissions to app files
-chown -R $app: $final_path
-chown -R $app: $config_path
-
-#=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # REINSTALL DEPENDENCIES
@@ -111,6 +103,14 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 #=================================================
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
+
+# Restore permissions to app files
+chown -R $app: $final_path
+chown -R $app: $config_path
 
 #=================================================
 # GENERIC FINALIZATION
