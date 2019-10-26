@@ -67,7 +67,7 @@ module.exports = {
 	// @type     boolean
 	// @default  false
 	//
-	prefetch: false,
+	prefetch: true,
 
 	//
 	// Store and proxy prefetched images and thumbnails.
@@ -84,7 +84,7 @@ module.exports = {
 	// @type     boolean
 	// @default  false
 	//
-	prefetchStorage: false,
+	prefetchStorage: true,
 
 	//
 	// Prefetch URLs Image Preview size limit
