@@ -109,7 +109,7 @@ fi
 #=================================================
 ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
 
-ynh_cron_upgrade_node
+ynh_install_nodejs $nodejs_version
 
 #=================================================
 # UPGRADE THE LOUNGE
