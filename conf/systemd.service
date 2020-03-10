@@ -6,7 +6,6 @@ After=network.target
 Type=simple
 User=__APP__
 Group=__APP__
-ExecStartPre=__NODEJS__
 WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
 Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
