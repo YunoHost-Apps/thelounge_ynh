@@ -6,7 +6,7 @@
         "en": "The Lounge is a web IRC client.",
         "fr": "The Lounge est un client web IRC."
     },
-    "version": "3.3.0~ynh1",
+    "version": "4.1.0~ynh1",
     "url": "https://thelounge.chat/",
     "license": "MIT",
     "maintainer": {
