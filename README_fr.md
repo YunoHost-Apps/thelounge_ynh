@@ -28,14 +28,13 @@ Comment configurer cette application: via le panneau d'administration.
 ## Documentation
 
  * Documentation officielle: https://thelounge.chat/docs
- * Documentation YunoHost: Si une documentation spécifique est nécessaire, n'hésitez pas à contribuer.
 
 ## Caractéristiques spécifiques YunoHost
 
 #### Support multi-utilisateurs
 
-L'authentification LDAP et HTTP est-elle prise en charge? **Oui**
-L'application peut-elle être utilisée par plusieurs utilisateurs? **Oui**
+* L'authentification LDAP est-elle prise en charge? **Oui**
+* L'application peut-elle être utilisée par plusieurs utilisateurs? **Oui**
 
 #### Architectures supportées
 
