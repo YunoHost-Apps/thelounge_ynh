@@ -52,7 +52,7 @@ Comment configurer cette application: via le panneau d'administration.
 
 ## Informations pour les développeurs
 
-Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/REPLACEBYYOURAPP_ynh/tree/testing).
+Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
 ```
