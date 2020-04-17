@@ -100,7 +100,7 @@ yunohost service add $app --log "/var/log/$app/$app.log"
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --time --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line-match="[INFO] Available at http://:::9000/ in private mode"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="[INFO] Available at http://:::9000/ in private mode"
 
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
