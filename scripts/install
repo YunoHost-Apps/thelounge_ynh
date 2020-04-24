@@ -13,6 +13,10 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+ynh_clean_check_starting
+}
+
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -190,7 +194,7 @@ ynh_script_progression --message="Starting a systemd service..."
 ###		- And the section "STOP SYSTEMD SERVICE" and "START SYSTEMD SERVICE" in the change_url script
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="[INFO] Available at http://:::9000/ in private mode"
 
 #=================================================
 # SETUP SSOWAT

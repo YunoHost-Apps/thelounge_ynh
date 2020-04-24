@@ -17,7 +17,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 - **Responsive interface.** The client works smoothly on every desktop, smartphone and tablet.
 - **Synchronized experience.** Always resume where you left off no matter what device.
 
-**Shipped version:** 3.3.0
+**Shipped version:** 4.1.0
 
 ## Screenshots
 
