@@ -19,7 +19,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-config_path=$(ynh_app_setting_get --app=$app --key=config_path --value=$config_path)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -47,7 +47,7 @@ ynh_remove_systemd_config
 #=================================================
 ynh_script_progression --message="Removing dependencies..."
 
-# Remove metapackage and its dependencies
+# Remove NodeJS
 ynh_remove_nodejs
 
 #=================================================

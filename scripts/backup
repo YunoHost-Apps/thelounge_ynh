@@ -19,17 +19,17 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_print_info --message="Backing up $app..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-final_path=$(ynh_app_setting_get $app final_path)
-config_path=$(ynh_app_setting_get $app config_path)
-domain=$(ynh_app_setting_get $app domain)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
 
 #=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
-ynh_print_info --message="Backing up $app..."
 
 ynh_backup --src_path="$final_path"
 

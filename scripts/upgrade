@@ -16,12 +16,12 @@ ynh_script_progression --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get $app domain)
-path_url=$(ynh_app_setting_get $app path)
-is_public=$(ynh_app_setting_get $app is_public)
-final_path=$(ynh_app_setting_get $app final_path)
-config_path=$(ynh_app_setting_get $app config_path)
-port=$(ynh_app_setting_get $app port)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+is_public=$(ynh_app_setting_get --app=$app --key=is_public)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
+port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
 # CHECK VERSION
@@ -83,7 +83,7 @@ path_url=$(ynh_normalize_url_path $path_url)
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="stop" --log_path="systemd"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -125,7 +125,7 @@ ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ st
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	pushd $final_path
+	pushd "$final_path"
 
 	yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
 
@@ -160,6 +160,8 @@ ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path
 
 ynh_add_systemd_config
 
+yunohost service add "$app" --description "Self-hosted web IRC client" --log "/var/log/$app/$app.log"
+
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
@@ -192,17 +194,11 @@ chown -R "$app": "$final_path"
 chown -R "$app": "$config_path"
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
-yunohost service add "$app" --description "Self-hosted web IRC client" --log "/var/log/$app/$app.log"
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # RELOAD NGINX

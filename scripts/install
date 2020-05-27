@@ -36,9 +36,8 @@ ynh_script_progression --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 config_path=/home/yunohost.app/$app/
-test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
-ynh_app_setting_set --app="$app" --key="config_path" --value="$config_path"
+test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
 # Normalize the url path syntax
 path_url=$(ynh_normalize_url_path $path_url)
@@ -50,17 +49,6 @@ ynh_webpath_available "$domain" "$path_url"
 ynh_webpath_register "$app" "$domain" "$path_url"
 
 #=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-ynh_script_progression --message="Storing installation settings..."
-
-ynh_app_setting_set --app="$app" --key="domain" --value="$domain"
-ynh_app_setting_set --app="$app" --key="path" --value="$path_url"
-ynh_app_setting_set --app="$app" --key="is_public" --value="$is_public"
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
 # FIND AND OPEN A PORT
 #=================================================
 ynh_script_progression --message="Configuring firewall..."
@@ -69,6 +57,17 @@ ynh_script_progression --message="Configuring firewall..."
 port=$(ynh_find_port 9000)
 
 ynh_app_setting_set --app="$app" --key="port" --value="$port"
+
+#=================================================
+# STORE SETTINGS FROM MANIFEST
+#=================================================
+ynh_script_progression --message="Storing installation settings..."
+
+ynh_app_setting_set --app="$app" --key="domain"      --value="$domain"
+ynh_app_setting_set --app="$app" --key="path"        --value="$path_url"
+ynh_app_setting_set --app="$app" --key="is_public"   --value="$is_public"
+ynh_app_setting_set --app="$app" --key="final_path"  --value="$final_path"
+ynh_app_setting_set --app="$app" --key="config_path" --value="$config_path"
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -81,18 +80,14 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version="$nodejs_version"
 # Install Yarn
 ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
 
-#==============================================
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..."
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+mkdir -p "$final_path"
 
-mkdir -p $final_path
-
-mkdir -p $config_path
+mkdir -p "$config_path"
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$final_path"
@@ -106,24 +101,18 @@ ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_f
 
 cp -a ../conf/config.js "$config_path"
 
+ynh_store_file_checksum "$config_path/config.js"
+
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
 ynh_script_progression --message="Installing The Lounge..."
 
-pushd $final_path
+pushd "$final_path"
 
 yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
 
 popd
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring nginx web server..."
-
-# Create a dedicated nginx config
-ynh_add_nginx_config
 
 #=================================================
 # CREATE DEDICATED USER
@@ -132,6 +121,14 @@ ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create "$app"
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Configuring nginx web server..."
+
+# Create a dedicated nginx config
+ynh_add_nginx_config
 
 #=================================================
 # SETUP SYSTEMD
@@ -145,12 +142,7 @@ ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path
 
 ynh_add_systemd_config
 
-#=================================================
-# STORE THE CHECKSUM OF THE CONFIG FILE
-#=================================================
-
-# Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum "$config_path/config.js"
+yunohost service add "$app" --description "Self-hosted web IRC client" --log "/var/log/$app/$app.log"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -171,18 +163,12 @@ ynh_script_progression --message="Configuring log rotation..."
 ynh_use_logrotate
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
-yunohost service add "$app" --description "Self-hosted web IRC client" --log "/var/log/$app/$app.log"
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # SETUP SSOWAT
@@ -190,11 +176,14 @@ ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$
 ynh_script_progression --message="Configuring SSOwat..."
 
 # Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway.
-	ynh_app_setting_set --app="$app" --key=unprotected_uris --value="/"
-fi
+#if [ $is_public -eq 1 ]
+#then
+#	# unprotected_uris allows SSO credentials to be passed anyway.
+#	ynh_app_setting_set --app="$app" --key=unprotected_uris --value="/"
+#fi
+
+# Make app public if necessary or protect it
+[ $is_public -eq 0 ] || ynh_permission_update --permission "main" --add "visitors"
 
 #=================================================
 # RELOAD NGINX
