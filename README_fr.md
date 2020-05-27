@@ -23,11 +23,12 @@ The Lounge est un client Web IRC auto-hébergé.
 
 ## Configuration
 
-Comment configurer cette application: via le panneau d’administration.
+Comment configurer cette application : via le panneau d’administration.
 
 ## Documentation
 
  * Documentation officielle : https://thelounge.chat/docs
+ * Documentation YunoHost : https://yunohost.org/#/app_thelounge_fr
 
 ## Caractéristiques spécifiques YunoHost
 
