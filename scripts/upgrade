@@ -12,7 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --time --weight=1
+ynh_script_progression --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -27,18 +27,12 @@ port=$(ynh_app_setting_get $app port)
 # CHECK VERSION
 #=================================================
 
-### This helper will compare the version of the currently installed app and the version of the upstream package.
-### $upgrade_type can have 2 different values
-### - UPGRADE_APP if the upstream app version has changed
-### - UPGRADE_PACKAGE if only the YunoHost package has changed
-### ynh_check_app_version_changed will stop the upgrade if the app is up to date.
-### UPGRADE_APP should be used to upgrade the core app only if there's an upgrade to do.
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..." --time --weight=1
+ynh_script_progression --message="Ensuring downward compatibility..."
 
 # Fix is_public as a boolean value
 if [ "$is_public" = "Yes" ]; then
@@ -61,16 +55,14 @@ if [ -z "$config_path" ]; then
 	ynh_app_setting_set --app=$app --key=config_path --value=$config_path
 fi
 
-
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..."
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
 ynh_clean_setup () {
-	ynh_clean_check_starting
 	# restore it if the upgrade fails
 	ynh_restore_upgradebackup
 }
@@ -89,9 +81,9 @@ path_url=$(ynh_normalize_url_path $path_url)
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --time --weight=1
+ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -99,18 +91,33 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..." --time --weight=1
+	ynh_script_progression --message="Upgrading source files..."
+
+	ynh_secure_remove --file="$final_path"
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$final_path"
 fi
 
 #=================================================
-# UPGRADE NODEJS
+# COPY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
 
-ynh_install_nodejs $nodejs_version
+# Main config File
+ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/config.js"
+
+cp -a ../conf/config.js "$config_path"
+
+#=================================================
+# UPGRADE NODEJS AND YARN
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..."
+
+# Install Nodejs
+ynh_exec_warn_less ynh_install_nodejs --nodejs_version="$nodejs_version"
+
+# Install Yarn
+ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
 
 #=================================================
 # UPGRADE THE LOUNGE
@@ -118,25 +125,17 @@ ynh_install_nodejs $nodejs_version
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-ynh_use_nodejs
-pushd $final_path
-npm install --unsafe-perm
+	pushd $final_path
 
-# Install webpack
-npm upgrade webpack
-npm upgrade webpack-cli
-npm upgrade copy-webpack-plugin
+	yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
 
-# Build The Lounge
-NODE_ENV=production npm run build
-
-popd
+	popd
 fi
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading nginx web server configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading nginx web server configuration..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -144,35 +143,22 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --time --weight=1
+ynh_script_progression --message="Making sure dedicated system user exists..."
 
 # Create a system user
-ynh_system_user_create --username=$app
+ynh_system_user_create --username="$app"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
+ynh_script_progression --message="Configuring a systemd service..."
 
-# Create a dedicated systemd config
-ynh_use_nodejs
-ynh_replace_string "__NODEJS__" "$nodejs_version" "../conf/systemd.service"
-ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
-ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
+ynh_replace_string --match_string="__APP__"       --replace_string="$app"         --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__ENV_PATH__"  --replace_string="$PATH"        --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
+
 ynh_add_systemd_config
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --time --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
-
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# ...
-#=================================================
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -181,15 +167,16 @@ ynh_system_user_create --username=$app
 ### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
 ### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
 ynh_backup_if_checksum_is_different --file="$config_path/config.js"
+
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$config_path/config.js"
 
-cp -a ../conf/config.js $config_path
+cp -a ../conf/config.js "$config_path"
 
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading logrotate configuration..."
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
@@ -201,32 +188,26 @@ ynh_use_logrotate --non-append
 #=================================================
 
 # Set right permissions for curl installation
-chown -R $app: $final_path
-chown -R $app: $config_path
+chown -R "$app": "$final_path"
+chown -R "$app": "$config_path"
 
 #=================================================
-# SETUP SSOWAT
+# ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..." --time --weight=1
 
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
-fi
+yunohost service add "$app" --description "Self-hosted web IRC client" --log "/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log" --line_match="[INFO] Available at http://:::9000/ in private mode"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --time --weight=1
+ynh_script_progression --message="Reloading nginx web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -234,4 +215,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --time --last
+ynh_script_progression --message="Upgrade of $app completed" --last
