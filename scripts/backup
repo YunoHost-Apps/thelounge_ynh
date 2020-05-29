@@ -31,7 +31,7 @@ domain=$(ynh_app_setting_get --app=$app --key=domain)
 # BACKUP THE APP MAIN DIR
 #=================================================
 
-ynh_backup --src_path="$final_path"
+ynh_backup --src_path=$final_path
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
@@ -55,7 +55,7 @@ ynh_backup --src_path="/etc/systemd/system/$app.service"
 # BACKUP CONFIG
 #=================================================
 
-ynh_backup --src_path="$config_path"
+ynh_backup --src_path=$config_path
 
 #=================================================
 # END OF SCRIPT
