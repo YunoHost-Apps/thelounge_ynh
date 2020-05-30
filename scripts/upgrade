@@ -101,6 +101,17 @@ then
 fi
 
 #=================================================
+# STORE THE CONFIG FILE CHECKSUM
+#=================================================
+
+### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
+### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
+ynh_backup_if_checksum_is_different --file="$config_path/config.js"
+
+# Recalculate and store the checksum of the file for the next upgrade.
+ynh_store_file_checksum --file="$config_path/config.js"
+
+#=================================================
 # COPY A CONFIG FILE
 #=================================================
 
@@ -127,7 +138,8 @@ ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ st
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	pushd $final_path
-
+	
+	ynh_use_nodejs
 	yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
 
 	popd
@@ -177,14 +189,6 @@ ynh_store_file_checksum --file="$config_path/config.js"
 cp -a ../conf/config.js "$config_path"
 
 #=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
@@ -193,6 +197,18 @@ ynh_use_logrotate --non-append
 # Set right permissions for curl installation
 chown -R $app: $final_path
 chown -R $app: $config_path
+
+#=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Upgrading SSOwat configuration..." --time --weight=1
+
+# Make app public if necessary
+if [ $is_public -eq 1 ]
+then
+	# unprotected_uris allows SSO credentials to be passed anyway
+	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
+fi
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -212,4 +228,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression --message="Upgrade of $app completed"

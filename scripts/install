@@ -110,8 +110,9 @@ ynh_script_progression --message="Installing The Lounge..."
 
 pushd $final_path
 
-yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
-
+	ynh_use_nodejs
+	yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
+	
 popd
 
 #=================================================
@@ -155,14 +156,6 @@ chown -R $app: $final_path
 chown -R $app: $config_path
 
 #=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..."
-
-# Use logrotate to manage application logfile(s)
-ynh_use_logrotate
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
@@ -189,4 +182,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression --message="Installation of $app completed"
