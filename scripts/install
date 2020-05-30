@@ -119,7 +119,8 @@ ynh_store_file_checksum "$config_path/config.js"
 ynh_script_progression --message="Installing The Lounge..."
 
 pushd $final_path
-	yarn install
+	ynh_use_nodejs
+	yarn install 
 	ynh_exec_warn_less NODE_ENV=production yarn build
 popd
 

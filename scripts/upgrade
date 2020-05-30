@@ -138,7 +138,9 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading the lounge..."
 	pushd $final_path
-		yarn install && ynh_exec_warn_less NODE_ENV=production yarn build
+		ynh_use_nodejs
+		yarn install
+		ynh_exec_warn_less NODE_ENV=production yarn build
 	popd
 fi
 
@@ -178,19 +180,21 @@ chown -R $app: $final_path
 chown -R $app: $config_path
 
 #=================================================
-# SETUP SSOWAT
+# GENERIC FINALIZATION
 #=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..."
-
-# Make app public if necessary or protect it
-[ $is_public -eq 0 ] || ynh_permission_update --permission "main" --add "visitors"
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
+# SECURE FILES AND DIRECTORIES
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
 yunohost service add $app --description "Self-hosted web IRC client" --log_type "systemd"
+
+#=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Upgrading SSOwat configuration..."
+
+# Make app public if necessary
+[ $is_public -eq 0 ] || ynh_permission_update --permission "main" --add "visitors"
 
 #=================================================
 # START SYSTEMD SERVICE
