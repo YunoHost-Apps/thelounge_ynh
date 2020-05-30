@@ -24,10 +24,10 @@ config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 #=================================================
 # STANDARD REMOVE
 #=================================================
-# REMOVE SERVICE FROM ADMIN PANEL
+# REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
 
-# Remove a service from the admin panel, added by `yunohost service add`
+# Remove the service from the list of services known by Yunohost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status $app >/dev/null
 then
 	ynh_script_progression --message="Removing $app service..."
@@ -53,12 +53,10 @@ ynh_remove_nodejs
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Removing $app main directory..."
+ynh_script_progression --message="Removing app main directory..."
 
 # Remove the app directory securely
-ynh_secure_remove --file=$final_path
-
-ynh_secure_remove --file=$config_path
+ynh_secure_remove --file="$final_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
@@ -69,12 +67,13 @@ ynh_script_progression --message="Removing nginx web server configuration..."
 ynh_remove_nginx_config
 
 #=================================================
-# REMOVE LOGROTATE CONFIGURATION
+# SPECIFIC REMOVE
 #=================================================
-ynh_script_progression --message="Removing logrotate configuration..."
+# REMOVE THE CONFIG FILE
+#=================================================
+ynh_script_progression --message="Removing the config file..."
 
-# Remove the app-specific logrotate config
-ynh_remove_logrotate
+ynh_secure_remove --file="$config_path"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -90,4 +89,4 @@ ynh_system_user_delete --username=$app
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of $app completed" --last
+ynh_script_progression --message="Removal of $app completed"
