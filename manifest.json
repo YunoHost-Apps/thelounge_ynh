@@ -3,8 +3,8 @@
     "id": "thelounge",
     "packaging_format": 1,
     "description": {
-        "en": "The Lounge is a web IRC client.",
-        "fr": "The Lounge est un client web IRC."
+        "en": "Self-hosted web IRC client.",
+        "fr": "Client Web IRC auto-hébergé."
     },
     "version": "4.1.0~ynh2",
     "url": "https://thelounge.chat/",
