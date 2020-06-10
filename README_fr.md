@@ -5,7 +5,7 @@
 
 *[Read this readme in english.](./README.md)* 
 
-> *Ce package vous permet d'installer The Lounge rapidement et simplement sur un serveur Yunohost.  
+> *Ce package vous permet d'installer The Lounge rapidement et simplement sur un serveur YunoHost.  
 Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
 ## Vue d’ensemble
@@ -39,8 +39,9 @@ Comment configurer cette application : via le panneau d’administration.
 
 #### Architectures supportées
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/thelounge/)
+* Buster x86-64 - [![](https://ci-buster.nohost.me/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-buster.nohost.me/ci/apps/thelounge/)
 
 ## Liens
 

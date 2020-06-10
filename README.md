@@ -40,8 +40,9 @@ How to configure this app: by an admin panel.
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/thelounge/)
+* Buster x86-64 - [![](https://ci-buster.nohost.me/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-buster.nohost.me/ci/apps/thelounge/)
 
 ## Links
 
