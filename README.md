@@ -12,7 +12,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 
 The Lounge is a self-hosted IRC client.
 
-**Shipped version:** 4.1.0
+**Shipped version:** 4.2.0
 
 ## Screenshots
 

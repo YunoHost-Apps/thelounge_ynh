@@ -11,7 +11,7 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 ## Vue d’ensemble
 The Lounge est un client Web IRC auto-hébergé.
 
-**Version incluse :** 4.1.0
+**Version incluse :** 4.2.0
 
 ## Captures d’écran
 
