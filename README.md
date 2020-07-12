@@ -1,6 +1,6 @@
 # The Lounge for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge)  
+[![Integration level](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)  
 [![Install The Lounge with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=thelounge)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -29,6 +29,7 @@ How to configure this app: by an admin panel.
 ## Documentation
 
  * Official documentation: https://thelounge.chat/docs
+ * YunoHost documentation: https://yunohost.org/#/app_thelounge
 
 ## YunoHost specific features
 
@@ -39,8 +40,9 @@ How to configure this app: by an admin panel.
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/thelounge/)
+* Buster x86-64 - [![](https://ci-buster.nohost.me/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-buster.nohost.me/ci/apps/thelounge/)
 
 ## Links
 
