@@ -52,8 +52,7 @@ How to configure this app: by an admin panel.
 
 ---
 
-Developers info
-----------------
+## Developers info
 
 Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing).
 

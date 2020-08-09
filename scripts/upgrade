@@ -189,14 +189,6 @@ ynh_script_progression --message="Integrating service in YunoHost..."
 yunohost service add $app --description "Client Web IRC auto-hébergé" --log_type "systemd"
 
 #=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..."
-
-# Make app public if necessary
-[ $is_public -eq 0 ] || ynh_permission_update --permission "main" --add "visitors"
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
