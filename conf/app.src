@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/thelounge/thelounge/archive/v4.2.0-pre.1.tar.gz
-SOURCE_SUM=be1c278a39ea23aea5e9846103e26bd03454bce8cb8e1422266fe047f31f3c7e
+SOURCE_URL=https://github.com/thelounge/thelounge/archive/v4.2.0-pre.2.tar.gz
+SOURCE_SUM=49b9adc0a96b7b4576c4b7361952544e267d77eeb6c4c7ed3f216a7ccfdb3caa
 SOURCE_SUM_PRG=sha256sum
 ARCH_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
