@@ -108,7 +108,7 @@ systemctl enable $app.service
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "Self-hosted web IRC client" --log_type "systemd"
+yunohost service add $app --description "Client Web IRC auto-hébergé" --log_type "systemd"
 
 #=================================================
 # START SYSTEMD SERVICE
