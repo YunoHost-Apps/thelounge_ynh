@@ -9,9 +9,9 @@ Group=__APP__
 WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
 Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
-ExecStart=__NODE__/node index.js start
+Environment="NODE_ENV=production"
+ExecStart=/usr/bin/yarn start
 Restart=always
 
 [Install]
 WantedBy=default.target
-

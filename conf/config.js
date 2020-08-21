@@ -29,7 +29,7 @@ module.exports = {
 	// @type     int
 	// @default  9000
 	//
-	port: 9009,
+	port: __PORT__,
 
 	//
 	// Set the local IP to bind to for outgoing connections. Leave to undefined
@@ -56,7 +56,7 @@ module.exports = {
 	// @type     string
 	// @default  "example"
 	//
-	theme: "example",
+	// theme: "example",
 
 	//
 	// Prefetch URLs
