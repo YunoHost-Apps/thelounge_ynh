@@ -3,8 +3,8 @@
     "id": "thelounge",
     "packaging_format": 1,
     "description": {
-        "en": "Web IRC client.",
-        "fr": "Client Web IRC."
+        "en": "Web IRC client",
+        "fr": "Client Web IRC"
     },
     "version": "4.2.0~ynh1",
     "url": "https://thelounge.chat/",
