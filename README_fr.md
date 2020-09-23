@@ -11,7 +11,7 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 ## Vue d’ensemble
 The Lounge est un client Web IRC auto-hébergé.
 
-**Version incluse :** 4.1.0
+**Version incluse :** 4.2.0
 
 ## Captures d’écran
 
@@ -41,7 +41,6 @@ Comment configurer cette application : via le panneau d’administration.
 
 * x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/thelounge/)
-* Buster x86-64 - [![](https://ci-buster.nohost.me/ci/logs/thelounge%20%28Apps%29.svg)](https://ci-buster.nohost.me/ci/apps/thelounge/)
 
 ## Liens
 
