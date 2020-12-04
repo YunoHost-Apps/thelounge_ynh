@@ -72,13 +72,6 @@ ynh_clean_setup () {
 ynh_abort_if_errors
 
 #=================================================
-# CHECK THE PATH
-#=================================================
-
-# Normalize the URL path syntax
-path_url=$(ynh_normalize_url_path --path_url=$path_url)
-
-#=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -186,7 +179,7 @@ chown -R $app: $config_path
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "Client Web IRC" --log_type "systemd"
+yunohost service add $app --description="Client Web IRC" --log_type="systemd"
 
 #=================================================
 # START SYSTEMD SERVICE
