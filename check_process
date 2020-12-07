@@ -21,12 +21,8 @@
 		upgrade=1	from_commit=bd00c8e3ce43563f33fde073cf36b997c348d05c
 		backup_restore=1
 		multi_instance=0
-		incorrect_path=0
 		port_already_use=0
 		change_url=1
-;;; Levels
-	# If the level 5 (Package linter) is forced to 1. Please add justifications here.
-	Level 5=auto
 ;;; Options
 Email=
 Notification=none
