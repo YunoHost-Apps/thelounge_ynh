@@ -179,7 +179,7 @@ chown -R $app: $config_path
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="Client Web IRC" --log_type="systemd"
+yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
