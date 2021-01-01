@@ -1,7 +1,7 @@
 # The Lounge pour YunoHost
 
 [![Niveau d’intégration](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)  
-[![Installer The Lounge avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=thelounge)
+[![Installer The Lounge avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
 *[Read this readme in english.](./README.md)* 
 
