@@ -19,7 +19,7 @@
     	"email": "beudbeud@beudibox.fr"
     },
     "requirements": {
-        "yunohost": ">= 3.8.1"
+        "yunohost": ">= 4.1.7"
     },
     "multi_instance": false,
     "services": [

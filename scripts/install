@@ -47,7 +47,6 @@ ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set --app=$app --key=domain      --value=$domain
 ynh_app_setting_set --app=$app --key=path        --value=$path_url
-ynh_app_setting_set --app=$app --key=is_public   --value=$is_public
 ynh_app_setting_set --app=$app --key=config_path --value=$config_path
 
 #=================================================
@@ -106,12 +105,14 @@ ynh_script_progression --message="Modifying a config file..."
 
 mkdir -p $config_path
 
-# Main config File
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/config.js"
+# # Main config File
+# ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/config.js"
 
-cp -a ../conf/config.js "$config_path"
+# cp -a ../conf/config.js "$config_path"
 
-ynh_store_file_checksum "$config_path/config.js"
+# ynh_store_file_checksum "$config_path/config.js"
+
+ynh_add_config --template="../conf/config.js" --destination="$config_path"
 
 #=================================================
 # INSTALL THE LOUNGE
@@ -129,8 +130,8 @@ popd
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..."
 
-ynh_replace_string --match_string="__APP__"       --replace_string="$app"         --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
+#ynh_replace_string --match_string="__APP__"       --replace_string="$app"         --target_file="../conf/systemd.service"
+#ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"  --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__ENV_PATH__"  --replace_string="$PATH"        --target_file="../conf/systemd.service"
 ynh_replace_string --match_string="__NODE__"      --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 
@@ -165,10 +166,10 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..."
+ynh_script_progression --message="Configuring permissions..."
 
 # Make app public if necessary or protect it
-[ $is_public -eq 0 ] || ynh_permission_update --permission "main" --add "visitors"
+[ $is_public -eq 0 ] || ynh_permission_update --permission="main" --add="visitors"
 
 #=================================================
 # RELOAD NGINX

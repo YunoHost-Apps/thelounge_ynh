@@ -29,7 +29,7 @@ How to configure this app: by an admin panel.
 ## Documentation
 
  * Official documentation: https://thelounge.chat/docs
- * YunoHost documentation: https://yunohost.org/#/app_thelounge
+ * YunoHost documentation: https://yunohost.org/en/app_thelounge
 
 ## YunoHost specific features
 
