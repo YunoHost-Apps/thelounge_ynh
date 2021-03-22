@@ -109,7 +109,7 @@ fi
 ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Available at http"
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Available at http"
 
 #=================================================
 # RELOAD NGINX

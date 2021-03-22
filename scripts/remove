@@ -19,6 +19,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -72,7 +73,7 @@ ynh_remove_nginx_config
 #=================================================
 ynh_script_progression --message="Removing the config file..."
 
-ynh_secure_remove --file="/home/yunohost.app/$app"
+ynh_secure_remove --file="$config_path"
 
 #=================================================
 # GENERIC FINALIZATION

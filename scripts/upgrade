@@ -43,6 +43,7 @@ fi
 # If config_path doesn't exist, create it
 if [ -z "$config_path" ]; then
 	config_path=/home/yunohost.app/$app
+	mkdir -p /home/yunohost.app/$app
 	ynh_app_setting_set --app=$app --key=config_path --value=$config_path
 fi
 
@@ -75,7 +76,7 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
+ynh_systemd_action --service_name=$app --action=stop --log_path=systemd
 
 #=================================================
 # CREATE DEDICATED USER
@@ -139,7 +140,7 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-ynh_add_config --template="../conf/config.js" --destination="/home/yunohost.app/$app/config.js"
+ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
 
 #=================================================
 # SETUP SYSTEMD
@@ -160,7 +161,7 @@ ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
 chown -R $app: $final_path
-chown -R $app: /home/yunohost.app/$app
+chown -R $app: $config_path
 
 #=================================================
 # GENERIC FINALIZATION
