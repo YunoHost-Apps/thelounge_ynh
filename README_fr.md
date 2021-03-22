@@ -28,7 +28,7 @@ Comment configurer cette application : via le panneau d’administration.
 ## Documentation
 
  * Documentation officielle : https://thelounge.chat/docs
- * Documentation YunoHost : https://yunohost.org/#/app_thelounge_fr
+ * Documentation YunoHost : https://yunohost.org/fr/app_thelounge
 
 ## Caractéristiques spécifiques YunoHost
 
