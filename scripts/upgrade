@@ -139,7 +139,7 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-ynh_add_config --template="../conf/config.js" --destination="$config_path"
+ynh_add_config --template="../conf/config.js" --destination="/home/yunohost.app/$app/config.js"
 
 #=================================================
 # SETUP SYSTEMD
@@ -160,7 +160,7 @@ ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
 chown -R $app: $final_path
-chown -R $app: $config_path
+chown -R $app: /home/yunohost.app/$app
 
 #=================================================
 # GENERIC FINALIZATION
@@ -176,7 +176,7 @@ yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$a
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Available at http"
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Available at http"
 
 #=================================================
 # RELOAD NGINX

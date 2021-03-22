@@ -23,7 +23,6 @@ ynh_print_info --message="Loading installation settings..."
 app=$YNH_APP_INSTANCE_NAME
 
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 
 #=================================================
@@ -53,7 +52,7 @@ ynh_backup --src_path="/etc/systemd/system/$app.service"
 # BACKUP CONFIG
 #=================================================
 
-ynh_backup --src_path="$config_path"
+ynh_backup --src_path="/home/yunohost.app/$app"
 
 #=================================================
 # END OF SCRIPT
