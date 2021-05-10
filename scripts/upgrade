@@ -94,6 +94,8 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..."
 
+	ynh_secure_remove --file=$final_path
+
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$final_path"
 fi
@@ -134,6 +136,13 @@ then
 fi
 
 #=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..."
+
+ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..."
@@ -151,9 +160,7 @@ ynh_add_systemd_config
 ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data $final_path
+chown -R $app: $final_path
 chown -R $app: $config_path
 
 #=================================================

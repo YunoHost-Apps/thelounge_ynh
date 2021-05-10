@@ -429,7 +429,7 @@ module.exports = {
 			rootDN: "ou=users,dc=yunohost,dc=org",
 
 			//   - `rootPassword`: Password of The Lounge LDAP system user.
-			rootPassword: "",
+			rootPassword: "1234",
 
 			//   - `ldapFilter`: it is set to `"(objectClass=person)(memberOf=ou=accounts,dc=example,dc=com)"`
 			//     by default.
