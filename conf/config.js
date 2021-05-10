@@ -83,15 +83,9 @@ module.exports = {
 		certificate: "",
 		ca: "",
 	},
-<<<<<<< Updated upstream
 
 	// ## Client settings
 
-=======
-
-	// ## Client settings
-
->>>>>>> Stashed changes
 	// ### `theme`
 	//
 	// Set the default theme to serve to new users. They will be able to select a
@@ -114,11 +108,7 @@ module.exports = {
 	// from URLs posted in channels and private messages.
 	//
 	// This value is set to `false` by default.
-<<<<<<< Updated upstream
-	prefetch:true,
-=======
 	prefetch: true,
->>>>>>> Stashed changes
 
 	// ### `disableMediaPreview`
 	//
@@ -131,15 +121,9 @@ module.exports = {
 	//
 	// This value is set to `false` by default.
 	disableMediaPreview: false,
-<<<<<<< Updated upstream
 
 	// ### `prefetchStorage`
 
-=======
-
-	// ### `prefetchStorage`
-
->>>>>>> Stashed changes
 	// When set to `true`, The Lounge will store and proxy prefetched images and
 	// thumbnails on the filesystem rather than directly display the content at
 	// the original URLs.
@@ -261,13 +245,8 @@ module.exports = {
 		tls: true,
 		rejectUnauthorized: true,
 		nick: "ynhuser|%%%%%",
-<<<<<<< Updated upstream
-		username: "ynhuser|%%%%%",
-		realname: "yunohost User",
-=======
 		username: "thelounge",
 		realname: "The Lounge User",
->>>>>>> Stashed changes
 		join: "#yunohost",
 	},
 
@@ -297,11 +276,7 @@ module.exports = {
 	// their JSON configuration file.
 	//
 	// This value is set to `["sqlite", "text"]` by default.
-<<<<<<< Updated upstream
-	messageStorage: ["sqlite"],
-=======
 	messageStorage: ["sqlite", "text"],
->>>>>>> Stashed changes
 
 	// ### `useHexIp`
 	//
@@ -313,7 +288,6 @@ module.exports = {
 	//
 	// This value is set to `false` by default.
 	useHexIp: false,
-<<<<<<< Updated upstream
 
 	// ## WEBIRC support
 	//
@@ -354,48 +328,6 @@ module.exports = {
 
 	// ## identd and oidentd support
 
-=======
-
-	// ## WEBIRC support
-	//
-	// When enabled, The Lounge will pass the connecting user's host and IP to the
-	// IRC server. Note that this requires to obtain a password from the IRC
-	// network that The Lounge will be connecting to and generally involves a lot
-	// of trust from the network you are connecting to.
-	//
-	// There are 2 ways to configure the `webirc` setting:
-	//
-	// - **Basic**: an object where keys are IRC hosts and values are passwords.
-	//   For example:
-	//
-	//   ```json
-	//   webirc: {
-	//     "irc.example.net": "thisiswebircpassword1",
-	//     "irc.example.org": "thisiswebircpassword2",
-	//   },
-	//   ```
-	//
-	// - **Advanced**: an object where keys are IRC hosts and values are functions
-	//   that take two arguments (`webircObj`, `network`) and return an
-	//   object to be directly passed to `irc-framework`. `webircObj` contains the
-	//   generated object which you can modify. For example:
-	//
-	//   ```js
-	//   webirc: {
-	//     "irc.example.com": (webircObj, network) => {
-	//       webircObj.password = "thisiswebircpassword";
-	//       webircObj.hostname = `webirc/${webircObj.hostname}`;
-	//       return webircObj;
-	//     },
-	//   },
-	//   ```
-	//
-	// This value is set to `null` to disable WEBIRC by default.
-	webirc: null,
-
-	// ## identd and oidentd support
-
->>>>>>> Stashed changes
 	// ### `identd`
 	//
 	// Run The Lounge with `identd` support.
@@ -483,13 +415,6 @@ module.exports = {
 		// - `baseDN`: LDAP base DN, alternative to `searchDN`. For example, set it
 		//   to `"ou=accounts,dc=example,dc=com"`.
 		//   When unset, the LDAP auth logic with use `searchDN` instead to locate users.
-<<<<<<< Updated upstream
-		baseDN: "ou=users,dc=yunohost,dc=org",
-	},
-
-	// ## Debugging settings
-
-=======
 
 		// - `searchDN`: LDAP search DN settings. This defines the procedure by
 		//   which The Lounge first looks for the user DN before authenticating them.
@@ -521,7 +446,6 @@ module.exports = {
 
 	// ## Debugging settings
 
->>>>>>> Stashed changes
 	// The `debug` object contains several settings to enable debugging in The
 	// Lounge. Use them to learn more about an issue you are noticing but be aware
 	// this may produce more logging or may affect connection performance so it is
