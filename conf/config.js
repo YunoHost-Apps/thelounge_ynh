@@ -1,416 +1,431 @@
 "use strict";
 
 module.exports = {
+	// ## Server settings
+
+	// ### `public`
 	//
-	// Set the server mode.
-	// Public servers does not require authentication.
+	// When set to `true`, The Lounge starts in public mode. When set to `false`,
+	// it starts in private mode.
 	//
-	// Set to 'false' to enable users.
+	// - A **public server** does not require authentication. Anyone can connect
+	//   to IRC networks in this mode. All IRC connections and channel
+	//   scrollbacks are lost when a user leaves the client.
+	// - A **private server** requires users to log in. Their IRC connections are
+	//   kept even when they are not using or logged in to the client. All joined
+	//   channels and scrollbacks are available when they come back.
 	//
-	// @type     boolean
-	// @default  false
-	//
+	// This value is set to `false` by default.
 	public: false,
 
+	// ### `host`
 	//
-	// IP address or hostname for the web server to listen on.
-	// Setting this to undefined will listen on all interfaces.
+	// IP address or hostname for the web server to listen to. For example, set it
+	// to `"127.0.0.1"` to accept connections from localhost only.
 	//
-	// For UNIX domain sockets, use unix:/absolute/path/to/file.sock.
+	// For UNIX domain sockets, use `"unix:/absolute/path/to/file.sock"`.
 	//
-	// @type     string
-	// @default  undefined
-	//
+	// This value is set to `undefined` by default to listen on all interfaces.
 	host: undefined,
 
+	// ### `port`
 	//
-	// Set the port to listen on.
+	// Set the port to listen to.
 	//
-	// @type     int
-	// @default  9000
-	//
+	// This value is set to `9000` by default.
 	port: __PORT__,
 
+	// ### `bind`
 	//
-	// Set the local IP to bind to for outgoing connections. Leave to undefined
-	// to let the operating system pick its preferred one.
+	// Set the local IP to bind to for outgoing connections.
 	//
-	// @type     string
-	// @default  undefined
-	//
+	// This value is set to `undefined` by default to let the operating system
+	// pick its preferred one.
 	bind: undefined,
 
+	// ### `reverseProxy`
 	//
-	// Sets whether the server is behind a reverse proxy and should honor the
-	// X-Forwarded-For header or not.
+	// When set to `true`, The Lounge is marked as served behind a reverse proxy
+	// and will honor the `X-Forwarded-For` header.
 	//
-	// @type     boolean
-	// @default  false
-	//
+	// This value is set to `false` by default.
 	reverseProxy: true,
 
+	// ### `maxHistory`
 	//
-	// Set the default theme.
-	// Find out how to add new themes at https://thelounge.github.io/docs/plugins/themes.html
+	// Defines the maximum number of history lines that will be kept in memory per
+	// channel/query, in order to reduce the memory usage of the server. Setting
+	// this to `-1` will keep unlimited amount.
 	//
-	// @type     string
-	// @default  "example"
-	//
-	// theme: "example",
+	// This value is set to `10000` by default.
+	maxHistory: 10000,
 
+	// ### `https`
 	//
-	// Prefetch URLs
+	// These settings are used to run The Lounge's web server using encrypted TLS.
 	//
-	// If enabled, The Lounge will try to load thumbnails and site descriptions from
-	// URLs posted in channels.
+	// If you want more control over the webserver,
+	// [use a reverse proxy instead](https://thelounge.chat/docs/guides/reverse-proxies).
 	//
-	// @type     boolean
-	// @default  false
+	// The available keys for the `https` object are:
 	//
+	// - `enable`: when set to `false`, HTTPS support is disabled
+	//    and all other values are ignored.
+	// - `key`: Path to the private key file.
+	// - `certificate`: Path to the certificate.
+	// - `ca`: Path to the CA bundle.
+	//
+	// The value of `enable` is set to `false` to disable HTTPS by default, in
+	// which case the other two string settings are ignored.
+	https: {
+		enable: false,
+		key: "",
+		certificate: "",
+		ca: "",
+	},
+
+	// ## Client settings
+
+	// ### `theme`
+	//
+	// Set the default theme to serve to new users. They will be able to select a
+	// different one in their client settings among those available.
+	//
+	// The Lounge ships with two themes (`default` and `morning`) and can be
+	// extended by installing more themes. Read more about how to manage them
+	// [here](https://thelounge.chat/docs/guides/theme-creation).
+	//
+	// This value needs to be the package name and not the display name. For
+	// example, the value for Morning would be `morning`, and the value for
+	// Solarized would be `thelounge-theme-solarized`.
+	//
+	// This value is set to `"default"` by default.
+	theme: "default",
+
+	// ### `prefetch`
+	//
+	// When set to `true`, The Lounge will load thumbnails and site descriptions
+	// from URLs posted in channels and private messages.
+	//
+	// This value is set to `false` by default.
 	prefetch: true,
 
+	// ### `disableMediaPreview`
 	//
-	// Store and proxy prefetched images and thumbnails.
-	// This improves security and privacy by not exposing client IP address,
-	// and always loading images from The Lounge instance and making all assets secure,
-	// which in result fixes mixed content warnings.
+	// When set to `true`, The Lounge will not preview media (images, video and
+	// audio) hosted on third-party sites. This ensures the client does not
+	// make any requests to external sites. If `prefetchStorage` is enabled,
+	// images proxied via the The Lounge will be previewed.
+	//
+	// This has no effect if `prefetch` is set to `false`.
+	//
+	// This value is set to `false` by default.
+	disableMediaPreview: false,
+
+	// ### `prefetchStorage`
+
+	// When set to `true`, The Lounge will store and proxy prefetched images and
+	// thumbnails on the filesystem rather than directly display the content at
+	// the original URLs.
+	//
+	// This option primarily exists to resolve mixed content warnings by not
+	// loading images from http hosts. This option does not work for video
+	// or audio as The Lounge will only load these from https hosts.
 	//
 	// If storage is enabled, The Lounge will fetch and store images and thumbnails
 	// in the `${THELOUNGE_HOME}/storage` folder.
 	//
-	// Images are deleted when they are no longer referenced by any message (controlled by maxHistory),
-	// and the folder is cleaned up on every The Lounge restart.
+	// Images are deleted when they are no longer referenced by any message
+	// (controlled by `maxHistory`), and the folder is cleaned up when The Lounge
+	// restarts.
 	//
-	// @type     boolean
-	// @default  false
-	//
+	// This value is set to `false` by default.
 	prefetchStorage: true,
 
+	// ### `prefetchMaxImageSize`
 	//
-	// Prefetch URLs Image Preview size limit
+	// When `prefetch` is enabled, images will only be displayed if their file
+	// size does not exceed this limit.
 	//
-	// If prefetch is enabled, The Lounge will only display content under the maximum size.
-	// Specified value is in kilobytes. Default value is 2048 kilobytes.
-	//
-	// @type     int
-	// @default  2048
-	//
+	// This value is set to `2048` kilobytes by default.
 	prefetchMaxImageSize: 2048,
 
+	// ### `fileUpload`
 	//
-	// Lock network
+	// Allow uploading files to the server hosting The Lounge.
 	//
-	// If set to true, users will not be able to modify host, port and tls
-	// settings and will be limited to the configured network.
+	// Files are stored in the `${THELOUNGE_HOME}/uploads` folder, do not expire,
+	// and are not removed by The Lounge. This may cause issues depending on your
+	// hardware, for example in terms of disk usage.
 	//
-	// @type     boolean
-	// @default  false
+	// The available keys for the `fileUpload` object are:
 	//
-	lockNetwork: false,
+	// - `enable`: When set to `true`, files can be uploaded on the client with a
+	//   drag-and-drop or using the upload dialog.
+	// - `maxFileSize`: When file upload is enabled, users sending files above
+	//   this limit will be prompted with an error message in their browser. A value of
+	//   `-1` disables the file size limit and allows files of any size. **Use at
+	//   your own risk.** This value is set to `10240` kilobytes by default.
+	// - `baseUrl`: If you want change the URL where uploaded files are accessed,
+	//   you can set this option to `"https://example.com/folder/"` and the final URL
+	//   would look like `"https://example.com/folder/aabbccddeeff1234/name.png"`.
+	//   If you use this option, you must have a reverse proxy configured,
+	//   to correctly proxy the uploads URLs back to The Lounge.
+	//   This value is set to `null` by default.
+	fileUpload: {
+		enable: false,
+		maxFileSize: 10240,
+		baseUrl: null,
+	},
 
+	// ### `transports`
 	//
-	// Hex IP
+	// Set `socket.io` transports.
 	//
-	// If enabled, clients' username will be set to their IP encoded has hex.
-	// This is done to share the real user IP address with the server for host masking purposes.
-	//
-	// @type     boolean
-	// @default  false
-	//
-	useHexIp: false,
+	// This value is set to `["polling", "websocket"]` by default.
+	transports: ["polling", "websocket"],
 
+	// ### `leaveMessage`
 	//
-	// WEBIRC support
+	// Set users' default `quit` and `part` messages if they are not providing
+	// one.
 	//
-	// If enabled, The Lounge will pass the connecting user's host and IP to the
-	// IRC server. Note that this requires to obtain a password from the IRC network
-	// The Lounge will be connecting to and generally involves a lot of trust from the
-	// network you are connecting to.
-	//
-	// Format (standard): {"irc.example.net": "hunter1", "irc.example.org": "passw0rd"}
-	// Format (function):
-	//   {"irc.example.net": function(client, args, trusted) {
-	//       // here, we return a webirc object fed directly to `irc-framework`
-	//       return {username: "thelounge", password: "hunter1", address: args.ip, hostname: "webirc/"+args.hostname};
-	//   }}
-	//
-	// @type     string | function(client, args):object(webirc)
-	// @default  null
-	webirc: null,
+	// This value is set to `"The Lounge - https://thelounge.chat"` by
+	// default.
+	leaveMessage: "The Lounge - https://thelounge.chat",
 
-	//
-	// Message logging
-	// Logging is also controlled per user individually (logs variable)
-	// Leave the array empty to disable all logging globally
-	//
-	// text: Text file per network/channel in user folder
-	// sqlite: Messages are stored in SQLite, this allows them to be reloaded on server restart
-	//
-	// @type     array
-	// @default  ["sqlite", "text"]
-	//
-	messageStorage: ["sqlite"],
+	// ## Default network
 
+	// ### `defaults`
 	//
-	// Maximum number of history lines per channel
+	// Specifies default network information that will be used as placeholder
+	// values in the *Connect* window.
 	//
-	// Defines the maximum number of history lines that will be kept in
-	// memory per channel/query, in order to reduce the memory usage of
-	// the server. Setting this to -1 will keep unlimited amount.
+	// The available keys for the `defaults` object are:
 	//
-	// @type     integer
-	// @default  10000
-	maxHistory: 10000,
-
+	// - `name`: Name to display in the channel list of The Lounge. This value is
+	//   not forwarded to the IRC network.
+	// - `host`: IP address or hostname of the IRC server.
+	// - `port`: Usually 6667 for unencrypted connections and 6697 for
+	//   connections encrypted with TLS.
+	// - `password`: Connection password. If the server supports SASL capability,
+	//   then this password will be used in SASL authentication.
+	// - `tls`: Enable TLS connections
+	// - `rejectUnauthorized`: Whether the server certificate should be verified
+	//   against the list of supplied Certificate Authorities (CAs) by your
+	//   Node.js installation.
+	// - `nick`: Nick name. Percent signs (`%`) will be replaced by random
+	//   numbers from 0 to 9. For example, `Guest%%%` may become `Guest123`.
+	// - `username`: User name.
+	// - `realname`: Real name.
+	// - `join`: Comma-separated list of channels to auto-join once connected.
 	//
-	// Default values for the 'Connect' form.
+	// This value is set to connect to the official channel of The Lounge on
+	// Freenode by default:
 	//
-	// @type     object
-	// @default  {}
-	//
+	// ```js
+	// defaults: {
+	//   name: "Freenode",
+	//   host: "chat.freenode.net",
+	//   port: 6697,
+	//   password: "",
+	//   tls: true,
+	//   rejectUnauthorized: true,
+	//   nick: "thelounge%%",
+	//   username: "thelounge",
+	//   realname: "The Lounge User",
+	//   join: "#thelounge"
+	// }
+	// ```
 	defaults: {
-		//
-		// Name
-		//
-		// @type     string
-		// @default  "Freenode"
-		//
 		name: "Freenode",
-
-		//
-		// Host
-		//
-		// @type     string
-		// @default  "chat.freenode.net"
-		//
 		host: "chat.freenode.net",
-
-		//
-		// Port
-		//
-		// @type     int
-		// @default  6697
-		//
 		port: 6697,
-
-		//
-		// Password
-		//
-		// @type     string
-		// @default  ""
-		//
 		password: "",
-
-		//
-		// Enable TLS/SSL
-		//
-		// @type     boolean
-		// @default  true
-		//
 		tls: true,
-
-		//
-		// Enable certificate verification
-		//
-		// If true, the server certificate is verified against
-		// the list of supplied CAs by your node.js installation.
-		//
-		// @type     boolean
-		// @default  true
-		//
 		rejectUnauthorized: true,
-
-		//
-		// Nick
-		//
-		// Percent sign (%) will be replaced into a random number from 0 to 9.
-		// For example, Guest%%% will become Guest123 on page load.
-		//
-		// @type     string
-		// @default  "thelounge%%"
-		//
 		nick: "ynhuser|%%%%%",
-
-		//
-		// Username
-		//
-		// @type     string
-		// @default  "thelounge"
-		//
 		username: "thelounge",
-
-		//
-		// Real Name
-		//
-		// @type     string
-		// @default  "The Lounge User"
-		//
 		realname: "The Lounge User",
-
-		//
-		// Channels
-		// This is a comma-separated list.
-		//
-		// @type     string
-		// @default  "#thelounge"
-		//
 		join: "#yunohost",
 	},
 
+	// ### `lockNetwork`
 	//
-	// Set socket.io transports
+	// When set to `true`, users will not be able to modify host, port and TLS
+	// settings and will be limited to the configured network.
+	// These fields will also be hidden from the UI.
 	//
-	// @type     array
-	// @default  ["polling", "websocket"]
-	//
-	transports: ["polling", "websocket"],
+	// This value is set to `false` by default.
+	lockNetwork: false,
 
-	//
-	// Run The Lounge using encrypted HTTP/2.
-	// This will fallback to regular HTTPS if HTTP/2 is not supported.
-	//
-	// @type     object
-	// @default  {}
-	//
-	https: {
-		//
-		// Enable HTTP/2 / HTTPS support.
-		//
-		// @type     boolean
-		// @default  false
-		//
-		enable: false,
+	// ## User management
 
-		//
-		// Path to the key.
-		//
-		// @type     string
-		// @example  "sslcert/key.pem"
-		// @default  ""
-		//
-		key: "",
+	// ### `messageStorage`
 
-		//
-		// Path to the certificate.
-		//
-		// @type     string
-		// @example  "sslcert/key-cert.pem"
-		// @default  ""
-		//
-		certificate: "",
+	// The Lounge can log user messages, for example to access them later or to
+	// reload messages on server restart.
 
-		//
-		// Path to the CA bundle.
-		//
-		// @type     string
-		// @example  "sslcert/bundle.pem"
-		// @default  ""
-		//
-		ca: "",
-	},
+	// Set this array with one or multiple values to enable logging:
+	// - `text`: Messages per network and channel will be stored as text files.
+	//   **Messages will not be reloaded on restart.**
+	// - `sqlite`: Messages are stored in SQLite database files, one per user.
+	//
+	// Logging can be disabled globally by setting this value to an empty array
+	// `[]`. Logging is also controlled per user individually in the `log` key of
+	// their JSON configuration file.
+	//
+	// This value is set to `["sqlite", "text"]` by default.
+	messageStorage: ["sqlite", "text"],
 
+	// ### `useHexIp`
 	//
-	// Default quit and part message if none is provided.
+	// When set to `true`, users' IP addresses will be encoded as hex.
 	//
-	// @type     string
-	// @default  "The Lounge - https://thelounge.chat"
+	// This is done to share the real user IP address with the server for host
+	// masking purposes. This is encoded in the `username` field and only supports
+	// IPv4.
 	//
-	leaveMessage: "The Lounge - https://thelounge.chat",
+	// This value is set to `false` by default.
+	useHexIp: false,
 
+	// ## WEBIRC support
 	//
-	// Run The Lounge with identd support.
+	// When enabled, The Lounge will pass the connecting user's host and IP to the
+	// IRC server. Note that this requires to obtain a password from the IRC
+	// network that The Lounge will be connecting to and generally involves a lot
+	// of trust from the network you are connecting to.
 	//
-	// @type     object
-	// @default  {}
+	// There are 2 ways to configure the `webirc` setting:
 	//
+	// - **Basic**: an object where keys are IRC hosts and values are passwords.
+	//   For example:
+	//
+	//   ```json
+	//   webirc: {
+	//     "irc.example.net": "thisiswebircpassword1",
+	//     "irc.example.org": "thisiswebircpassword2",
+	//   },
+	//   ```
+	//
+	// - **Advanced**: an object where keys are IRC hosts and values are functions
+	//   that take two arguments (`webircObj`, `network`) and return an
+	//   object to be directly passed to `irc-framework`. `webircObj` contains the
+	//   generated object which you can modify. For example:
+	//
+	//   ```js
+	//   webirc: {
+	//     "irc.example.com": (webircObj, network) => {
+	//       webircObj.password = "thisiswebircpassword";
+	//       webircObj.hostname = `webirc/${webircObj.hostname}`;
+	//       return webircObj;
+	//     },
+	//   },
+	//   ```
+	//
+	// This value is set to `null` to disable WEBIRC by default.
+	webirc: null,
+
+	// ## identd and oidentd support
+
+	// ### `identd`
+	//
+	// Run The Lounge with `identd` support.
+	//
+	// The available keys for the `identd` object are:
+	//
+	// - `enable`: When `true`, the identd daemon runs on server start.
+	// - `port`: Port to listen for ident requests.
+	//
+	// The value of `enable` is set to `false` to disable `identd` support by
+	// default, in which case the value of `port` is ignored. The default value of
+	// `port` is 113.
 	identd: {
-		//
-		// Run the identd daemon on server start.
-		//
-		// @type     boolean
-		// @default  false
-		//
 		enable: false,
-
-		//
-		// Port to listen for ident requests.
-		//
-		// @type     int
-		// @default  113
-		//
 		port: 113,
 	},
 
+	// ### `oidentd`
 	//
-	// Enable oidentd support using the specified file
+	// When this setting is a string, this enables `oidentd` support using the
+	// configuration file located at the given path.
 	//
-	// Example: oidentd: "~/.oidentd.conf",
-	//
-	// @type     string
-	// @default  null
-	//
+	// This is set to `null` by default to disable `oidentd` support.
 	oidentd: null,
 
+	// ## LDAP support
+
+	// These settings enable and configure LDAP authentication.
 	//
-	// LDAP authentication settings (only available if public=false)
-	// @type    object
-	// @default {}
+	// They are only being used in private mode. To know more about private mode,
+	// see the `public` setting above.
+
 	//
 	// The authentication process works as follows:
 	//
-	//   1. Lounge connects to the LDAP server with its system credentials
-	//   2. It performs a LDAP search query to find the full DN associated to the
-	//      user requesting to log in.
-	//   3. Lounge tries to connect a second time, but this time using the user's
-	//      DN and password. Auth is validated iff this connection is successful.
+	// 1. The Lounge connects to the LDAP server with its system credentials.
+	// 2. It performs an LDAP search query to find the full DN associated to the
+	//    user requesting to log in.
+	// 3. The Lounge tries to connect a second time, but this time using the
+	//    user's DN and password. Authentication is validated if and only if this
+	//    connection is successful.
 	//
 	// The search query takes a couple of parameters in `searchDN`:
-	//   - a base DN `searchDN/base`. Only children nodes of this DN will be likely
-	//     to be returned;
-	//   - a search scope `searchDN/scope` (see LDAP documentation);
-	//   - the query itself, build as (&(<primaryKey>=<username>) <filter>)
-	//     where <username> is the user name provided in the log in request,
-	//     <primaryKey> is provided by the config and <fitler> is a filtering complement
-	//     also given in the config, to filter for instance only for nodes of type
-	//     inetOrgPerson, or whatever LDAP search allows.
 	//
-	// Alternatively, you can specify the `bindDN` parameter. This will make the lounge
-	// ignore searchDN options and assume that the user DN is always:
-	//     <bindDN>,<primaryKey>=<username>
-	// where <username> is the user name provided in the log in request, and <bindDN>
-	// and <primaryKey> are provided by the config.
+	// - a base DN `searchDN/base`. Only children nodes of this DN will be likely
+	//   be returned;
+	// - a search scope `searchDN/scope` (see LDAP documentation);
+	// - the query itself, built as `(&(<primaryKey>=<username>) <filter>)`
+	//   where `<username>` is the user name provided in the log in request,
+	//   `<primaryKey>` is provided by the config and `<filter>` is a filtering
+	//   complement also given in the config, to filter for instance only for
+	//   nodes of type `inetOrgPerson`, or whatever LDAP search allows.
 	//
+	// Alternatively, you can specify the `bindDN` parameter. This will make The
+	// Lounge ignore `searchDN` options and assume that the user DN is always
+	// `<bindDN>,<primaryKey>=<username>`, where `<username>` is the user name
+	// provided in the log in request, and `<bindDN>` and `<primaryKey>` are
+	// provided by the configuration.
+	//
+	// The available keys for the `ldap` object are:
 	ldap: {
-		//
-		// Enable LDAP user authentication
-		//
-		// @type     boolean
-		// @default  false
-		//
+		// - `enable`: when set to `false`, LDAP support is disabled and all other
+		//   values are ignored.
 		enable: true,
 
-		//
-		// LDAP server URL
-		//
-		// @type     string
-		//
+		// - `url`: A url of the form `ldaps://<ip>:<port>`.
+		//   For plain connections, use the `ldap` scheme.
 		url: "ldap://127.0.0.1",
 
+		// - `primaryKey`: LDAP primary key. It is set to `"uid"` by default.
+		primaryKey: "uid",
 
-		//
-		// LDAP base dn, alternative to searchDN
-		//
-		// @type     string
-		//
+		// - `baseDN`: LDAP base DN, alternative to `searchDN`. For example, set it
+		//   to `"ou=accounts,dc=example,dc=com"`.
+		//   When unset, the LDAP auth logic with use `searchDN` instead to locate users.
 		baseDN: "ou=users,dc=yunohost,dc=org",
+	},
 
-		//
-		// LDAP primary key
-		//
-		// @type     string
-		// @default  "uid"
-		//
-		primaryKey: "uid"
+	// ## Debugging settings
 
-		}
+	// The `debug` object contains several settings to enable debugging in The
+	// Lounge. Use them to learn more about an issue you are noticing but be aware
+	// this may produce more logging or may affect connection performance so it is
+	// not recommended to use them by default.
+	//
+	// All values in the `debug` object are set to `false`.
+	debug: {
+		// ### `debug.ircFramework`
+		//
+		// When set to true, this enables extra debugging output provided by
+		// [`irc-framework`](https://github.com/kiwiirc/irc-framework), the
+		// underlying IRC library for Node.js used by The Lounge.
+		ircFramework: false,
+
+		// ### `debug.raw`
+		//
+		// When set to `true`, this enables logging of raw IRC messages into each
+		// server window, displayed on the client.
+		raw: false,
+	},
 };
