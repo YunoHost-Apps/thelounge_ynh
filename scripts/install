@@ -115,6 +115,9 @@ ynh_script_progression --message="Modifying a config file..."
 
 ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
 
+chmod 400 "$config_path/config.js"
+chown $app "$config_path/config.js"
+
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
