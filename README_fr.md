@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Client Web IRC
 
-**Version incluse :** 4.2.0~ynh3
+**Version incluse :** 4.3.0~ynh1
 
 **Démo :** https://demo.thelounge.chat/
 

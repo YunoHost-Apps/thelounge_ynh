@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Web IRC client
 
-**Shipped version:** 4.2.0~ynh3
+**Shipped version:** 4.3.0~ynh1
 
 **Demo:** https://demo.thelounge.chat/
 
