@@ -8,6 +8,14 @@
     },
     "version": "4.2.0~ynh3",
     "url": "https://thelounge.chat/",
+    "upstream": {
+        "license": "MIT",
+        "website": "https://thelounge.chat/",
+        "demo": "https://demo.thelounge.chat/",
+        "admindoc": "https://thelounge.chat/docs",
+        "userdoc": "https://yunohost.org/#/app_thelounge",
+        "code": "https://github.com/thelounge/thelounge"
+    },
     "license": "MIT",
     "maintainer": {
         "name": "rafi59",
@@ -19,7 +27,7 @@
     	"email": "beudbeud@beudibox.fr"
     },
     "requirements": {
-        "yunohost": ">= 4.1.7"
+        "yunohost": ">= 4.2.4"
     },
     "multi_instance": false,
     "services": [
