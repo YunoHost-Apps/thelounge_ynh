@@ -19,10 +19,18 @@ Web IRC client
 
 **Shipped version:** 4.2.0~ynh3
 
+**Demo:** https://demo.thelounge.chat/
 
+## Screenshots
+
+![](./doc/screenshots/thelounge-screenshot.png)
 
 ## Documentation and resources
 
+* Official app website: https://thelounge.chat/
+* Official user documentation: https://yunohost.org/#/app_thelounge
+* Official admin documentation: https://thelounge.chat/docs
+* Upstream app code repository: https://github.com/thelounge/thelounge
 * YunoHost documentation for this app: https://yunohost.org/app_thelounge
 * Report a bug: https://github.com/YunoHost-Apps/thelounge_ynh/issues
 
