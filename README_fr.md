@@ -1,55 +1,44 @@
 # The Lounge pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)  
+[![Niveau d'intégration](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)  
 [![Installer The Lounge avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
-*[Read this readme in english.](./README.md)* 
+*[Read this readme in english.](./README.md)*
+*[Lire ce readme en français.](./README_fr.md)*
 
-> *Ce package vous permet d'installer The Lounge rapidement et simplement sur un serveur YunoHost.  
-Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
+> *Ce package vous permet d'installer The Lounge rapidement et simplement sur un serveur YunoHost.
+Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
-## Vue d’ensemble
-The Lounge est un client Web IRC auto-hébergé.
+## Vue d'ensemble
 
-**Version incluse :** 4.2.0
+Client Web IRC
 
-## Captures d’écran
+**Version incluse :** 4.2.0~ynh3
 
-![](https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/img/thelounge-screenshot.png)
+**Démo :** https://demo.thelounge.chat/
 
-## Démo
+## Captures d'écran
 
-* [Démo officielle](https://demo.thelounge.chat/)
+![](./doc/screenshots/thelounge-screenshot.png)
+
+## Avertissements / informations importantes
 
 ## Configuration
 
 Comment configurer cette application : via le panneau d’administration.
-
-## Documentation
-
- * Documentation officielle : https://thelounge.chat/docs
- * Documentation YunoHost : https://yunohost.org/fr/app_thelounge
-
-## Caractéristiques spécifiques YunoHost
 
 #### Support multi-utilisateurs
 
 * L’authentification LDAP est-elle prise en charge ? **Oui**
 * L’application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**
 
-#### Architectures supportées
+## Documentations et ressources
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/thelounge.svg)](https://ci-apps-arm.yunohost.org/ci/apps/thelounge/)
-
-## Liens
-
- * Signaler un bug : https://github.com/YunoHost-Apps/thelounge_ynh/issues
- * Site de l’application : https://thelounge.chat/
- * Dépôt de l’application principale : https://github.com/thelounge/thelounge
- * Site web YunoHost : https://yunohost.org/
-
----
+* Site officiel de l'app : https://thelounge.chat/
+* Documentation officielle de l'admin : https://thelounge.chat/docs
+* Dépôt de code officiel de l'app : https://github.com/thelounge/thelounge
+* Documentation YunoHost pour cette app : https://yunohost.org/app_thelounge
+* Signaler un bug : https://github.com/YunoHost-Apps/thelounge_ynh/issues
 
 ## Informations pour les développeurs
 
@@ -61,3 +50,5 @@ sudo yunohost app install https://github.com/YunoHost-Apps/thelounge_ynh/tree/te
 ou
 sudo yunohost app upgrade thelounge -u https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing --debug
 ```
+
+**Plus d'infos sur le packaging d'applications :** https://yunohost.org/packaging_apps
