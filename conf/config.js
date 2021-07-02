@@ -26,7 +26,7 @@ module.exports = {
 	// For UNIX domain sockets, use `"unix:/absolute/path/to/file.sock"`.
 	//
 	// This value is set to `undefined` by default to listen on all interfaces.
-	host: undefined,
+	host: "127.0.0.1",
 
 	// ### `port`
 	//
@@ -395,7 +395,7 @@ module.exports = {
 
 		// - `url`: A url of the form `ldaps://<ip>:<port>`.
 		//   For plain connections, use the `ldap` scheme.
-		url: "ldap://127.0.0.1",
+		url: "ldap://127.0.0.1:389",
 
 		// - `primaryKey`: LDAP primary key. It is set to `"uid"` by default.
 		primaryKey: "uid",
