@@ -8,9 +8,10 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
-Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
+#Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__"
 Environment="NODE_ENV=production"
-ExecStart=/usr/bin/yarn start
+#ExecStart=/usr/bin/yarn start
+ExecStart=THELOUNGE_HOME=/home/yunohost.app/__APP__ thelounge start
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
