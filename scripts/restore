@@ -65,6 +65,10 @@ ynh_script_progression --message="Restoring $app main directory..."
 
 ynh_restore_file --origin_path="$final_path"
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # RESTORE THE CONFIG
 #=================================================
@@ -72,9 +76,9 @@ ynh_script_progression --message="Restoring the config path..."
 
 ynh_restore_file --origin_path="$config_path"
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$config_path"
+chmod -R o-rwx "$config_path"
+chown -R $app:www-data "$config_path"
 
 #=================================================
 # SPECIFIC RESTORATION
