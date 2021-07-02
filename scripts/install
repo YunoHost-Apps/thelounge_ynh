@@ -166,8 +166,10 @@ ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_
 #=================================================
 ynh_script_progression --message="Configuring permissions..."
 
-# Make app public if necessary or protect it
-[ $is_public -eq 0 ] || ynh_permission_update --permission="main" --add="visitors"
+if [ $is_public -eq 1 ]
+then
+	ynh_permission_update --permission="main" --add="visitors"
+fi
 
 #=================================================
 # RELOAD NGINX
