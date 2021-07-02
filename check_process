@@ -3,7 +3,6 @@
 		domain="domain.tld"
 		path="/path"
 		is_public=1
-		password="long_password"
 	; Checks
 		pkg_linter=1
 		setup_sub_dir=1
@@ -22,4 +21,4 @@ Notification=none
 ;;; Upgrade options
 	; commit=bd00c8e3ce43563f33fde073cf36b997c348d05c
 		name=Merge pull request #25
-		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass&port=666&
+		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&is_public=1&
