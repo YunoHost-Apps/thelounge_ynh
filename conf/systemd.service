@@ -1,20 +1,18 @@
 [Unit]
-Description=The Lounge IRC client
-After=network.target
+Description=The Lounge (IRC client)
+After=network-online.target
+Wants=network-online.target
+
 
 [Service]
-Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__
-Environment="PATH=__ENV_PATH__"
-Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
-Environment="NODE_ENV=production"
-ExecStart=/usr/bin/yarn start
-Restart=on-failure
-RestartSec=5
-StartLimitInterval=60s
-StartLimitBurst=3
+Type=simple
+ExecStart=/usr/bin/thelounge start
+ProtectSystem=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

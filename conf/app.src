@@ -1,6 +1,6 @@
-SOURCE_URL=https://github.com/thelounge/thelounge/archive/v4.2.0.tar.gz
-SOURCE_SUM=6119c0692f03678940848ec19a8095ba67f8fdba42bb12481205314eabc0672d
+SOURCE_URL=https://github.com/thelounge/thelounge-deb/releases/download/v4.2.0/thelounge_4.2.0_all.deb
+SOURCE_SUM=
 SOURCE_SUM_PRG=sha256sum
-ARCH_FORMAT=tar.gz
+ARCH_FORMAT=deb
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
+SOURCE_FILENAME=thelounge_4.2.0_all.deb
