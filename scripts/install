@@ -88,6 +88,10 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir=$final_path
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -103,9 +107,16 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-mkdir -p /home/yunohost.app/$app
+$config_path=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=$config_path --value=$config_path
+
+mkdir -p $config_path
 
 ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
+
+chmod 750 "$config_path"
+chmod -R o-rwx "$config_path"
+chown -R $app:www-data "$config_path"
 
 #=================================================
 # INSTALL THE LOUNGE
@@ -127,17 +138,6 @@ ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --targ
 ynh_replace_string --match_string="__NODE__" --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..."
-
-# Set permissions to app files
-chown -R $app: $final_path
-chown -R $app: $config_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

@@ -100,6 +100,10 @@ then
 	ynh_setup_source --dest_dir="$final_path"
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -151,17 +155,6 @@ ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --targ
 ynh_replace_string --match_string="__NODE__" --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..."
-
-# Set permissions on app files
-chown -R $app: $final_path
-chown -R $app: $config_path
 
 #=================================================
 # GENERIC FINALIZATION
