@@ -10,7 +10,7 @@ WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
 #Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__"
 Environment="NODE_ENV=production"
-ExecStart=/usr/bin/yarn start -c port=__PORT__
+ExecStart=/usr/bin/yarn start -c port=__PORT__ -c public=true
 #ExecStart=THELOUNGE_HOME=/home/yunohost.app/__APP__ thelounge start -c port=__PORT__ -c public=true
 Restart=on-failure
 RestartSec=5
