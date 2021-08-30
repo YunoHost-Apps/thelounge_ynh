@@ -129,19 +129,11 @@ ynh_add_config --template="../conf/config.js" --destination="$datadir/config.js"
 #=================================================
 ynh_script_progression --message="Installing The Lounge..."
 
-# pushd $final_path
-# 	ynh_use_nodejs
-# 	ynh_exec_warn_less NODE_ENV=production yarn install 
-# 	yarn add webpack webpack-dev-server --dev
-# 	ynh_exec_warn_less NODE_ENV=production yarn build
-# popd
-
 pushd $final_path
-	ynh_use_nodejs
-	ynh_exec_warn_less ynh_exec_as $app yarn install 
-	yarn add webpack webpack-dev-server --dev
-	ynh_exec_warn_less ynh_exec_as $app NODE_ENV=production yarn build
-	ynh_exec_warn_less ynh_exec_as $app yarn link
+ 	ynh_use_nodejs
+ 	ynh_exec_warn_less NODE_ENV=production yarn install 
+ 	yarn add webpack webpack-dev-server --dev
+ 	ynh_exec_warn_less NODE_ENV=production yarn build
 popd
 
 #=================================================
