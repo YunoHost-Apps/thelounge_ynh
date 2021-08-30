@@ -16,7 +16,7 @@ module.exports = {
 	//   channels and scrollbacks are available when they come back.
 	//
 	// This value is set to `false` by default.
-	public: true,
+	public: false,
 
 	// ### `host`
 	//
@@ -108,7 +108,7 @@ module.exports = {
 	// from URLs posted in channels and private messages.
 	//
 	// This value is set to `false` by default.
-	prefetch: true,
+	prefetch: false,
 
 	// ### `disableMediaPreview`
 	//
