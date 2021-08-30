@@ -157,7 +157,6 @@ ynh_add_config --template="../conf/config.js" --destination="$config_path/config
 ynh_script_progression --message="Upgrading systemd configuration..."
 
 ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__NODE__" --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -175,7 +174,7 @@ yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$a
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd #--line_match="Available at http"
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd
 
 #=================================================
 # RELOAD NGINX
