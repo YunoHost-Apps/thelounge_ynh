@@ -122,7 +122,7 @@ chown -R $app:www-data "$datadir"
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
+ynh_add_config --template="../conf/config-dist.js" --destination="$config_path/config.js"
 
 #=================================================
 # INSTALL THE LOUNGE
