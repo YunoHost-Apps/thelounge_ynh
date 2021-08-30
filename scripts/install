@@ -66,10 +66,10 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..."
+#ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
-ynh_system_user_create --username=$app
+#ynh_system_user_create --username=$app
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -127,10 +127,10 @@ ynh_systemd_action --service_name=$app --action=start --log_path=systemd #--line
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..."
+#ynh_script_progression --message="Configuring permissions..."
 
 # Make app public if necessary or protect it
-[ $is_public -eq 0 ] || ynh_permission_update --permission="main" --add="visitors"
+#[ $is_public -eq 0 ] || ynh_permission_update --permission="main" --add="visitors"
 
 #=================================================
 # RELOAD NGINX
