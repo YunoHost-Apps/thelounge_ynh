@@ -104,16 +104,16 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Creating a data directory..."
+# ynh_script_progression --message="Creating a data directory..."
 
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+# datadir=/home/yunohost.app/$app
+# ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
-mkdir -p $datadir
+# mkdir -p $datadir
 
-chmod 750 "$datadir"
-chmod -R o-rwx "$datadir"
-chown -R $app:www-data "$datadir"
+# chmod 750 "$datadir"
+# chmod -R o-rwx "$datadir"
+# chown -R $app:www-data "$datadir"
 
 #=================================================
 # SPECIFIC SETUP

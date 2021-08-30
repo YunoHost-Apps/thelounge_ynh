@@ -31,8 +31,7 @@
     },
     "multi_instance": false,
     "services": [
-        "nginx",
-        "mysql"
+        "nginx"
     ],
     "arguments": {
         "install" : [

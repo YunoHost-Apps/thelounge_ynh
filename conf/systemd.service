@@ -6,16 +6,20 @@ After=network.target
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__/
-Environment="PATH=__ENV_PATH__"
-Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
-Environment="NODE_ENV=production"
+#WorkingDirectory=__FINALPATH__/
+#Environment="PATH=__ENV_PATH__"
+#Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
+#Environment="NODE_ENV=production"
 ExecStart=/usr/bin/yarn start
-#ExecStart=__FINALPATH__/ start
-Restart=on-failure
-RestartSec=5
-StartLimitInterval=60s
-StartLimitBurst=3
+ProtectSystem=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+#Restart=on-failure
+#RestartSec=5
+#StartLimitInterval=60s
+#StartLimitBurst=3
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
