@@ -276,7 +276,7 @@ module.exports = {
 	// their JSON configuration file.
 	//
 	// This value is set to `["sqlite", "text"]` by default.
-	messageStorage: ["sqlite", "text"],
+	messageStorage: ["sqlite"],
 
 	// ### `useHexIp`
 	//
