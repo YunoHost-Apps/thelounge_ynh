@@ -48,11 +48,6 @@
                 "default": "/irc"
             },
             {
-                "name": "admin",
-                "type": "user",
-                "example": "johndoe"
-            },
-            {
                 "name": "is_public",
                 "type": "boolean",
                 "default": true
