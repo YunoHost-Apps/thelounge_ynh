@@ -93,10 +93,9 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..."
 
-	ynh_secure_remove --file=$final_path
-
+	ynh_secure_remove --file="$final_path"
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path"
+	ynh_setup_source --dest_dir=$final_path
 fi
 
 chmod 750 "$final_path"
@@ -136,20 +135,13 @@ ynh_add_config --template="../conf/config.js" --destination="$datadir/config.js"
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading the lounge..."
 	pushd $final_path
-		ynh_use_nodejs
-		ynh_exec_warn_less NODE_ENV=production yarn install
+	 	ynh_use_nodejs
+		ynh_exec_warn_less NODE_ENV=production yarn install 
+		yarn add webpack webpack-dev-server --dev
 		ynh_exec_warn_less NODE_ENV=production yarn build
 	popd
 fi
-
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Modifying a config file..."
-
-ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
 
 #=================================================
 # SETUP SYSTEMD
