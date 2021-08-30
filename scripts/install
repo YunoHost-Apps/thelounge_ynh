@@ -63,9 +63,6 @@ ynh_script_progression --message="Installing dependencies..."
 # Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
-# # Install Yarn
-# ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
-
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -96,29 +93,20 @@ ynh_add_nginx_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Modifying a config file..."
+#ynh_script_progression --message="Modifying a config file..."
 
-#mkdir -p /home/yunohost.app/$app
-
-ynh_add_config --template="../conf/config.js" --destination="/etc/thelounge/config.js"
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Configuring a systemd service..."
-
-ynh_add_systemd_config
+#ynh_add_config --template="../conf/config.js" --destination="/etc/thelounge/config.js"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-ynh_script_progression --message="Securing files and directories..."
+#ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
-chown -R $app: $final_path
-chown -R $app: $config_path
+#chown -R $app: $final_path
+#chown -R $app: $config_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -133,8 +121,8 @@ yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$a
 ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
-#ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Available at http"
-systemctl enable --now thelounge.service
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd #--line_match="Available at http"
+#systemctl enable --now thelounge.service
 
 #=================================================
 # SETUP SSOWAT
