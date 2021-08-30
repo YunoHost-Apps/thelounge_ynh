@@ -64,14 +64,6 @@ ynh_script_progression --message="Installing dependencies..."
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-#ynh_script_progression --message="Configuring system user..."
-
-# Create a system user
-#ynh_system_user_create --username=$app
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..."
@@ -89,24 +81,11 @@ ynh_script_progression --message="Configuring NGINX web server..."
 ynh_add_nginx_config
 
 #=================================================
-# SPECIFIC SETUP
-#=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-#ynh_script_progression --message="Modifying a config file..."
+ynh_script_progression --message="Modifying a config file..."
 
-#ynh_add_config --template="../conf/config.js" --destination="/etc/thelounge/config.js"
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-#ynh_script_progression --message="Securing files and directories..."
-
-# Set permissions to app files
-#chown -R $app: $final_path
-#chown -R $app: $config_path
+ynh_add_config --template="../conf/config.js" --destination="/etc/thelounge/config.js"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -123,14 +102,6 @@ ynh_script_progression --message="Starting a systemd service..."
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd #--line_match="Available at http"
 #systemctl enable --now thelounge.service
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-#ynh_script_progression --message="Configuring permissions..."
-
-# Make app public if necessary or protect it
-#[ $is_public -eq 0 ] || ynh_permission_update --permission="main" --add="visitors"
 
 #=================================================
 # RELOAD NGINX
