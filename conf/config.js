@@ -238,8 +238,8 @@ module.exports = {
 	// }
 	// ```
 	defaults: {
-		name: "Freenode",
-		host: "chat.freenode.net",
+		name: "Libera.Chat",
+		host: "irc.libera.chat",
 		port: 6697,
 		password: "",
 		tls: true,
