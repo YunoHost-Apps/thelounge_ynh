@@ -140,7 +140,7 @@ module.exports = {
 	// restarts.
 	//
 	// This value is set to `false` by default.
-	prefetchStorage: false,
+	prefetchStorage: true,
 
 	// ### `prefetchMaxImageSize`
 	//
