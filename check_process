@@ -2,6 +2,7 @@
 	; Manifest
 		domain="domain.tld"
 		path="/path"
+		admin="john"
 		is_public=1
 		password="password"
 	; Checks

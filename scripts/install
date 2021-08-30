@@ -26,6 +26,8 @@ ynh_abort_if_errors
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
+admin=$YNH_APP_ARG_ADMIN
+
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
@@ -48,6 +50,7 @@ ynh_script_progression --message="Storing installation settings..."
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=config_path --value=$config_path
+ynh_app_setting_set --app=$app --key=admin --value=$admin
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -141,6 +144,7 @@ pushd $final_path
 	yarn add webpack webpack-dev-server --dev
 	ynh_exec_warn_less ynh_exec_as $app NODE_ENV=production yarn build
 	ynh_exec_warn_less ynh_exec_as $app yarn link
+	ynh_exec_as $app thelounge add $admin
 popd
 
 #=================================================
