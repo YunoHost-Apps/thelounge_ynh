@@ -16,7 +16,7 @@ module.exports = {
 	//   channels and scrollbacks are available when they come back.
 	//
 	// This value is set to `false` by default.
-	public: false,
+	public: true,
 
 	// ### `host`
 	//
@@ -391,7 +391,7 @@ module.exports = {
 	ldap: {
 		// - `enable`: when set to `false`, LDAP support is disabled and all other
 		//   values are ignored.
-		enable: true,
+		enable: false,
 
 		// - `url`: A url of the form `ldaps://<ip>:<port>`.
 		//   For plain connections, use the `ldap` scheme.
