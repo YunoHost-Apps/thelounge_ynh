@@ -128,8 +128,7 @@ ynh_script_progression --message="Installing The Lounge..."
 
 pushd $final_path
  	ynh_use_nodejs
- 	ynh_exec_warn_less NODE_ENV=production yarn install 
- 	yarn add webpack webpack-dev-server --dev
+ 	ynh_exec_warn_less NODE_ENV=production yarn install
  	ynh_exec_warn_less NODE_ENV=production yarn build
 popd
 
@@ -139,7 +138,6 @@ popd
 ynh_script_progression --message="Configuring a systemd service..."
 
 ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__NODE__" --replace_string="$nodejs_path" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
