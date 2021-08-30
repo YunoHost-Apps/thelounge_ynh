@@ -105,7 +105,6 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Creating a data directory..."
 
-
 datadir=/home/yunohost.app/$app
 ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
@@ -122,18 +121,26 @@ chown -R $app:www-data "$datadir"
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-ynh_add_config --template="../conf/config-dist.js" --destination="$config_path/config.js"
+ynh_add_config --template="../conf/config.js" --destination="$config_path/config.js"
 
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
 ynh_script_progression --message="Installing The Lounge..."
 
+# pushd $final_path
+# 	ynh_use_nodejs
+# 	ynh_exec_warn_less NODE_ENV=production yarn install 
+# 	yarn add webpack webpack-dev-server --dev
+# 	ynh_exec_warn_less NODE_ENV=production yarn build
+# popd
+
 pushd $final_path
 	ynh_use_nodejs
-	ynh_exec_warn_less NODE_ENV=production yarn install 
+	ynh_exec_warn_less ynh_exec_as $app yarn install 
 	yarn add webpack webpack-dev-server --dev
-	ynh_exec_warn_less NODE_ENV=production yarn build
+	ynh_exec_warn_less ynh_exec_as $app NODE_ENV=production yarn build
+	ynh_exec_warn_less ynh_exec_as $app yarn link
 popd
 
 #=================================================
