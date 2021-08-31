@@ -15,9 +15,15 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-Web IRC client
+Modern web IRC client designed for self-hosting 
 
-**Shipped version:** 4.2.0~ynh3
+### Features:
+
+- Always connected
+- Responsive interface
+- Multi-user support
+
+**Shipped version:** 4.2.0~ynh4
 
 **Demo:** https://demo.thelounge.chat/
 
@@ -27,8 +33,7 @@ Web IRC client
 
 ## Documentation and resources
 
-* Official app website: https://example.com
-* Official user documentation: https://yunohost.org/en/app_thelounge
+* Official app website: https://thelounge.chat/
 * Official admin documentation: https://thelounge.chat/docs
 * Upstream app code repository: https://github.com/thelounge/thelounge
 * YunoHost documentation for this app: https://yunohost.org/app_thelounge
