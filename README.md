@@ -15,7 +15,13 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-Web IRC client
+Modern web IRC client designed for self-hosting 
+
+### Features:
+
+- Always connected
+- Responsive interface
+- Multi-user support
 
 **Shipped version:** 4.2.0~ynh3
 
