@@ -6,7 +6,7 @@
         "en": "Web IRC client",
         "fr": "Client Web IRC"
     },
-    "version": "4.2.0~ynh4",
+    "version": "4.2.0~ynh5",
     "url": "https://thelounge.chat/",
     "upstream": {
         "license": "MIT",
@@ -36,8 +36,7 @@
         "install" : [
             {
                 "name": "domain",
-                "type": "domain",
-                "example": "example.com"
+                "type": "domain"
             },
             {
                 "name": "path",

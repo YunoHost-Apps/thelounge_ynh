@@ -16,7 +16,7 @@ module.exports = {
 	//   channels and scrollbacks are available when they come back.
 	//
 	// This value is set to `false` by default.
-	public: true,
+	public: false,
 
 	// ### `host`
 	//
@@ -140,7 +140,7 @@ module.exports = {
 	// restarts.
 	//
 	// This value is set to `false` by default.
-	prefetchStorage: true,
+	prefetchStorage: false,
 
 	// ### `prefetchMaxImageSize`
 	//
@@ -149,6 +149,15 @@ module.exports = {
 	//
 	// This value is set to `2048` kilobytes by default.
 	prefetchMaxImageSize: 2048,
+
+	// ### prefetchMaxSearchSize
+	//
+	// This value sets the maximum request size made to find the Open Graph tags
+	// for link previews. For some sites like YouTube this can easily exceed 300
+	// kilobytes.
+	//
+	// This value is set to `50` kilobytes by default.
+	prefetchMaxSearchSize: 50,
 
 	// ### `fileUpload`
 	//
@@ -391,7 +400,7 @@ module.exports = {
 	ldap: {
 		// - `enable`: when set to `false`, LDAP support is disabled and all other
 		//   values are ignored.
-		enable: false,
+		enable: true,
 
 		// - `url`: A url of the form `ldaps://<ip>:<port>`.
 		//   For plain connections, use the `ldap` scheme.
