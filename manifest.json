@@ -6,7 +6,7 @@
         "en": "Web IRC client",
         "fr": "Client Web IRC"
     },
-    "version": "4.2.0~ynh5",
+    "version": "v4.3.0-pre.5_fix~ynh1",
     "url": "https://thelounge.chat/",
     "upstream": {
         "license": "MIT",
@@ -22,8 +22,8 @@
         "url": ""
     },
     "previous_maintainers": {
-    	"name": "beudbeud",
-    	"email": "beudbeud@beudibox.fr"
+        "name": "beudbeud",
+        "email": "beudbeud@beudibox.fr"
     },
     "requirements": {
         "yunohost": ">= 4.2.4"
@@ -33,7 +33,7 @@
         "nginx"
     ],
     "arguments": {
-        "install" : [
+        "install": [
             {
                 "name": "domain",
                 "type": "domain"
