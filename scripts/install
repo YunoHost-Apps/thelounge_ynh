@@ -126,10 +126,10 @@ ynh_script_progression --message="Installing The Lounge..." --weight=10
 
 pushd $final_path
  	ynh_use_nodejs
-	export NODE_ENV=production
- 	ynh_exec_warn_less yarn install 
- 	#ynh_exec_warn_less yarn add webpack webpack-dev-server --dev
- 	ynh_exec_warn_less yarn build
+	#export NODE_ENV=production
+ 	yarn install --production
+ 	yarn add webpack --dev
+ 	yarn build
 popd
 
 #=================================================
