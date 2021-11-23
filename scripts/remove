@@ -48,7 +48,7 @@ ynh_remove_systemd_config
 ynh_script_progression --message="Removing dependencies..."
 
 # Remove NodeJS
-ynh_remove_nodejs
+dpkg --remove thelounge
 
 #=================================================
 # REMOVE APP MAIN DIR

@@ -1,0 +1,7 @@
+SOURCE_URL=https://github.com/thelounge/thelounge/releases/download/v4.3.0-pre.6/thelounge_4.3.0.pre.6_all.deb
+SOURCE_SUM=0224f2bf7b3223358b92be8fa5a5a68fd93b1547f791ed20f9107c8e5933256a
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=deb
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=thelounge_4.3.0.pre.6_all.deb
+SOURCE_EXTRACT=false

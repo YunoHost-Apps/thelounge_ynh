@@ -23,6 +23,7 @@ ynh_abort_if_errors
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
+admin=$YNH_APP_ARG_ADMIN
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -61,11 +62,9 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 #=================================================
 ynh_script_progression --message="Installing dependencies..."
 
-# Install Nodejs
-ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
-
-# Install Yarn
-ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
+tempdir="$(mktemp -d)"
+ynh_setup_source --dest_dir=$tempdir --source_id=deb
+ynh_exec_warn_less dpkg -i $tempdir/thelounge_4.3.0.pre.6_all.deb
 
 #=================================================
 # CREATE DEDICATED USER
@@ -75,18 +74,20 @@ ynh_script_progression --message="Configuring system user..."
 # Create a system user
 ynh_system_user_create --username=$app --home_dir="$final_path"
 
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-ynh_script_progression --message="Setting up source files..."
+# #=================================================
+# # DOWNLOAD, CHECK AND UNPACK SOURCE
+# #=================================================
+# ynh_script_progression --message="Setting up source files..."
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir=$final_path
+# ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+# # Download, check integrity, uncompress and patch the source from app.src
+# ynh_setup_source --dest_dir=$final_path
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+# chmod 750 "$final_path"
+# chmod -R o-rwx "$final_path"
+# chown -R $app:www-data "$final_path"
+
+ynh_exec_as $app thelounge add $admin
 
 #=================================================
 # NGINX CONFIGURATION
@@ -96,48 +97,36 @@ ynh_script_progression --message="Configuring NGINX web server..."
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Creating a data directory..."
+# #=================================================
+# # CREATE DATA DIRECTORY
+# #=================================================
+# ynh_script_progression --message="Creating a data directory..."
 
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+# datadir=/home/yunohost.app/$app
+# ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
-mkdir -p $datadir
+# mkdir -p $datadir
 
-chmod 750 "$datadir"
-chmod -R o-rwx "$datadir"
-chown -R $app:www-data "$datadir"
+# chmod 750 "$datadir"
+# chmod -R o-rwx "$datadir"
+# chown -R $app:www-data "$datadir"
 
-#=================================================
-# SPECIFIC SETUP
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Modifying a config file..."
+# #=================================================
+# # SPECIFIC SETUP
+# #=================================================
+# # MODIFY A CONFIG FILE
+# #=================================================
+# ynh_script_progression --message="Modifying a config file..."
 
-ynh_add_config --template="../conf/config.js" --destination="$datadir/config.js"
+# ynh_add_config --template="../conf/config.js" --destination="$datadir/config.js"
 
-#=================================================
-# INSTALL THE LOUNGE
-#=================================================
-ynh_script_progression --message="Installing The Lounge..."
+# #=================================================
+# # SETUP SYSTEMD
+# #=================================================
+# ynh_script_progression --message="Configuring a systemd service..."
 
-pushd $final_path
- 	ynh_use_nodejs
- 	ynh_exec_warn_less NODE_ENV=production yarn install 
- 	yarn add webpack webpack-dev-server --dev
- 	ynh_exec_warn_less NODE_ENV=production yarn build
-popd
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Configuring a systemd service..."
-
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_add_systemd_config
+# ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
+# ynh_add_systemd_config
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

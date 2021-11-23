@@ -45,6 +45,10 @@
                 "default": "/irc"
             },
             {
+                "name": "admin",
+                "type": "user"
+            },
+            {
                 "name": "is_public",
                 "type": "boolean",
                 "default": true
