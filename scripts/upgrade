@@ -132,10 +132,10 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	pushd $final_path
 	 	ynh_use_nodejs
-		export NODE_ENV=production
-		ynh_exec_warn_less yarn install 
-		ynh_exec_warn_less yarn add webpack webpack-dev-server --dev
-		ynh_exec_warn_less yarn build
+		#export NODE_ENV=production
+		yarn install --production=true --silent
+		yarn add webpack webpack-dev-server --dev --non-interactive
+		yarn build --non-interactive
 	popd
 fi
 
