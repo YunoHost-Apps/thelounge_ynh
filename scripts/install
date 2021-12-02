@@ -64,7 +64,7 @@ ynh_script_progression --message="Installing dependencies..."
 
 tempdir="$(mktemp -d)"
 ynh_setup_source --dest_dir=$tempdir --source_id=deb
-ynh_exec_warn_less dpkg -i $tempdir/thelounge_4.3.0.pre.6_all.deb
+ynh_exec_warn_less dpkg -i $tempdir/thelounge.deb
 
 #=================================================
 # CREATE DEDICATED USER
