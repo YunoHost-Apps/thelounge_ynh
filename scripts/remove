@@ -50,6 +50,8 @@ ynh_script_progression --message="Removing dependencies..."
 # Remove NodeJS
 dpkg --remove thelounge
 
+ynh_remove_nodejs
+
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
