@@ -10,7 +10,7 @@ WorkingDirectory=__FINALPATH__/
 Environment="PATH=__ENV_PATH__"
 Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
 Environment="NODE_ENV=production"
-ExecStart==__YNH_NODE__ thelounge start
+ExecStart==thelounge start
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s
