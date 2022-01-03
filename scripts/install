@@ -65,11 +65,6 @@ ynh_script_progression --message="Installing dependencies..." --weight=20
 # Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Installing dependencies..."
-
 tempdir="$(mktemp -d)"
 ynh_setup_source --dest_dir=$tempdir --source_id=deb
 ynh_exec_warn_less dpkg -i $tempdir/thelounge.deb
