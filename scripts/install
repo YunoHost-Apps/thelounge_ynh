@@ -128,7 +128,7 @@ pushd $final_path
  	ynh_use_nodejs
  	#ynh_exec_as $app env $ynh_node_load_PATH 
  	ynh_exec_warn_less $ynh_npm install --global --unsafe-perm thelounge
- 	ynh_exec_warn_less ynh_exec_as $app env "$ynh_node_load_PATH" thelounge start
+ 	#ynh_exec_warn_less ynh_exec_as $app env "$ynh_node_load_PATH" thelounge start
 popd
 
 #=================================================
