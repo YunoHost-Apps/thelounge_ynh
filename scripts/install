@@ -73,10 +73,7 @@ ynh_exec_warn_less dpkg -i $tempdir/thelounge.deb
 # CREATE DEDICATED USER
 #=================================================
 
-# pushd $final_path
-#  	ynh_use_nodejs
-#  	ynh_exec_as $app env "$ynh_node_load_PATH" thelounge add $admin
-# popd
+# ynh_exec_as $app thelounge add $admin
 
 #=================================================
 # NGINX CONFIGURATION
@@ -86,36 +83,17 @@ ynh_script_progression --message="Configuring NGINX web server..."
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-# #=================================================
-# # CREATE DATA DIRECTORY
-# #=================================================
-# ynh_script_progression --message="Creating a data directory..."
+#=================================================
+# SPECIFIC SETUP
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..."
 
-# datadir=/home/yunohost.app/$app
-# ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+ynh_add_config --template="../conf/config.js" --destination="/etc/thelounge/config.js"
 
-# mkdir -p $datadir
-
-# chmod 750 "$datadir"
-# chmod -R o-rwx "$datadir"
-# chown -R $app:www-data "$datadir"
-
-# #=================================================
-# # SPECIFIC SETUP
-# #=================================================
-# # MODIFY A CONFIG FILE
-# #=================================================
-# ynh_script_progression --message="Modifying a config file..."
-
-# ynh_add_config --template="../conf/config.js" --destination="$datadir/config.js"
-
-# #=================================================
-# # SETUP SYSTEMD
-# #=================================================
-# ynh_script_progression --message="Configuring a systemd service..."
-
-# ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-# ynh_add_systemd_config
+chmod 400 "/etc/thelounge/config.js"
+chown $app:$app "/etc/thelounge/config.js"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
