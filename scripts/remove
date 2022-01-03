@@ -18,8 +18,6 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 port=$(ynh_app_setting_get --app=$app --key=port)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 
 #=================================================
 # STANDARD REMOVE
@@ -49,7 +47,6 @@ ynh_script_progression --message="Removing dependencies..."
 
 # Remove NodeJS
 dpkg --remove thelounge
-
 ynh_remove_nodejs
 
 #=================================================
@@ -67,25 +64,6 @@ ynh_script_progression --message="Removing NGINX web server configuration..."
 
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
-
-#=================================================
-# SPECIFIC REMOVE
-#=================================================
-# REMOVE THE CONFIG FILE
-#=================================================
-ynh_script_progression --message="Removing the config file..."
-
-ynh_secure_remove --file="$datadir"
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# REMOVE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Removing the dedicated system user..."
-
-# Delete a system user
-ynh_system_user_delete --username=$app
 
 #=================================================
 # END OF SCRIPT
