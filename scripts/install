@@ -66,6 +66,8 @@ tempdir="$(mktemp -d)"
 ynh_setup_source --dest_dir=$tempdir --source_id=deb
 ynh_exec_warn_less dpkg -i $tempdir/thelounge.deb
 
+ynh_secure_remove --file="$tempdir"
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================

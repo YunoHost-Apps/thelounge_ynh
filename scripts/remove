@@ -50,14 +50,6 @@ dpkg --remove thelounge
 ynh_remove_nodejs
 
 #=================================================
-# REMOVE APP MAIN DIR
-#=================================================
-ynh_script_progression --message="Removing $app main directory..."
-
-# Remove the app directory securely
-ynh_secure_remove --file="$final_path"
-
-#=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Removing NGINX web server configuration..."
