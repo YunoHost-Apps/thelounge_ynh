@@ -7,8 +7,6 @@
 # nodejs version
 nodejs_version=14
 
-pkg_dependencies="nodejs"
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================

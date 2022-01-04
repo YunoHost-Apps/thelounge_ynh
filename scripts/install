@@ -60,9 +60,7 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 ynh_script_progression --message="Installing dependencies..." --weight=20
 
 # Install Nodejs
-#ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-ynh_install_app_dependencies $pkg_dependencies
+ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
 tempdir="$(mktemp -d)"
 ynh_setup_source --dest_dir=$tempdir --source_id=deb
