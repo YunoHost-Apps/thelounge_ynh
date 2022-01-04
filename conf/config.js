@@ -428,7 +428,8 @@ module.exports = {
 		//   to `"ou=accounts,dc=example,dc=com"`.
 		//   When unset, the LDAP auth logic with use `searchDN` instead to locate users.
         baseDN: "ou=users,dc=yunohost,dc=org",
-		
+	},
+
 	// ## Debugging settings
 
 	// The `debug` object contains several settings to enable debugging in The
