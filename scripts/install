@@ -126,9 +126,9 @@ ynh_script_progression --message="Installing The Lounge..." --weight=10
 
 pushd $final_path
  	ynh_use_nodejs
- 	NODE_ENV=production ynh_exec_warn_less yarn install 
- 	NODE_ENV=production yarn add webpack webpack-cli --dev
- 	NODE_ENV=production ynh_exec_warn_less yarn build
+	ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn install
+	ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn build
+	ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn link
 popd
 
 #=================================================
