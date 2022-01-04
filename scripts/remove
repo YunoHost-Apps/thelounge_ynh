@@ -45,9 +45,17 @@ ynh_remove_systemd_config
 #=================================================
 ynh_script_progression --message="Removing dependencies..."
 
+#=================================================
+# REMOVE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Removing dependencies..." --time --weight=1
+
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
+
 # Remove NodeJS
 dpkg --remove thelounge
-ynh_remove_nodejs
+#ynh_remove_nodejs
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
