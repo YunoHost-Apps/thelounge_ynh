@@ -152,8 +152,9 @@ module.exports = {
 
 	// ### prefetchMaxSearchSize
 	//
-	// This value sets the maximum request size made to find the Open Graph tags
-	// for link previews. For some sites like YouTube this can easily exceed 300
+	// This value sets the maximum response size allowed when finding the Open
+	// Graph tags for link previews. The entire response is temporarily stored
+	// in memory and for some sites like YouTube this can easily exceed 300
 	// kilobytes.
 	//
 	// This value is set to `50` kilobytes by default.
@@ -227,10 +228,11 @@ module.exports = {
 	//   numbers from 0 to 9. For example, `Guest%%%` may become `Guest123`.
 	// - `username`: User name.
 	// - `realname`: Real name.
+	// - `leaveMessage`: Network specific leave message (overrides global leaveMessage)
 	// - `join`: Comma-separated list of channels to auto-join once connected.
 	//
 	// This value is set to connect to the official channel of The Lounge on
-	// irc.libera.chat by default:
+	// Libera.Chat by default:
 	//
 	// ```js
 	// defaults: {
@@ -257,6 +259,7 @@ module.exports = {
 		username: "thelounge",
 		realname: "The Lounge User",
 		join: "#yunohost",
+		leaveMessage: "",
 	},
 
 	// ### `lockNetwork`
@@ -406,13 +409,25 @@ module.exports = {
 		//   For plain connections, use the `ldap` scheme.
 		url: "ldap://127.0.0.1:389",
 
+		// - `tlsOptions`: LDAP connection TLS options (only used if scheme is
+		//   `ldaps://`). It is an object whose values are Node.js' `tls.connect()`
+		//   options. It is set to `{}` by default.
+		//   For example, this option can be used in order to force the use of IPv6:
+		//   ```js
+		//   {
+		//     host: 'my::ip::v6',
+		//     servername: 'example.com'
+		//   }
+		//   ```
+		tlsOptions: {},
+
 		// - `primaryKey`: LDAP primary key. It is set to `"uid"` by default.
 		primaryKey: "uid",
 
 		// - `baseDN`: LDAP base DN, alternative to `searchDN`. For example, set it
 		//   to `"ou=accounts,dc=example,dc=com"`.
 		//   When unset, the LDAP auth logic with use `searchDN` instead to locate users.
-		baseDN: "ou=users,dc=yunohost,dc=org",
+        baseDN: "ou=users,dc=yunohost,dc=org",
 	},
 
 	// ## Debugging settings

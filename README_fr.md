@@ -11,15 +11,15 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-Modern web IRC client designed for self-hosting 
+Client Web IRC moderne conçu pour l'auto-hébergement
 
-### Features:
+### Caractéristiques:
 
-- Always connected
-- Responsive interface
-- Multi-user support
+- Toujours connecté
+- Interface réactive
+- Support multi-utilisateurs 
 
-**Version incluse :** 4.2.0~ynh5
+**Version incluse :** 4.3.0~ynh1
 
 **Démo :** https://demo.thelounge.chat/
 

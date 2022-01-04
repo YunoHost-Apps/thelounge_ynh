@@ -12,7 +12,7 @@
 		setup_private=1
 		setup_public=1
 		upgrade=1
-		#upgrade=1	from_commit=bd00c8e3ce43563f33fde073cf36b997c348d05c
+		#upgrade=1	from_commit=3e641515e539d8c76c00ae3dc4d411e055510770
 		backup_restore=1
 		multi_instance=0
 		change_url=1
@@ -20,6 +20,6 @@
 Email=
 Notification=none
 ;;; Upgrade options
-	; commit=bd00c8e3ce43563f33fde073cf36b997c348d05c
-		name=Merge pull request #25
+	; commit=3e641515e539d8c76c00ae3dc4d411e055510770
+		name=Merge pull request #42
 		manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass&port=666&
