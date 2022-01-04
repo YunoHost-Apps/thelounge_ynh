@@ -131,10 +131,9 @@ ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ st
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	pushd $final_path
-	 	ynh_use_nodejs
+ 		ynh_use_nodejs
 		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn install
-		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn build
-		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn link
+		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH NODE_ENV=production yarn build
 	popd
 fi
 
