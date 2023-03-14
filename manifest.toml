@@ -39,6 +39,8 @@ ram.runtime = "50M"
     default = "visitors"
 
 [resources]
+    [resources.sources]
+
         [resources.sources.main]
         url = "https://github.com/thelounge/thelounge/archive/v4.3.1.tar.gz"
         sha256 = "7bf444cc97449d78a74b35c3fea882ddf6e3df265f0e2252a23cc48309b11713"
