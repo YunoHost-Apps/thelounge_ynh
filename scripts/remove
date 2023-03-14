@@ -15,7 +15,7 @@ source /usr/share/yunohost/helpers
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
 
-# Remove the service from the list of services known by Yunohost (added from `yunohost service add`)
+# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status $app >/dev/null
 then
 	ynh_script_progression --message="Removing $app service..." --weight=2
@@ -33,7 +33,7 @@ ynh_remove_systemd_config
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Removing dependencies..." --weight=1
+ynh_script_progression --message="Removing dependencies..." --weight=1
 
 # Remove NodeJS
 ynh_remove_nodejs
