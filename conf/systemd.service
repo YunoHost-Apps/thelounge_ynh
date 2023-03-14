@@ -1,5 +1,5 @@
 [Unit]
-Description=The Lounge IRC client
+Description=TheLounge: IRC client
 After=network.target
 
 [Service]
@@ -8,7 +8,7 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
 Environment="PATH=__ENV_PATH__"
-Environment="THELOUNGE_HOME=/home/yunohost.app/__APP__/"
+Environment="THELOUNGE_HOME=__DATA_DIR__/"
 Environment="NODE_ENV=production"
 ExecStart=/usr/bin/yarn start
 Restart=on-failure
