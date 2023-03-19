@@ -42,9 +42,9 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        url = "https://github.com/thelounge/thelounge/archive/v4.4.0-pre.1.tar.gz"
-        sha256 = "2530f4dd0da22fe557984baf90fab4e27cc0e64b91d6debf01860f2e395290fe"
-
+        url = "https://github.com/thelounge/thelounge/archive/v4.4.0-pre.2.tar.gz"
+        sha256 = "64241353875684f64ef433d38f5b4a0d47564b84b506b6d375b1811cd3fe3d52"
+        
     [resources.ports]
 
     [resources.system_user]
