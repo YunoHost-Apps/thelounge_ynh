@@ -50,13 +50,10 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=5
+ynh_script_progression --message="Upgrading dependencies..." --weight=5
 
 # Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
-
-# Install Yarn
-#REMOVEME? ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
 
 #=================================================
 # SPECIFIC UPGRADE
