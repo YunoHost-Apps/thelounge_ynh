@@ -1,0 +1,64 @@
+packaging_format = 2
+
+id = "thelounge"
+name = "The Lounge"
+description.en = "Web IRC client"
+description.fr = "Client Web IRC"
+
+version = "4.4.0~ynh1"
+
+maintainers = ["rafi59"]
+
+[upstream]
+license = "MIT"
+website = "https://thelounge.chat/"
+demo = "https://demo.thelounge.chat/"
+admindoc = "https://thelounge.chat/docs"
+code = "https://github.com/thelounge/thelounge"
+
+[integration]
+yunohost = ">= 11.1.15"
+architectures = "all"
+multi_instance = false
+ldap = false
+sso =  false
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/irc"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+    [resources.sources]
+
+        [resources.sources.main]
+        url = "https://github.com/thelounge/thelounge/archive/v4.4.0-pre.2.tar.gz"
+        sha256 = "64241353875684f64ef433d38f5b4a0d47564b84b506b6d375b1811cd3fe3d52"
+        autoupdate.strategy = "latest_github_tag"
+        
+    [resources.ports]
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = ""
+    extras.yarn.repo = "deb https://dl.yarnpkg.com/debian/ stable main"
+    extras.yarn.key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    extras.yarn.packages = "yarn"
