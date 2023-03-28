@@ -57,7 +57,8 @@ ram.runtime = "50M"
     [resources.permissions]
     main.url = "/"
 
-        [[resources.apt.extras]]
-        repo = "deb https://dl.yarnpkg.com/debian/ stable main"
-        key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
-        packages = "yarn"
+    [resources.apt]
+    
+    extras.yarn.repo = "deb https://dl.yarnpkg.com/debian/ stable main"
+    extras.yarn.key = "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    extras.yarn.packages = "yarn"
