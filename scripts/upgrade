@@ -65,8 +65,8 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	pushd $install_dir
  		ynh_use_nodejs
- 		ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH corepack enable
-		ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH corepack prepare yarn@stable --activate
+ 		ynh_exec_warn_less corepack enable
+		ynh_exec_warn_less corepack prepare yarn@stable --activate
 		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH yarn install
 		ynh_exec_warn_less sudo -u $app env $ynh_node_load_PATH NODE_ENV=production yarn build
 	popd
