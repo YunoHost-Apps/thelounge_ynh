@@ -5,7 +5,7 @@ name = "The Lounge"
 description.en = "Web IRC client"
 description.fr = "Client Web IRC"
 
-version = "4.4.1~ynh1"
+version = "4.4.1~ynh2"
 
 maintainers = ["rafi59"]
 
@@ -17,7 +17,7 @@ admindoc = "https://thelounge.chat/docs"
 code = "https://github.com/thelounge/thelounge"
 
 [integration]
-yunohost = ">= 11.1.21"
+yunohost = ">= 11.2"
 architectures = "all"
 multi_instance = false
 ldap = false
