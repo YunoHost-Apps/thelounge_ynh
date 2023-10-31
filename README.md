@@ -37,7 +37,7 @@ Modern web IRC client designed for self-hosting
 * Official app website: <https://thelounge.chat/>
 * Official admin documentation: <https://thelounge.chat/docs>
 * Upstream app code repository: <https://github.com/thelounge/thelounge>
-* YunoHost documentation for this app: <https://yunohost.org/app_thelounge>
+* YunoHost Store: <https://apps.yunohost.org/app/thelounge>
 * Report a bug: <https://github.com/YunoHost-Apps/thelounge_ynh/issues>
 
 ## Developer info
