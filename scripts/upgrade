@@ -40,6 +40,7 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 #=================================================
 # UPGRADE THE LOUNGE
 #=================================================
+ynh_script_progression --message="Installing $app..." --weight=3
 
 pushd $install_dir
  	ynh_use_nodejs
