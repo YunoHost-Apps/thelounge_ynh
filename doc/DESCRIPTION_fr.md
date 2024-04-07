@@ -1,4 +1,4 @@
-Client Web IRC moderne conçu pour l'auto-hébergement
+Client Web IRC moderne conçu pour l'auto-hébergement.
 
 ### Caractéristiques:
 

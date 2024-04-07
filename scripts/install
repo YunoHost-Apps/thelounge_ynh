@@ -43,12 +43,12 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
-ynh_add_config --template="../conf/config.js" --destination="$data_dir/config.js"
+ynh_add_config --template="config.js" --destination="$data_dir/config.js"
 
 #=================================================
 # INSTALL THE LOUNGE
 #=================================================
-ynh_script_progression --message="Installing The Lounge..." --weight=10
+ynh_script_progression --message="Installing $app..." --weight=10
 
 pushd $install_dir
  	ynh_use_nodejs

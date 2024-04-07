@@ -9,14 +9,14 @@ It shall NOT be edited by hand.
 
 [![Install The Lounge with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
-*[Read this README is other languages.](./ALL_README.md)*
+*[Read this README in other languages.](./ALL_README.md)*
 
 > *This package allows you to install The Lounge quickly and simply on a YunoHost server.*  
 > *If you don't have YunoHost, please consult [the guide](https://yunohost.org/install) to learn how to install it.*
 
 ## Overview
 
-Modern web IRC client designed for self-hosting 
+Modern web IRC client designed for self-hosting. 
 
 ### Features:
 
@@ -24,7 +24,7 @@ Modern web IRC client designed for self-hosting
 - Responsive interface
 - Multi-user support
 
-**Shipped version:** 4.4.1~ynh2
+**Shipped version:** 4.4.3~ynh1
 
 **Demo:** <https://demo.thelounge.chat/>
 

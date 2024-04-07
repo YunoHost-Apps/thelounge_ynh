@@ -16,7 +16,7 @@ Il NE doit PAS être modifié à la main.
 
 ## Vue d’ensemble
 
-Client Web IRC moderne conçu pour l'auto-hébergement
+Client Web IRC moderne conçu pour l'auto-hébergement.
 
 ### Caractéristiques:
 
@@ -24,7 +24,7 @@ Client Web IRC moderne conçu pour l'auto-hébergement
 - Interface réactive
 - Support multi-utilisateurs 
 
-**Version incluse :** 4.4.1~ynh2
+**Version incluse :** 4.4.3~ynh1
 
 **Démo :** <https://demo.thelounge.chat/>
 
