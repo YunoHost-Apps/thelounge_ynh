@@ -16,7 +16,7 @@ It shall NOT be edited by hand.
 
 ## Overview
 
-Modern web IRC client designed for self-hosting 
+Modern web IRC client designed for self-hosting. 
 
 ### Features:
 
