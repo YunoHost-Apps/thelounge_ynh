@@ -5,7 +5,7 @@ name = "The Lounge"
 description.en = "Web IRC client"
 description.fr = "Client Web IRC"
 
-version = "4.4.3~ynh1"
+version = "4.4.3~ynh2"
 
 maintainers = ["rafi59"]
 
