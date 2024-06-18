@@ -29,14 +29,6 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=1
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
 # SPECIFIC SETUP
 #=================================================
 # MODIFY A CONFIG FILE
@@ -44,6 +36,9 @@ ynh_add_nginx_config
 ynh_script_progression --message="Modifying a config file..." --weight=1
 
 ynh_add_config --template="config.js" --destination="$data_dir/config.js"
+
+chmod 400 "$data_dir/config.js"
+chown "$app:$app" "$data_dir/config.js"
 
 #=================================================
 # INSTALL THE LOUNGE
@@ -61,13 +56,10 @@ popd
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
-env_path="$PATH"
-ynh_add_systemd_config
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+ynh_add_systemd_config
 
 yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$app.log"
 

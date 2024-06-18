@@ -7,7 +7,7 @@ description.fr = "Client Web IRC"
 
 version = "4.4.3~ynh2"
 
-maintainers = ["rafi59"]
+maintainers = []
 
 [upstream]
 license = "MIT"
