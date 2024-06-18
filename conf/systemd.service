@@ -7,7 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
-Environment="PATH=__ENV_PATH__"
+Environment="__YNH_NODE_LOAD_PATH__"
 Environment="THELOUNGE_HOME=__DATA_DIR__/"
 Environment="NODE_ENV=production"
 ExecStart=/usr/bin/yarn start
