@@ -4,8 +4,4 @@
 # COMMON VARIABLES AND CUSTOM HELPERS
 #=================================================
 
-nodejs_version=20
-
-#=================================================
-# FUTURE OFFICIAL HELPERS
-#=================================================
+nodejs_version="20"

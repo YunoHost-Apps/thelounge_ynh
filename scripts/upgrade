@@ -17,8 +17,6 @@ ynh_script_progression "Upgrading source files..."
 
 ynh_setup_source --dest_dir=$install_dir --full_replace
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
@@ -32,9 +30,8 @@ ynh_nodejs_install
 ynh_script_progression "Installing $app..."
 
 pushd $install_dir
-
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH yarn install
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH NODE_ENV=production yarn build
+	ynh_hide_warnings ynh_exec_as_app yarn install
+	ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
 popd
 
 #=================================================
