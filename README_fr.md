@@ -5,7 +5,7 @@ Il NE doit PAS être modifié à la main.
 
 # The Lounge pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Niveau d’intégration](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
 
 [![Installer The Lounge avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
