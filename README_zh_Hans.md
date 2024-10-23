@@ -24,7 +24,7 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**分发版本：** 4.4.3~ynh3
+**分发版本：** 4.4.3~ynh4
 
 **演示：** <https://demo.thelounge.chat/>
 

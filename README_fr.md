@@ -24,7 +24,7 @@ Client Web IRC moderne conçu pour l'auto-hébergement.
 - Interface réactive
 - Support multi-utilisateurs 
 
-**Version incluse :** 4.4.3~ynh3
+**Version incluse :** 4.4.3~ynh4
 
 **Démo :** <https://demo.thelounge.chat/>
 
