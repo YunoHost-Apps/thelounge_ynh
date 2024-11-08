@@ -7,7 +7,7 @@ description.fr = "Client Web IRC"
 
 version = "4.4.3~ynh4"
 
-maintainers = []
+maintainers = ["eric_G"]
 
 [upstream]
 license = "MIT"
@@ -23,7 +23,6 @@ architectures = "all"
 multi_instance = false
 
 ldap = false
-
 sso =  false
 
 disk = "50M"
