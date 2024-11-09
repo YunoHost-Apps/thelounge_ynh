@@ -25,7 +25,7 @@ ynh_script_progression "Reinstalling dependencies..."
 ynh_nodejs_install
 
 #=================================================
-# RESTORE SYSTEMD
+# RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
