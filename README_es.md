@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # The Lounge para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
 
 [![Instalar The Lounge con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
@@ -24,7 +24,7 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Versión actual:** 4.4.3~ynh3
+**Versión actual:** 4.4.3~ynh4
 
 **Demo:** <https://demo.thelounge.chat/>
 
@@ -42,7 +42,7 @@ Modern web IRC client designed for self-hosting.
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

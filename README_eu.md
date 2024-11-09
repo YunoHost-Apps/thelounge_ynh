@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # The Lounge YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/thelounge.svg)](https://dash.yunohost.org/appci/app/thelounge) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
 
 [![Instalatu The Lounge YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
@@ -24,7 +24,7 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Paketatutako bertsioa:** 4.4.3~ynh3
+**Paketatutako bertsioa:** 4.4.3~ynh4
 
 **Demoa:** <https://demo.thelounge.chat/>
 
