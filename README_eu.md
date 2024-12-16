@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # The Lounge YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/thelounge)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/thelounge)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/thelounge)
 
 [![Instalatu The Lounge YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 

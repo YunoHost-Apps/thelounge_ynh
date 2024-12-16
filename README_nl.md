@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # The Lounge voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/thelounge)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/thelounge)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/thelounge)
 
 [![The Lounge met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
