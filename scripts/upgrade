@@ -12,7 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service="$app" --action=stop --log_path=systemd
+ynh_systemctl --service="$app" --action=stop --log_path="systemd"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -66,7 +66,7 @@ popd
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT

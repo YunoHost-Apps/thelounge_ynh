@@ -61,7 +61,7 @@ popd
 ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT

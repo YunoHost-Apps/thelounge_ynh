@@ -23,9 +23,9 @@ ynh_script_progression "Restoring the data directory..."
 ynh_restore "$data_dir"
 
 #=================================================
-# REINSTALL DEPENDENCIES
+# INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression "Reinstalling dependencies..."
+ynh_script_progression "Installing dependencies..."
 
 ynh_nodejs_install
 
@@ -45,7 +45,7 @@ yunohost service add "$app" --description="Client Web IRC" --log="/var/log/$app/
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
 
 ynh_systemctl --service=nginx --action=reload
 
