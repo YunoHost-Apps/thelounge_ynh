@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -8,14 +12,27 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service=$app --action=stop --log_path=systemd
+ynh_systemctl --service="$app" --action=stop --log_path=systemd
+
+#=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression "Ensuring downward compatibility..."
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir=$install_dir --full_replace
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir" --full_replace
+
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating $app's configuration files..."
+
+ynh_config_add --template="config.js" --destination="$data_dir/config.js"
 
 #=================================================
 # UPGRADE DEPENDENCIES
@@ -23,6 +40,16 @@ ynh_setup_source --dest_dir=$install_dir --full_replace
 ynh_script_progression "Upgrading dependencies..."
 
 ynh_nodejs_install
+
+#=================================================
+# REAPPLY SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Upgrading system configurations related to $app..."
+
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+yunohost service add "$app" --description="Client Web IRC" --log="/var/log/$app/$app.log"
 
 #=================================================
 # UPGRADE THE LOUNGE
@@ -35,22 +62,11 @@ pushd $install_dir
 popd
 
 #=================================================
-# REAPPLY SYSTEM CONFIGURATIONS
-#=================================================
-ynh_script_progression "Upgrading system configurations related to $app..."
-
-ynh_config_add_nginx
-
-ynh_config_add_systemd
-
-yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$app.log"
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path=systemd
 
 #=================================================
 # END OF SCRIPT

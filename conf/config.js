@@ -172,6 +172,20 @@ module.exports = {
 	//
 	// - `enable`: When set to `true`, files can be uploaded on the client with a
 	//   drag-and-drop or using the upload dialog.
+	prefetchTimeout: 5000,
+
+	// ### `fileUpload`
+	//
+	// Allow uploading files to the server hosting The Lounge.
+	//
+	// Files are stored in the `${THELOUNGE_HOME}/uploads` folder, do not expire,
+	// and are not removed by The Lounge. This may cause issues depending on your
+	// hardware, for example in terms of disk usage.
+	//
+	// The available keys for the `fileUpload` object are:
+	//
+	// - `enable`: When set to `true`, files can be uploaded on the client with a
+	//   drag-and-drop or using the upload dialog.
 	// - `maxFileSize`: When file upload is enabled, users sending files above
 	//   this limit will be prompted with an error message in their browser. A value of
 	//   `-1` disables the file size limit and allows files of any size. **Use at
@@ -289,6 +303,26 @@ module.exports = {
 	//
 	// This value is set to `["sqlite", "text"]` by default.
 	messageStorage: ["sqlite", "text"],
+
+	// ### `storagePolicy`
+
+	// When the sqlite storage is in use, control the maximum storage duration.
+	// A background task will periodically clean up messages older than the limit.
+
+	// The available keys for the `storagePolicy` object are:
+	//
+	// - `enabled`: If this is false, the cleaning task is not running.
+	// - `maxAgeDays`: Maximum age of an entry in days.
+	// - `deletionPolicy`: Controls what types of messages are being deleted.
+	//   Valid options are:
+	//   - `statusOnly`: Only delete message types which are status related (e.g. away, back, join, parts, mode, ctcp...)
+	//     but keep actual messages from nicks. This keeps the DB size down while retaining "precious" messages.
+	//   - `everything`: Delete everything, including messages from irc nicks
+	storagePolicy: {
+		enabled: false,
+		maxAgeDays: 7,
+		deletionPolicy: "statusOnly",
+	},
 
 	// ### `useHexIp`
 	//
