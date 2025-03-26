@@ -1,7 +1,30 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir"
+
+#=================================================
+# APP INITIAL CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration files..."
+
+ynh_config_add --template="config.js" --destination="$data_dir/config.js"
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -11,18 +34,16 @@ ynh_script_progression "Installing dependencies..."
 ynh_nodejs_install
 
 #=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression "Setting up source files..."
+ynh_script_progression "Adding system configurations related to $app..."
 
-ynh_setup_source --dest_dir=$install_dir
+# Create a dedicated NGINX config using the conf/nginx.conf template
+ynh_config_add_nginx
 
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression "Updating configuration..."
-
-ynh_config_add --template="config.js" --destination="$data_dir/config.js"
+# Create a dedicated systemd config
+ynh_config_add_systemd
+yunohost service add "$app" --description="Client Web IRC" --log="/var/log/$app/$app.log"
 
 #=================================================
 # INSTALL THE LOUNGE
@@ -35,22 +56,12 @@ pushd $install_dir
 popd
 
 #=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression "Configuring $app's systemd service..."
-
-ynh_config_add_nginx
-
-ynh_config_add_systemd
-
-yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$app.log"
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT

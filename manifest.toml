@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "thelounge"
@@ -5,7 +7,7 @@ name = "The Lounge"
 description.en = "Web IRC client"
 description.fr = "Client Web IRC"
 
-version = "4.4.3~ynh4"
+version = "4.4.3~ynh5"
 
 maintainers = ["eric_G"]
 
@@ -23,6 +25,7 @@ architectures = "all"
 multi_instance = false
 
 ldap = false
+
 sso =  false
 
 disk = "50M"
@@ -44,12 +47,10 @@ ram.runtime = "50M"
 [resources]
     [resources.sources]
 
-        [resources.sources.main]
-        url = "https://github.com/thelounge/thelounge/archive/refs/tags/v4.4.3.tar.gz"
-        sha256 = "67491b81be767acfd4a99c52690e400c9f1309a703624eba849236e93492b86a"
-        autoupdate.strategy = "latest_github_tag"
-        
-    [resources.ports]
+    [resources.sources.main]
+    url = "https://github.com/thelounge/thelounge/archive/refs/tags/v4.4.3.tar.gz"
+    sha256 = "67491b81be767acfd4a99c52690e400c9f1309a703624eba849236e93492b86a"
+    autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
 
@@ -59,6 +60,8 @@ ram.runtime = "50M"
 
     [resources.permissions]
     main.url = "/"
+
+    [resources.ports]
 
     [resources.apt]
     packages = ""

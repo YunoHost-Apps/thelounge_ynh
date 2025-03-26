@@ -26,7 +26,8 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Paketatutako bertsioa:** 4.4.3~ynh4
+
+**Paketatutako bertsioa:** 4.4.3~ynh5
 
 **Demoa:** <https://demo.thelounge.chat/>
 
@@ -46,7 +47,7 @@ Modern web IRC client designed for self-hosting.
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing --debug

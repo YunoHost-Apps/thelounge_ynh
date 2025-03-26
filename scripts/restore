@@ -1,47 +1,51 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+# Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
-ynh_script_progression "Restoring $app main directory..."
+ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
 #=================================================
-# RESTORE THE CONFIG
+# RESTORE THE DATA DIRECTORY
 #=================================================
-ynh_script_progression "Restoring the config path..."
+ynh_script_progression "Restoring the data directory..."
 
 ynh_restore "$data_dir"
 
 #=================================================
-# REINSTALL DEPENDENCIES
+# INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression "Reinstalling dependencies..."
+ynh_script_progression "Installing dependencies..."
 
 ynh_nodejs_install
 
 #=================================================
-# RESTORE SYSTEM CONFIGURATIONS
+# RESTORE SYSTEM CONFIGURATION
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_restore "/etc/systemd/system/$app.service"
-systemctl enable $app.service --quiet
-
-yunohost service add $app --description="Client Web IRC" --log="/var/log/$app/$app.log"
+systemctl enable "$app.service" --quiet
+yunohost service add "$app" --description="Client Web IRC" --log="/var/log/$app/$app.log"
 
 #=================================================
-# START SYSTEMD SERVICE
+# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================
-ynh_script_progression "Starting $app's systemd service..."
+ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
 
 ynh_systemctl --service=nginx --action=reload
 
