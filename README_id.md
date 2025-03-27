@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # The Lounge untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/thelounge)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+![Status kerja](https://apps.yunohost.org/badge/state/thelounge)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/thelounge)
 
 [![Pasang The Lounge dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
@@ -24,7 +26,8 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Versi terkirim:** 4.4.3~ynh4
+
+**Versi terkirim:** 4.4.3~ynh5
 
 **Demo:** <https://demo.thelounge.chat/>
 

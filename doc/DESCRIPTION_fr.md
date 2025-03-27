@@ -4,4 +4,4 @@ Client Web IRC moderne conçu pour l'auto-hébergement.
 
 - Toujours connecté
 - Interface réactive
-- Support multi-utilisateurs 
+- Support multi-utilisateurs

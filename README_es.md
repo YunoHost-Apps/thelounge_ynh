@@ -3,9 +3,11 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# The Lounge para Yunohost
+# The Lounge para YunoHost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/thelounge)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+![Estado funcional](https://apps.yunohost.org/badge/state/thelounge)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/thelounge)
 
 [![Instalar The Lounge con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
@@ -24,7 +26,8 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Versión actual:** 4.4.3~ynh4
+
+**Versión actual:** 4.4.3~ynh5
 
 **Demo:** <https://demo.thelounge.chat/>
 

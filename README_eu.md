@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # The Lounge YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/thelounge.svg)](https://ci-apps.yunohost.org/ci/apps/thelounge/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/thelounge.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/thelounge)](https://ci-apps.yunohost.org/ci/apps/thelounge/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/thelounge)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/thelounge)
 
 [![Instalatu The Lounge YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=thelounge)
 
@@ -24,7 +26,8 @@ Modern web IRC client designed for self-hosting.
 - Responsive interface
 - Multi-user support
 
-**Paketatutako bertsioa:** 4.4.3~ynh4
+
+**Paketatutako bertsioa:** 4.4.3~ynh5
 
 **Demoa:** <https://demo.thelounge.chat/>
 
@@ -44,7 +47,7 @@ Modern web IRC client designed for self-hosting.
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/thelounge_ynh/tree/testing --debug
