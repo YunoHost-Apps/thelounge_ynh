@@ -4,7 +4,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -39,7 +39,7 @@ ynh_config_add --template="config.js" --destination="$data_dir/config.js"
 #=================================================
 ynh_script_progression "Upgrading dependencies..."
 
-ynh_nodejs_install
+#REMOVEME? ynh_nodejs_install
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATION

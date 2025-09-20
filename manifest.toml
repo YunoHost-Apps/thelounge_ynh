@@ -63,4 +63,8 @@ ram.runtime = "50M"
     [resources.ports]
 
     [resources.apt]
-    packages = "yarn"
+     packages = "yarn"
+
+    [resources.nodejs]
+    version = "22"
+    
