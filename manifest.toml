@@ -19,7 +19,7 @@ admindoc = "https://thelounge.chat/docs"
 code = "https://github.com/thelounge/thelounge"
 
 [integration]
-yunohost = ">= 12.1.7"
+yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
