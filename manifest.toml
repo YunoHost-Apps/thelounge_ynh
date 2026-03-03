@@ -19,12 +19,12 @@ admindoc = "https://thelounge.chat/docs"
 code = "https://github.com/thelounge/thelounge"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.38"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
 
-ldap = false
+ldap = true
 sso =  false
 
 disk = "50M"
@@ -61,9 +61,6 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.ports]
-
-    [resources.apt]
-     packages = "yarn"
 
     [resources.nodejs]
     version = "22"

@@ -10,7 +10,7 @@ WorkingDirectory=__INSTALL_DIR__/
 Environment="PATH=__PATH_WITH_NODEJS__"
 Environment="THELOUNGE_HOME=__DATA_DIR__/"
 Environment="NODE_ENV=production"
-ExecStart=/usr/bin/yarn start
+ExecStart=__NODEJS_DIR__/corepack yarn start
 Restart=on-failure
 RestartSec=5
 StartLimitInterval=60s

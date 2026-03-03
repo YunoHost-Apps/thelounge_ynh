@@ -11,7 +11,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service="$app" --action=stop --log_path="systemd"
+ynh_systemctl --service="$app" --action=stop
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -45,6 +45,7 @@ yunohost service add "$app" --description="Client Web IRC" --log="/var/log/$app/
 ynh_script_progression "Installing $app..."
 
 pushd $install_dir
+	ynh_hide_warnings corepack enable && corepack prepare yarn@1.22.20 --activate
 	ynh_hide_warnings ynh_exec_as_app yarn install
 	ynh_hide_warnings ynh_exec_as_app NODE_ENV=production yarn build
 popd
@@ -54,7 +55,7 @@ popd
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service="$app" --action="start" --wait_until="Available at" --log_path="systemd"
+ynh_systemctl --service="$app" --action="start"
 
 #=================================================
 # END OF SCRIPT
