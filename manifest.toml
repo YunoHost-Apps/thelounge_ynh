@@ -7,7 +7,7 @@ name = "The Lounge"
 description.en = "Web IRC client"
 description.fr = "Client Web IRC"
 
-version = "4.5.1~ynh1"
+version = "4.5.2~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -47,8 +47,8 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/thelounge/thelounge/archive/refs/tags/v4.5.1.tar.gz"
-    sha256 = "8d10b015d9ab0262f8087c74f1ba36f92f11e570183e18ed6e71962041425563"
+    url = "https://github.com/thelounge/thelounge/archive/refs/tags/v4.5.2.tar.gz"
+    sha256 = "81148db208ffdf056a5284147907b9d842ee0c35dfdde1c082379955f413a76a"
     autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
